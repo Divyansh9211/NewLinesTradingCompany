@@ -1,1 +1,129 @@
+/* Footer Container Styles */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.party-footer {
+  background-color: #1a1a2e; /* Midnight Blue for an elegant look */
+  color: #e0e0e0; /* Soft white text */
+  font-family: 'Poppins', 'Helvetica Neue', sans-serif;
+  padding: 60px 20px 20px;
+}
 
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 20px;
+}
+
+/* Headings */
+.footer-section h3 {
+  color: #f4d03f; /* Festive Gold/Champagne color */
+  margin-bottom: 20px;
+  font-size: 1.4em;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.footer-section p {
+  font-size: 0.95em;
+  line-height: 1.7;
+  color: #b0b0b0;
+}
+
+/* Links List */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 12px;
+}
+
+/* Newsletter Input & Button */
+.newsletter form {
+  display: flex;
+  margin-top: 15px;
+}
+
+.newsletter input {
+  padding: 12px;
+  background-color: #16213e; /* Slightly lighter blue */
+  border: 1px solid #f4d03f;
+  color: #fff;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  flex: 1;
+}
+
+.newsletter input::placeholder {
+  color: #888;
+}
+
+.newsletter button {
+  padding: 12px 25px;
+  background-color: #f4d03f;
+  color: #1a1a2e; /* Dark text on gold button */
+  border: 1px solid #f4d03f;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter button:hover {
+  background-color: #d4b232;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #333; /* Subtle line */
+  font-size: 0.85em;
+  color: #888;
+}
+
+.footer-section ul li a{
+    color:#e0e0e0;
+    text-decoration:none;
+    display:inline-block;
+    transition:all 0.3s ease;
+}
+
+.footer-section ul li a:hover{
+    color:#f4d03f;
+    transform:translateX(5px);
+}
+/* Mobile Responsive Footer */
+@media (max-width:768px){
+
+  .footer-container{
+    flex-direction:column;
+  }
+
+  .newsletter form{
+    flex-direction:column;
+  }
+
+  .newsletter input,
+  .newsletter button{
+    width:100%;
+    border-radius:5px;
+    margin-bottom:10px;
+  }
+
+}
