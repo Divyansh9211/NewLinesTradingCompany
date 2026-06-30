@@ -3,24 +3,26 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 header {
-  height: 80px;
-  width: 100%;
-  background: white;
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  margin-bottom: 40px;
-  display: flex;
-  align-items: center;
+    height: 80px;
+    width: 100%;
+    background: white;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
 }
 
-nav{
-    width:100%;
+nav {
+    width: 100%;
 }
 
 
 .logo {
     width: 200px;
- margin-left:40px;
+    margin-left: 40px;
+    margin-right: 2gi00px;
     cursor: pointer;
 
 }
@@ -42,23 +44,23 @@ nav{
     cursor: pointer;
 }
 
-a{
+a {
     text-decoration: none;
     color: rgb(63, 62, 62);
 }
 
-a:hover{
+a:hover {
     color: red;
 }
 
-.image{
+.image {
     margin-top: 8px;
-    width:100%;
-    height:auto;
-    display:block;
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
-.btn1{
+.btn1 {
     width: 150px;
     height: 40px;
     background-color: #fff;
@@ -72,7 +74,7 @@ a:hover{
     border-radius: 10px;
 }
 
-.btn1:hover{
+.btn1:hover {
     background-color: red;
     color: #fff;
     outline: none;
