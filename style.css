@@ -527,12 +527,12 @@ footer{
   padding: 0;
   margin: 0;
 }
-ul li{
+footer ul li{
   list-style: none;
   margin-bottom: 22px;
 }
 
-ul li a{
+footer ul li a{
   text-decoration: none;
   color: #fff;
 }
