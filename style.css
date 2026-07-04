@@ -616,7 +616,7 @@ hr{
   position: absolute;
   top: 0;
   left: 10px;
-  animation: moving 2s linear infinite;;
+  animation: moving 2s linear infinite;
 }
 
 @keyframes moving {
