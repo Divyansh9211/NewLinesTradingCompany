@@ -3,6 +3,7 @@ body {
   padding: 0px;
   box-sizing: border-box;
   font-family: 'poppins', 'sans-serif';
+  overflow-x:hidden;
 }
 
 header {
@@ -213,7 +214,7 @@ nav {
 
 
 .carousel {
-  width: 98.82vw;
+  width: 100vw;
   height: 100vh;
   margin-top: -50px;
   overflow: hidden;
@@ -641,4 +642,17 @@ hr{
   flex-basis: 100%;
 }
 
+}
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:none;
+}
+
+::-webkit-scrollbar-thumb{
+    background:red;
+    border-radius:20px;
 }
