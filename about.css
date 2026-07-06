@@ -39,7 +39,6 @@ nav {
 }
 
 .nav-bar ul li {
-    font-family: "Poppins", sans-serif;
     font-size: 19px;
     font-weight: 650;
     white-space: nowrap;
@@ -73,14 +72,18 @@ a:hover {
     border-color: red;
 }
 
+/* CONTENT SECTIONS ONLY */
 
-
-section {
+.about,
+.mission,
+.vision,
+.products,
+.why {
     width: 85%;
     margin: 60px auto;
 }
 
-/* Heading */
+/* Headings */
 
 h1 {
     text-align: center;
@@ -96,7 +99,9 @@ h2 {
     margin-bottom: 25px;
 }
 
-section p {
+.about p,
+.mission p,
+.vision p {
     font-size: 18px;
     text-align: justify;
     color: #555;
@@ -166,7 +171,7 @@ section p {
     transform: translateY(-5px);
 }
 
-/* Why Choose Us */
+/* Why */
 
 .why {
     background: white;
@@ -206,20 +211,6 @@ section p {
     font-size: 16px;
 }
 
-/* Bulk Orders */
-
-
-
-.note h2 {
-    color: white;
-}
-
-.note p {
-    color: #ddd;
-    text-align: center;
-    font-size: 18px;
-}
-
 /* Responsive */
 
 @media(max-width:768px) {
@@ -232,16 +223,12 @@ section p {
         font-size: 28px;
     }
 
-    section {
-        width: 92%;
-    }
-
     .about,
     .mission,
     .vision,
     .products,
-    .why,
-    .note {
+    .why {
+        width: 92%;
         padding: 25px;
     }
 
@@ -250,4 +237,171 @@ section p {
     }
 }
 
+/* FOOTER */
 
+footer{
+  width:100%;
+  background:linear-gradient(to right,#00093c,#2d0b00);
+  color:#fff;
+  padding:100px 0 30px;
+  border-top-left-radius:200px;
+  font-size:13.5px;
+  line-height:20px;
+  margin-top:80px;
+}
+
+.row{
+  width:85%;
+  margin:auto;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.col{
+  flex-basis:22%;
+  padding:10px;
+}
+
+.col:nth-child(2),
+.col:nth-child(3){
+  flex-basis:15%;
+}
+
+.footerlogo{
+  width:180px;
+  margin-bottom:5px;
+}
+
+.col h3{
+  width:fit-content;
+  margin-bottom:40px;
+  position:relative;
+}
+
+.email-id{
+  width:fit-content;
+  border-bottom:1px solid #ccc;
+  margin-top:45px;
+}
+
+footer .contact{
+  margin:17.955px 0;
+}
+
+footer p{
+  color:#fff;
+  text-align:left;
+}
+
+.col ul{
+  padding:0;
+  margin:0;
+}
+
+footer ul li{
+  list-style:none;
+  margin-bottom:22px;
+}
+
+footer ul li a{
+  color:#fff;
+  text-decoration:none;
+}
+
+footer form{
+  padding-bottom:15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #ccc;
+  margin-bottom:50px;
+}
+
+footer form .fa-envelope{
+  font-size:18px;
+  margin-right:10px;
+}
+
+footer form input{
+  width:100%;
+  background:transparent;
+  color:#ccc;
+  border:none;
+  outline:none;
+}
+
+footer form button{
+  background:transparent;
+  border:0;
+  outline:none;
+  cursor:pointer;
+}
+
+footer form button .fa-arrow-right{
+  font-size:16px;
+  color:#ccc;
+}
+
+.social-icons .fa-brands{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  text-align:center;
+  line-height:40px;
+  font-size:20px;
+  color:#000;
+  background:#fff;
+  margin-right:15px;
+  cursor:pointer;
+}
+
+footer hr{
+  width:90%;
+  border:0;
+  border-bottom:1px solid #ccc;
+  margin:20px auto;
+}
+
+.copyright{
+  text-align:center !important;
+  transform:translateY(15px);
+}
+
+.underline{
+  width:100%;
+  height:5px;
+  background:#767676;
+  border-radius:3px;
+  position:absolute;
+  top:25px;
+  left:0;
+  overflow:hidden;
+}
+
+.underline span{
+  width:15px;
+  height:100%;
+  background:#fff;
+  border-radius:3px;
+  position:absolute;
+  animation:moving 2s linear infinite;
+}
+
+@keyframes moving{
+  0%{left:-20px;}
+  100%{left:100%;}
+}
+
+@media(max-width:700px){
+  footer{
+    border-top-left-radius:100px;
+  }
+
+  .col,
+  .col:nth-child(2),
+  .col:nth-child(3){
+    flex-basis:100%;
+  }
+}
