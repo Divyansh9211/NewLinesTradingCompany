@@ -78,6 +78,12 @@ nav {
     border-color: red;
 }
 
+.banner{
+  width: 100%;
+  height: auto;
+  margin-bottom: 40px;
+}
+
 .hero{
     background:linear-gradient(to right,#00093c,#2d0b00);
     color:white;
