@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLTC Login & Signup</title>
+
+    <link rel="stylesheet" href="login.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <!-- LEFT SECTION -->
+
+        <div class="left-section">
+
+            <img src="background.png" class="bg-image">
+
+            <div class="overlay-content">
+
+                <img src="logo.png" class="logo">
+
+                <h2>WE MANUFACTURE</h2>
+
+                <h1>Happiness</h1>
+
+                <h3>You Celebrate</h3>
+
+                <p>
+                    Premium party decoration items <br>
+                    crafted to make every moment special.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SECTION -->
+
+        <div class="right-section">
+
+            <div class="form-container">
+
+                <!-- Tabs -->
+
+                <div class="tabs">
+
+                    <button class="tab active" id="loginBtn">
+                        Login
+                    </button>
+
+                    <button class="tab" id="signupBtn">
+                        Sign Up
+                    </button>
+
+                </div>
+
+                <!-- LOGIN FORM -->
+
+                <form class="form login-form active-form">
+
+                    <div class="icon-circle">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+
+                    <h2>Welcome Back!</h2>
+
+                    <p class="subtitle">
+                        Login to continue to your account
+                    </p>
+
+                    <div class="input-box">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder="Email Address">
+                    </div>
+
+                    <div class="input-box">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Password">
+                        <i class="fa-regular fa-eye eye"></i>
+                    </div>
+
+                    <a href="#" class="forgot">
+                        Forgot Password?
+                    </a>
+
+                    <button class="main-btn">
+                        Login
+                    </button>
+
+                    <div class="divider">
+                        <span>or continue with</span>
+                    </div>
+
+                    <div class="socials">
+
+                        <button class="social-btn">
+                            <i class="fa-brands fa-google"></i>
+                            Google
+                        </button>
+
+                        <button class="social-btn">
+                            <i class="fa-brands fa-facebook-f"></i>
+                            Facebook
+                        </button>
+
+                    </div>
+
+                    <p class="bottom-text">
+                        Don't have an account?
+                        <span id="switchSignup">
+                            Sign Up
+                        </span>
+                    </p>
+
+                </form>
+
+                <!-- SIGNUP FORM -->
+
+                <form class="form signup-form">
+
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+
+                    <h2>Create Your Account</h2>
+
+                    <p class="subtitle">
+                        Join NLTC and be a part of our celebration family
+                    </p>
+
+                    <div class="double-input">
+
+                        <div class="input-box">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" placeholder="Full Name">
+                        </div>
+
+                        <div class="input-box">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" placeholder="Email Address">
+                        </div>
+
+                    </div>
+
+                    <div class="input-box">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="text" placeholder="Phone Number">
+                    </div>
+
+                    <div class="input-box">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Password">
+                        <i class="fa-regular fa-eye eye"></i>
+                    </div>
+
+                    <div class="input-box">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Confirm Password">
+                        <i class="fa-regular fa-eye eye"></i>
+                    </div>
+
+                    <div class="checkbox">
+
+                        <input type="checkbox">
+
+                        <p>
+                            I agree to the
+                            <span>Terms of Service</span>
+                            and
+                            <span>Privacy Policy</span>
+                        </p>
+
+                    </div>
+
+                    <button class="main-btn">
+                        Sign Up
+                    </button>
+
+                    <div class="divider">
+                        <span>or continue with</span>
+                    </div>
+
+                    <div class="socials">
+
+                        <button class="social-btn">
+                            <i class="fa-brands fa-google"></i>
+                            Google
+                        </button>
+
+                        <button class="social-btn">
+                            <i class="fa-brands fa-facebook-f"></i>
+                            Facebook
+                        </button>
+
+                    </div>
+
+                    <p class="bottom-text">
+                        Already have an account?
+                        <span id="switchLogin">
+                            Login
+                        </span>
+                    </p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="login.js"></script>
+
+</body>
+
+</html>

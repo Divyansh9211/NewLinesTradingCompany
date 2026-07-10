@@ -6,6 +6,8 @@ body {
   overflow-x:hidden;
 }
 
+
+
 header {
   height: 80px;
   width: 100%;
@@ -116,6 +118,23 @@ nav {
 .cart p {
   margin: 0;
   /* Removes the default top and bottom margin */
+}
+
+ a{
+  text-decoration: none;
+}
+.loginbtn i:hover  {
+    color: red;
+    transition: 0.3s;
+}
+
+.login p{
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login p:hover{
+  color: red;
 }
 
 
