@@ -1,75 +1,202 @@
-const loginBtn = document.getElementById("loginBtn");
-const signupBtn = document.getElementById("signupBtn");
+/*=========================================
+        ELEMENTS
+=========================================*/
 
-const loginForm = document.querySelector(".login-form");
-const signupForm = document.querySelector(".signup-form");
+const loginTab = document.getElementById("loginTab");
+const signupTab = document.getElementById("signupTab");
 
-const switchSignup = document.getElementById("switchSignup");
-const switchLogin = document.getElementById("switchLogin");
+const slider = document.querySelector(".tab-slider");
 
-/* SHOW SIGNUP */
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
 
-function showSignup(){
+const gotoSignup = document.getElementById("gotoSignup");
+const gotoLogin = document.getElementById("gotoLogin");
 
-    signupForm.classList.add("active-form");
-    loginForm.classList.remove("active-form");
 
-    signupBtn.classList.add("active");
-    loginBtn.classList.remove("active");
+/*=========================================
+        SHOW LOGIN
+=========================================*/
+
+function showLogin() {
+
+    loginTab.classList.add("active");
+    signupTab.classList.remove("active");
+
+    slider.classList.remove("move");
+
+    signupForm.classList.remove("active");
+    loginForm.classList.add("active");
 
 }
 
-/* SHOW LOGIN */
 
-function showLogin(){
+/*=========================================
+        SHOW SIGNUP
+=========================================*/
 
-    loginForm.classList.add("active-form");
-    signupForm.classList.remove("active-form");
+function showSignup() {
 
-    loginBtn.classList.add("active");
-    signupBtn.classList.remove("active");
+    signupTab.classList.add("active");
+    loginTab.classList.remove("active");
+
+    slider.classList.add("move");
+
+    loginForm.classList.remove("active");
+    signupForm.classList.add("active");
 
 }
 
-/* TAB EVENTS */
 
-signupBtn.addEventListener("click",showSignup);
+/*=========================================
+        TAB EVENTS
+=========================================*/
 
-loginBtn.addEventListener("click",showLogin);
+loginTab.addEventListener("click", showLogin);
 
-/* TEXT SWITCH EVENTS */
+signupTab.addEventListener("click", showSignup);
 
-switchSignup.addEventListener("click",showSignup);
+if(gotoSignup){
 
-switchLogin.addEventListener("click",showLogin);
+    gotoSignup.addEventListener("click", showSignup);
 
-/* PASSWORD SHOW/HIDE */
+}
 
-const eyes = document.querySelectorAll(".eye");
+if(gotoLogin){
 
-eyes.forEach((eye)=>{
+    gotoLogin.addEventListener("click", showLogin);
 
-    eye.addEventListener("click",()=>{
+}
 
-        const input = eye.previousElementSibling;
 
-        if(input.type === "password"){
+/*=========================================
+        PASSWORD SHOW HIDE
+=========================================*/
 
-            input.type = "text";
+document.querySelectorAll(".toggle-password").forEach(function(icon){
 
-            eye.classList.remove("fa-eye");
+    icon.addEventListener("click", function(){
 
-            eye.classList.add("fa-eye-slash");
+        const input = this.previousElementSibling;
+
+        if(input.type==="password"){
+
+            input.type="text";
+
+            this.classList.remove("fa-eye");
+
+            this.classList.add("fa-eye-slash");
 
         }
 
         else{
 
-            input.type = "password";
+            input.type="password";
 
-            eye.classList.remove("fa-eye-slash");
+            this.classList.remove("fa-eye-slash");
 
-            eye.classList.add("fa-eye");
+            this.classList.add("fa-eye");
+
+        }
+
+    });
+
+});
+
+
+/*=========================================
+        INPUT FOCUS EFFECT
+=========================================*/
+
+document.querySelectorAll(".input-box input").forEach(function(input){
+
+    input.addEventListener("focus",function(){
+
+        this.parentElement.classList.add("focus");
+
+    });
+
+    input.addEventListener("blur",function(){
+
+        this.parentElement.classList.remove("focus");
+
+    });
+
+});
+
+
+/*=========================================
+        RIPPLE EFFECT
+=========================================*/
+
+document.querySelectorAll(".main-btn").forEach(function(button){
+
+    button.addEventListener("click",function(e){
+
+        const ripple=document.createElement("span");
+
+        ripple.className="ripple";
+
+        const rect=this.getBoundingClientRect();
+
+        const size=Math.max(rect.width,rect.height);
+
+        ripple.style.width=size+"px";
+        ripple.style.height=size+"px";
+
+        ripple.style.left=(e.clientX-rect.left-size/2)+"px";
+        ripple.style.top=(e.clientY-rect.top-size/2)+"px";
+
+        this.appendChild(ripple);
+
+        setTimeout(()=>{
+
+            ripple.remove();
+
+        },600);
+
+    });
+
+});
+
+
+/*=========================================
+        PAGE LOAD
+=========================================*/
+
+window.addEventListener("load",function(){
+
+    document.body.classList.add("loaded");
+
+});
+
+
+/*=========================================
+        ESC KEY
+=========================================*/
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Escape"){
+
+        document.activeElement.blur();
+
+    }
+
+});
+
+
+/*=========================================
+        ENTER KEY
+=========================================*/
+
+document.querySelectorAll("input").forEach(function(input){
+
+    input.addEventListener("keypress",function(e){
+
+        if(e.key==="Enter"){
+
+            e.preventDefault();
 
         }
 

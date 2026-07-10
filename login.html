@@ -2,226 +2,617 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NLTC Login & Signup</title>
 
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NLTC | Login</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="login.css">
 
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
-        rel="stylesheet">
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body>
 
-    <div class="main-container">
+<div class="container">
 
-        <!-- LEFT SECTION -->
+    <!--=================================
+            LEFT SIDE
+    ==================================-->
 
-        <div class="left-section">
+    <section class="left-panel">
 
-            <img src="background.png" class="bg-image">
+        <img src="LOGIN.png" class="bg-image" alt="Background">
 
-            <div class="overlay-content">
+        <div class="overlay"></div>
 
-                <img src="logo.png" class="logo">
+        <div class="left-content">
 
-                <h2>WE MANUFACTURE</h2>
+            <!-- Logo -->
 
-                <h1>Happiness</h1>
+            <div class="logo-box">
 
-                <h3>You Celebrate</h3>
+                <img src="NLTClogo.png" alt="NLTC Logo">
 
-                <p>
-                    Premium party decoration items <br>
-                    crafted to make every moment special.
-                </p>
+            </div>
+
+            <!-- Company Name -->
+
+            <p class="company-name">
+
+                NEW LINES TRADING COMPANY
+
+            </p>
+
+            <!-- Heading -->
+
+            <h1>
+
+                We Manufacture
+
+                <span>Celebrations</span>
+
+            </h1>
+
+            <!-- Divider -->
+
+            <div class="heading-divider">
+
+                <span></span>
+
+                <i class="fa-solid fa-gem"></i>
+
+                <span></span>
+
+            </div>
+
+            <!-- Description -->
+
+            <p class="tagline">
+
+                Premium Party Decoration Items
+
+                <br>
+
+                For Every Special Moment
+
+            </p>
+
+            <!-- Product Icons -->
+
+            <div class="products">
+
+                <div class="product">
+
+                    <div class="icon">
+
+                        <i class="fa-solid fa-gift"></i>
+
+                    </div>
+
+                    <h4>Gift Items</h4>
+
+                </div>
+
+                <div class="product">
+
+                    <div class="icon">
+
+                        <i class="fa-solid fa-cake-candles"></i>
+
+                    </div>
+
+                    <h4>Cake Candles</h4>
+
+                </div>
+
+                <div class="product">
+
+                    <div class="icon">
+
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                    </div>
+
+                    <h4>Party Poppers</h4>
+
+                </div>
+
+                <div class="product">
+
+                    <div class="icon">
+
+                        <i class="fa-solid fa-star"></i>
+
+                    </div>
+
+                    <h4>Decorations</h4>
+
+                </div>
 
             </div>
 
         </div>
 
-        <!-- RIGHT SECTION -->
+        <!-- Bottom Feature Strip -->
 
-        <div class="right-section">
+        <div class="left-features">
 
-            <div class="form-container">
+            <div class="feature">
 
-                <!-- Tabs -->
+                <i class="fa-solid fa-award"></i>
 
-                <div class="tabs">
+                <div>
 
-                    <button class="tab active" id="loginBtn">
-                        Login
+                    <h5>Premium Quality</h5>
+
+                    <p>Best Materials</p>
+
+                </div>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fa-solid fa-star"></i>
+
+                <div>
+
+                    <h5>Innovative Designs</h5>
+
+                    <p>Trendy Collection</p>
+
+                </div>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fa-solid fa-heart"></i>
+
+                <div>
+
+                    <h5>Customer Trust</h5>
+
+                    <p>Your Trust, Our Pride</p>
+
+                </div>
+
+            </div>
+
+            <div class="feature">
+
+                <i class="fa-solid fa-truck-fast"></i>
+
+                <div>
+
+                    <h5>Timely Delivery</h5>
+
+                    <p>Across India</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!--=================================
+            RIGHT SIDE STARTS
+    ==================================-->
+
+    <section class="right-panel">
+
+        <div class="login-card">
+
+            <!-- Login / Signup Tabs -->
+
+            <div class="tabs">
+
+                <button id="loginTab" class="tab active">
+
+                    Login
+
+                </button>
+
+                <button id="signupTab" class="tab">
+
+                    Sign Up
+
+                </button>
+
+                <div class="tab-slider"></div>
+
+            </div>
+                        <!--=================================
+                    LOGIN FORM
+            ==================================-->
+
+            <form id="loginForm" class="form-container active">
+
+                <div class="form-header">
+
+                    <h2>Welcome Back!</h2>
+
+                    <div class="divider">
+
+                        <span></span>
+
+                        <i class="fa-solid fa-heart"></i>
+
+                        <span></span>
+
+                    </div>
+
+                    <p>
+
+                        Login to continue to your account
+
+                    </p>
+
+                </div>
+
+                <!-- Email -->
+
+                <div class="input-box">
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        required>
+
+                </div>
+
+                <!-- Password -->
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        required>
+
+                    <i class="fa-regular fa-eye toggle-password"></i>
+
+                </div>
+
+                <!-- Remember -->
+
+                <div class="remember-row">
+
+                    <label>
+
+                        <input type="checkbox">
+
+                        Remember Me
+
+                    </label>
+
+                    <a href="#">
+
+                        Forgot Password?
+
+                    </a>
+
+                </div>
+
+                <!-- Button -->
+
+                <button
+                    type="submit"
+                    class="main-btn">
+
+                    Login
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+                <!-- Continue -->
+
+                <div class="continue">
+
+                    <span></span>
+
+                    <p>or continue with</p>
+
+                    <span></span>
+
+                </div>
+
+                <!-- Social -->
+
+                <div class="social-buttons">
+
+                    <button type="button">
+
+                        <i class="fa-brands fa-google"></i>
+
+                        Google
+
                     </button>
 
-                    <button class="tab" id="signupBtn">
-                        Sign Up
+                    <button type="button">
+
+                        <i class="fa-brands fa-facebook-f"></i>
+
+                        Facebook
+
                     </button>
 
                 </div>
 
-                <!-- LOGIN FORM -->
+                <!-- Bottom -->
 
-                <form class="form login-form active-form">
+                <div class="bottom-text">
 
-                    <div class="icon-circle">
-                        <i class="fa-regular fa-user"></i>
-                    </div>
+                    Don't have an account?
 
-                    <h2>Welcome Back!</h2>
+                    <span id="gotoSignup">
 
-                    <p class="subtitle">
-                        Login to continue to your account
-                    </p>
-
-                    <div class="input-box">
-                        <i class="fa-regular fa-envelope"></i>
-                        <input type="email" placeholder="Email Address">
-                    </div>
-
-                    <div class="input-box">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Password">
-                        <i class="fa-regular fa-eye eye"></i>
-                    </div>
-
-                    <a href="#" class="forgot">
-                        Forgot Password?
-                    </a>
-
-                    <button class="main-btn">
-                        Login
-                    </button>
-
-                    <div class="divider">
-                        <span>or continue with</span>
-                    </div>
-
-                    <div class="socials">
-
-                        <button class="social-btn">
-                            <i class="fa-brands fa-google"></i>
-                            Google
-                        </button>
-
-                        <button class="social-btn">
-                            <i class="fa-brands fa-facebook-f"></i>
-                            Facebook
-                        </button>
-
-                    </div>
-
-                    <p class="bottom-text">
-                        Don't have an account?
-                        <span id="switchSignup">
-                            Sign Up
-                        </span>
-                    </p>
-
-                </form>
-
-                <!-- SIGNUP FORM -->
-
-                <form class="form signup-form">
-
-                    <div class="icon-circle">
-                        <i class="fa-solid fa-user-plus"></i>
-                    </div>
-
-                    <h2>Create Your Account</h2>
-
-                    <p class="subtitle">
-                        Join NLTC and be a part of our celebration family
-                    </p>
-
-                    <div class="double-input">
-
-                        <div class="input-box">
-                            <i class="fa-regular fa-user"></i>
-                            <input type="text" placeholder="Full Name">
-                        </div>
-
-                        <div class="input-box">
-                            <i class="fa-regular fa-envelope"></i>
-                            <input type="email" placeholder="Email Address">
-                        </div>
-
-                    </div>
-
-                    <div class="input-box">
-                        <i class="fa-solid fa-phone"></i>
-                        <input type="text" placeholder="Phone Number">
-                    </div>
-
-                    <div class="input-box">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Password">
-                        <i class="fa-regular fa-eye eye"></i>
-                    </div>
-
-                    <div class="input-box">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Confirm Password">
-                        <i class="fa-regular fa-eye eye"></i>
-                    </div>
-
-                    <div class="checkbox">
-
-                        <input type="checkbox">
-
-                        <p>
-                            I agree to the
-                            <span>Terms of Service</span>
-                            and
-                            <span>Privacy Policy</span>
-                        </p>
-
-                    </div>
-
-                    <button class="main-btn">
                         Sign Up
-                    </button>
+
+                    </span>
+
+                </div>
+
+            </form>
+
+            <!--=================================
+                    SIGNUP FORM START
+            ==================================-->
+
+            <form
+                id="signupForm"
+                class="form-container">
+
+                <div class="form-header">
+
+                    <h2>Create Account</h2>
 
                     <div class="divider">
-                        <span>or continue with</span>
-                    </div>
 
-                    <div class="socials">
+                        <span></span>
 
-                        <button class="social-btn">
-                            <i class="fa-brands fa-google"></i>
-                            Google
-                        </button>
+                        <i class="fa-solid fa-heart"></i>
 
-                        <button class="social-btn">
-                            <i class="fa-brands fa-facebook-f"></i>
-                            Facebook
-                        </button>
+                        <span></span>
 
                     </div>
 
-                    <p class="bottom-text">
-                        Already have an account?
-                        <span id="switchLogin">
-                            Login
-                        </span>
+                    <p>
+
+                        Join NLTC and start celebrating.
+
                     </p>
 
-                </form>
+                </div>
+
+                <div class="row">
+
+                    <div class="input-box">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            type="text"
+                            placeholder="First Name"
+                            required>
+
+                    </div>
+
+                    <div class="input-box">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            type="text"
+                            placeholder="Last Name"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="input-box">
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-phone"></i>
+
+                    <input
+                        type="tel"
+                        placeholder="Phone Number"
+                        required>
+
+                </div>
+                                <!-- Password -->
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        placeholder="Create Password"
+                        required>
+
+                    <i class="fa-regular fa-eye toggle-password"></i>
+
+                </div>
+
+                <!-- Confirm Password -->
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        required>
+
+                    <i class="fa-regular fa-eye toggle-password"></i>
+
+                </div>
+
+                <!-- Terms -->
+
+                <div class="terms">
+
+                    <label>
+
+                        <input type="checkbox" required>
+
+                        I agree to the
+
+                        <a href="#">Terms & Conditions</a>
+
+                        and
+
+                        <a href="#">Privacy Policy</a>
+
+                    </label>
+
+                </div>
+
+                <!-- Signup Button -->
+
+                <button
+                    type="submit"
+                    class="main-btn">
+
+                    Create Account
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                </button>
+
+                <!-- Continue -->
+
+                <div class="continue">
+
+                    <span></span>
+
+                    <p>or continue with</p>
+
+                    <span></span>
+
+                </div>
+
+                <!-- Social Buttons -->
+
+                <div class="social-buttons">
+
+                    <button type="button">
+
+                        <i class="fa-brands fa-google"></i>
+
+                        Google
+
+                    </button>
+
+                    <button type="button">
+
+                        <i class="fa-brands fa-facebook-f"></i>
+
+                        Facebook
+
+                    </button>
+
+                </div>
+
+                <!-- Bottom -->
+
+                <div class="bottom-text">
+
+                    Already have an account?
+
+                    <span id="gotoLogin">
+
+                        Login
+
+                    </span>
+
+                </div>
+
+            </form>
+
+            <!-- Bottom Feature Strip -->
+
+            <div class="bottom-features">
+
+                <div class="bottom-feature">
+
+                    <i class="fa-solid fa-award"></i>
+
+                    <span>Premium Quality</span>
+
+                </div>
+
+                <div class="bottom-feature">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    <span>Trusted Brand</span>
+
+                </div>
+
+                <div class="bottom-feature">
+
+                    <i class="fa-solid fa-truck-fast"></i>
+
+                    <span>Fast Delivery</span>
+
+                </div>
+
+                <div class="bottom-feature">
+
+                    <i class="fa-solid fa-headset"></i>
+
+                    <span>24/7 Support</span>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
+    </section>
 
-    <script src="login.js"></script>
+</div>
+
+<!-- JavaScript -->
+
+<script src="login.js"></script>
 
 </body>
 
