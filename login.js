@@ -1,205 +1,231 @@
-/*=========================================
-        ELEMENTS
-=========================================*/
+// ========================================================
+// NLTC Login & Signup JavaScript (Aligned with Mockup - Red theme)
+// ========================================================
 
-const loginTab = document.getElementById("loginTab");
-const signupTab = document.getElementById("signupTab");
+document.addEventListener("DOMContentLoaded", () => {
 
-const slider = document.querySelector(".tab-slider");
+    // ==========================================
+    // Password Show / Hide
+    // ==========================================
 
-const loginForm = document.getElementById("loginForm");
-const signupForm = document.getElementById("signupForm");
+    const togglePassword = document.querySelectorAll(".togglePassword");
 
-const gotoSignup = document.getElementById("gotoSignup");
-const gotoLogin = document.getElementById("gotoLogin");
+    togglePassword.forEach(icon => {
 
+        icon.addEventListener("click", () => {
 
-/*=========================================
-        SHOW LOGIN
-=========================================*/
+            const target = document.getElementById(icon.dataset.target);
 
-function showLogin() {
+            if (target.type === "password") {
 
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
+                target.type = "text";
 
-    slider.classList.remove("move");
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
 
-    signupForm.classList.remove("active");
-    loginForm.classList.add("active");
+            } else {
 
-}
+                target.type = "password";
 
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
 
-/*=========================================
-        SHOW SIGNUP
-=========================================*/
+            }
 
-function showSignup() {
-
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
-
-    slider.classList.add("move");
-
-    loginForm.classList.remove("active");
-    signupForm.classList.add("active");
-
-}
-
-
-/*=========================================
-        TAB EVENTS
-=========================================*/
-
-loginTab.addEventListener("click", showLogin);
-
-signupTab.addEventListener("click", showSignup);
-
-if(gotoSignup){
-
-    gotoSignup.addEventListener("click", showSignup);
-
-}
-
-if(gotoLogin){
-
-    gotoLogin.addEventListener("click", showLogin);
-
-}
-
-
-/*=========================================
-        PASSWORD SHOW HIDE
-=========================================*/
-
-document.querySelectorAll(".toggle-password").forEach(function(icon){
-
-    icon.addEventListener("click", function(){
-
-        const input = this.previousElementSibling;
-
-        if(input.type==="password"){
-
-            input.type="text";
-
-            this.classList.remove("fa-eye");
-
-            this.classList.add("fa-eye-slash");
-
-        }
-
-        else{
-
-            input.type="password";
-
-            this.classList.remove("fa-eye-slash");
-
-            this.classList.add("fa-eye");
-
-        }
+        });
 
     });
 
-});
+    // ==========================================
+    // Input Focus Effect
+    // ==========================================
 
+    const inputs = document.querySelectorAll(".input-box input");
 
-/*=========================================
-        INPUT FOCUS EFFECT
-=========================================*/
+    inputs.forEach(input => {
 
-document.querySelectorAll(".input-box input").forEach(function(input){
+        input.addEventListener("focus", () => {
 
-    input.addEventListener("focus",function(){
+            input.parentElement.classList.add("active");
 
-        this.parentElement.classList.add("focus");
+        });
 
-    });
+        input.addEventListener("blur", () => {
 
-    input.addEventListener("blur",function(){
+            if (input.value === "") {
 
-        this.parentElement.classList.remove("focus");
+                input.parentElement.classList.remove("active");
 
-    });
+            }
 
-});
-
-
-/*=========================================
-        RIPPLE EFFECT
-=========================================*/
-
-document.querySelectorAll(".main-btn").forEach(function(button){
-
-    button.addEventListener("click",function(e){
-
-        const ripple=document.createElement("span");
-
-        ripple.className="ripple";
-
-        const rect=this.getBoundingClientRect();
-
-        const size=Math.max(rect.width,rect.height);
-
-        ripple.style.width=size+"px";
-        ripple.style.height=size+"px";
-
-        ripple.style.left=(e.clientX-rect.left-size/2)+"px";
-        ripple.style.top=(e.clientY-rect.top-size/2)+"px";
-
-        this.appendChild(ripple);
-
-        setTimeout(()=>{
-
-            ripple.remove();
-
-        },600);
+        });
 
     });
 
-});
+    // ==========================================
+    // Login Validation
+    // ==========================================
 
+    const loginForm = document.querySelector(".login-form");
 
-/*=========================================
-        PAGE LOAD
-=========================================*/
+    if (loginForm) {
 
-window.addEventListener("load",function(){
-
-    document.body.classList.add("loaded");
-
-});
-
-
-/*=========================================
-        ESC KEY
-=========================================*/
-
-document.addEventListener("keydown",function(e){
-
-    if(e.key==="Escape"){
-
-        document.activeElement.blur();
-
-    }
-
-});
-
-
-/*=========================================
-        ENTER KEY
-=========================================*/
-
-document.querySelectorAll("input").forEach(function(input){
-
-    input.addEventListener("keypress",function(e){
-
-        if(e.key==="Enter"){
+        loginForm.addEventListener("submit", function (e) {
 
             e.preventDefault();
 
-        }
+            const fields = loginForm.querySelectorAll("input");
+
+            let valid = true;
+
+            fields.forEach(field => {
+
+                if (field.type !== "checkbox" && field.value.trim() === "") {
+
+                    valid = false;
+
+                    field.parentElement.classList.add("error");
+
+                } else {
+
+                    if (field.parentElement.classList.contains("input-box")) {
+
+                        field.parentElement.classList.remove("error");
+
+                    }
+
+                }
+
+            });
+
+            if (valid) {
+
+                alert("Login Successful!");
+
+            }
+
+        });
+
+    }
+
+    // ==========================================
+    // Signup Validation
+    // ==========================================
+
+    const signupForm = document.querySelector(".signup-form");
+
+    if (signupForm) {
+
+        signupForm.addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const password = document.getElementById("signupPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+
+                alert("Passwords do not match.");
+
+                return;
+
+            }
+
+            alert("Account Created Successfully!");
+
+        });
+
+    }
+
+    // ==========================================
+    // Ripple Button Effect
+    // ==========================================
+
+    const buttons = document.querySelectorAll("button");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", function (e) {
+
+            const circle = document.createElement("span");
+
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+
+            circle.style.width = diameter + "px";
+            circle.style.height = diameter + "px";
+
+            circle.classList.add("ripple");
+
+            const rect = button.getBoundingClientRect();
+
+            circle.style.left = (e.clientX - rect.left - diameter / 2) + "px";
+            circle.style.top = (e.clientY - rect.top - diameter / 2) + "px";
+
+            const ripple = button.getElementsByClassName("ripple")[0];
+
+            if (ripple) {
+
+                ripple.remove();
+
+            }
+
+            button.appendChild(circle);
+
+        });
 
     });
+
+    // ==========================================
+    // Card Animation
+    // ==========================================
+
+    const cards = document.querySelectorAll(".glass-card");
+
+    cards.forEach((card, index) => {
+
+        card.style.opacity = "0";
+
+        card.style.transform = "translateY(40px)";
+
+        setTimeout(() => {
+
+            card.style.transition = "0.8s ease";
+
+            card.style.opacity = "1";
+
+            card.style.transform = "translateY(0px)";
+
+        }, index * 250);
+
+    });
+
+    // ==========================================
+    // Floating Animation
+    // ==========================================
+
+    setInterval(() => {
+
+        cards.forEach((card, index) => {
+
+            const offset = index % 2 === 0 ? -6 : 6;
+
+            card.animate(
+
+                [
+                    { transform: "translateY(0px)" },
+                    { transform: `translateY(${offset}px)` },
+                    { transform: "translateY(0px)" }
+                ],
+
+                {
+                    duration: 3000,
+                    iterations: 1
+                }
+
+            );
+
+        });
+
+    }, 3000);
 
 });
