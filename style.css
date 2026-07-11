@@ -203,6 +203,32 @@ nav {
   .nav-right div i {
     font-size: 18px;
   }
+
+  .nav-menu.active {
+    display: flex !important;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    padding: 20px;
+    gap: 15px;
+    border-top: 1px solid #eee;
+  }
+  .nav-menu.active li {
+    display: block !important;
+    margin: 0 !important;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 0;
+    text-align: left;
+  }
+  .nav-menu.active li:hover {
+    color: red;
+  }
 }
 
 
@@ -476,11 +502,22 @@ nav {
 @media screen and (max-width: 690px) {
 
   .list .item .content {
-    top: 40%;
+    top: 30%;
+    width: 90%;
+    left: 20px;
   }
 
-  .content .title .content .name {
-    font-size: 45px;
+  .content .title,
+  .content .name {
+    font-size: 32px;
+  }
+
+  .content .des {
+    font-size: 14px;
+  }
+
+  .content .btn {
+    margin-top: 220px;
   }
 
   .content .btn button {

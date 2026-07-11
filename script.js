@@ -58,3 +58,26 @@ function showSlider(type) {
 //Start the initial animation
 
 resetTimeAnimation()
+
+// Mobile dropdown menu toggle
+const menuIcon = document.querySelector('.nav-left i');
+const navMenu = document.querySelector('.nav-menu');
+
+if (menuIcon && navMenu) {
+    menuIcon.onclick = function(e) {
+        e.stopPropagation();
+        navMenu.classList.toggle('active');
+    }
+
+    document.onclick = function(e) {
+        if (!navMenu.contains(e.target) && e.target !== menuIcon) {
+            navMenu.classList.remove('active');
+        }
+    }
+
+    navMenu.querySelectorAll('li').forEach(li => {
+        li.onclick = function() {
+            navMenu.classList.remove('active');
+        }
+    });
+}
