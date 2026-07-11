@@ -213,7 +213,57 @@ h2 {
 
 /* Responsive */
 
+@media(max-width:1100px) {
+    header {
+        height: auto;
+        min-height: 80px;
+        padding: 10px 0;
+    }
+    .nav-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    .logo {
+        width: 140px;
+    }
+    .nav-bar ul {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .nav-bar ul li {
+        font-size: 16px;
+    }
+    .btn1 {
+        width: 130px;
+        font-size: 16px;
+    }
+}
+
 @media(max-width:768px) {
+    header {
+        height: auto;
+        min-height: 80px;
+        padding: 10px 0;
+    }
+    .nav-bar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+    .logo {
+        width: 130px;
+    }
+    .nav-bar ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .btn1 {
+        width: 120px;
+        height: 38px;
+        font-size: 15px;
+    }
 
     h1 {
         font-size: 38px;
@@ -286,13 +336,11 @@ footer{
   margin-top:45px;
 }
 
-footer .contact{
-  margin:17.955px 0;
-}
-
 footer p{
   color:#fff;
   text-align:left;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .col ul{

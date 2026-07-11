@@ -197,7 +197,11 @@ nav {
   }
 
   .nav-right div p {
-    font-size: 10px;
+    display: none;
+  }
+
+  .nav-right div i {
+    font-size: 18px;
   }
 }
 

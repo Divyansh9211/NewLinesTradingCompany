@@ -312,6 +312,12 @@ nav {
 
 @media(max-width:1100px) {
 
+    header {
+        height: auto;
+        min-height: 80px;
+        padding: 10px 0;
+    }
+
     .nav-bar {
         flex-wrap: wrap;
         justify-content: center;
@@ -353,6 +359,12 @@ nav {
 
 
 @media(max-width:700px) {
+
+    header {
+        height: auto;
+        min-height: 80px;
+        padding: 10px 0;
+    }
 
     .nav-bar {
         flex-direction: column;
@@ -447,14 +459,15 @@ footer{
   position: relative;
 }
 
+footer p{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 .email-id{
   width: fit-content;
   border-bottom: 1px solid #ccc;
   margin-top: 45px;
-}
-
-.contact{
-    margin: 17.955px 0;
 }
 
 .col ul{
