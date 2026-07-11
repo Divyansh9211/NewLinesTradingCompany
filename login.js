@@ -1,5 +1,5 @@
 // ========================================================
-// NLTC Login & Signup JavaScript (Aligned with Mockup - Red theme)
+// NLTC Login & Signup JavaScript (Aligned with Mockup - rgb(255,0,0) Red Theme)
 // ========================================================
 
 document.addEventListener("DOMContentLoaded", () => {
