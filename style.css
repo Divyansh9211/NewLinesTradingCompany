@@ -1,9 +1,16 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0px;
   padding: 0px;
-  box-sizing: border-box;
   font-family: 'poppins', 'sans-serif';
-  overflow-x:hidden;
 }
 
 
@@ -163,19 +170,14 @@ nav {
 }
 
 /*media query*/
-/* media query for mobile screens*/
-@media only screen and (max-width:700px) {
+@media only screen and (max-width:1280px) {
   .nav-menu {
     display: none;
   }
 
   .nav-left i {
     display: block;
-  }
-
-  img {
-    width: 130px;
-    margin-right: 10px;
+    cursor: pointer;
   }
 
   header {
@@ -185,19 +187,20 @@ nav {
   .search-bar {
     position: absolute;
     top: 70px;
-    width: 100%;
-    left: 0;
+    width: calc(100% - 30px);
+    left: 15px;
     border-radius: 50px;
     background: #fff;
     border: 1px solid #eee;
-  }
-
-  .nav-right div {
-    margin: 0 7px;
+    z-index: 100;
   }
 
   .nav-right div p {
     display: none;
+  }
+
+  .nav-right div {
+    margin: 0 8px;
   }
 
   .nav-right div i {
@@ -218,6 +221,7 @@ nav {
     gap: 15px;
     border-top: 1px solid #eee;
   }
+
   .nav-menu.active li {
     display: block !important;
     margin: 0 !important;
@@ -226,37 +230,16 @@ nav {
     padding: 5px 0;
     text-align: left;
   }
+
   .nav-menu.active li:hover {
     color: red;
   }
 }
 
-
-
-/*media query for tablet screens*/
-@media only screen and (max-width:1280px) {
-  .nav-menu {
-    display: none;
-  }
-
-  .nav-left i {
-    display: block;
-  }
-
-
-
-  header {
-    height: 60px;
-  }
-
-  .search-bar {
-    position: absolute;
-    top: 70px;
-    width: 100%;
-    left: 0;
-    border-radius: 50px;
-    background: #fff;
-    border: 1px solid #eee;
+@media only screen and (max-width:700px) {
+  img {
+    width: 120px;
+    margin-right: 10px;
   }
 }
 
@@ -364,7 +347,7 @@ nav {
 }
 
 .content .btn {
-  margin-top: 520px;
+  margin-top: 30px;
   margin-left: 5px;
   opacity: 0;
   animation: animate 1s ease-in-out 1.2s 1 forwards;
@@ -517,7 +500,7 @@ nav {
   }
 
   .content .btn {
-    margin-top: 220px;
+    margin-top: 20px;
   }
 
   .content .btn button {

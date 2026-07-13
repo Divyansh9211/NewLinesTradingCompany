@@ -1,7 +1,15 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
 
@@ -151,7 +159,7 @@ h2 {
 
 .products ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-top: 20px;
 }
@@ -182,7 +190,7 @@ h2 {
 
 .box {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 25px;
     margin-top: 35px;
 }
@@ -244,33 +252,39 @@ h2 {
 @media(max-width:768px) {
     header {
         height: auto;
-        min-height: 80px;
-        padding: 10px 0;
+        padding: 15px 0;
     }
     .nav-bar {
         flex-direction: column;
         gap: 15px;
-        padding: 20px;
+        padding: 10px;
     }
     .logo {
-        width: 130px;
+        width: 120px;
     }
     .nav-bar ul {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 15px;
+    }
+    .nav-bar ul li {
+        font-size: 15px;
     }
     .btn1 {
         width: 120px;
-        height: 38px;
-        font-size: 15px;
+        height: 36px;
+        font-size: 14px;
     }
 
     h1 {
-        font-size: 38px;
+        font-size: 32px;
+        margin-bottom: 25px;
     }
 
     h2 {
-        font-size: 28px;
+        font-size: 24px;
+        margin-bottom: 15px;
     }
 
     .about,
@@ -278,12 +292,14 @@ h2 {
     .vision,
     .products,
     .why {
-        width: 92%;
-        padding: 25px;
+        width: 94%;
+        padding: 20px;
+        margin: 30px auto;
     }
 
     p {
-        font-size: 16px;
+        font-size: 15px;
+        line-height: 1.6;
     }
 }
 

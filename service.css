@@ -1,7 +1,15 @@
-*{
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+* {
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
 }
 
 
@@ -362,29 +370,34 @@ nav {
 
     header {
         height: auto;
-        min-height: 80px;
-        padding: 10px 0;
+        padding: 15px 0;
     }
 
     .nav-bar {
         flex-direction: column;
         gap: 15px;
-        padding: 20px;
+        padding: 10px;
     }
 
     .logo {
-        width: 130px;
+        width: 120px;
     }
 
     .nav-bar ul {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 15px;
+    }
+
+    .nav-bar ul li {
+        font-size: 15px;
     }
 
     .btn1 {
         width: 120px;
-        height: 38px;
-        font-size: 15px;
+        height: 36px;
+        font-size: 14px;
     }
 
     .services {
