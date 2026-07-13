@@ -724,11 +724,18 @@ hr{
 
 .shop-by-occasion-section {
   background-color: #faf7f2;
-  padding: 80px 4% 60px 4%;
+  padding: 80px 4% 30px 4%;
   font-family: 'Poppins', sans-serif;
 }
 
-.occasion-section-header {
+.shop-by-category-section {
+  background-color: #faf7f2;
+  padding: 30px 4% 60px 4%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.occasion-section-header,
+.category-section-header {
   text-align: center;
   margin-bottom: 60px;
 }
@@ -774,8 +781,9 @@ hr{
   font-weight: 400;
 }
 
-/* Occasions Grid Layout */
-.occasions-grid {
+/* Occasions & Categories Grid Layout */
+.occasions-grid,
+.categories-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 35px 30px;
@@ -784,7 +792,8 @@ hr{
 }
 
 /* Card Styles */
-.occasion-card {
+.occasion-card,
+.category-card {
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
@@ -795,7 +804,8 @@ hr{
   height: 100%;
 }
 
-.occasion-card:hover {
+.occasion-card:hover,
+.category-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
@@ -814,7 +824,8 @@ hr{
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.occasion-card:hover .card-img-container img {
+.occasion-card:hover .card-img-container img,
+.category-card:hover .card-img-container img {
   transform: scale(1.06);
 }
 
@@ -850,7 +861,8 @@ hr{
   font-size: 1.3rem;
 }
 
-.occasion-card:hover .circle-icon {
+.occasion-card:hover .circle-icon,
+.category-card:hover .circle-icon {
   transform: translate(-50%, -50%) scale(1.08);
 }
 
@@ -918,6 +930,43 @@ hr{
 .icon-welcomehome { background-color: #283593; }
 .link-welcomehome { color: #283593; }
 
+/* Category specific colors */
+.icon-balloons { background-color: #d1226b; }
+.link-balloons { color: #d1226b; }
+
+.icon-caps { background-color: #1976d2; }
+.link-caps { color: #1976d2; }
+
+.icon-poppers { background-color: #673ab7; }
+.link-poppers { color: #673ab7; }
+
+.icon-candles { background-color: #d81b60; }
+.link-candles { color: #d81b60; }
+
+.icon-sashes { background-color: #e67e22; }
+.link-sashes { color: #e67e22; }
+
+.icon-banners { background-color: #d1226b; }
+.link-banners { color: #d1226b; }
+
+.icon-knives { background-color: #673ab7; }
+.link-knives { color: #673ab7; }
+
+.icon-tiara { background-color: #d81b60; }
+.link-tiara { color: #d81b60; }
+
+.icon-crowns { background-color: #e67e22; }
+.link-crowns { color: #e67e22; }
+
+.icon-toppers { background-color: #1976d2; }
+.link-toppers { color: #1976d2; }
+
+.icon-combos { background-color: #2e7d32; }
+.link-combos { color: #2e7d32; }
+
+.icon-manymore { background-color: #283593; }
+.link-manymore { color: #283593; }
+
 /* Features Bar Section */
 .features-bar-section {
   display: flex;
@@ -978,7 +1027,8 @@ hr{
 
 /* Responsiveness Media Queries */
 @media (max-width: 991px) {
-  .occasions-grid {
+  .occasions-grid,
+  .categories-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
   }
@@ -995,7 +1045,8 @@ hr{
 }
 
 @media (max-width: 600px) {
-  .shop-by-occasion-section {
+  .shop-by-occasion-section,
+  .shop-by-category-section {
     padding: 60px 4% 40px 4%;
   }
   
@@ -1004,7 +1055,8 @@ hr{
     letter-spacing: 0.08em;
   }
   
-  .occasions-grid {
+  .occasions-grid,
+  .categories-grid {
     grid-template-columns: 1fr;
     gap: 40px 20px;
     max-width: 400px;
