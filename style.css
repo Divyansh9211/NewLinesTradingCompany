@@ -11,6 +11,11 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: 'poppins', 'sans-serif';
+  background-image: url('background.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% auto;
+  background-color: #faf7f2;
 }
 
 
