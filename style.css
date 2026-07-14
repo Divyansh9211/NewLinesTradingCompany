@@ -14,7 +14,8 @@ body {
   background-image: url('background.png');
   background-repeat: no-repeat;
   background-position: top center;
-  background-size: 100% auto;
+  background-size: cover;
+  background-attachment: fixed;
   background-color: #faf7f2;
 }
 
@@ -711,19 +712,19 @@ hr{
    ========================================================================= */
 
 .shop-by-occasion-section {
-  background-color: #faf7f2;
+  background-color: transparent;
   padding: 80px 4% 30px 4%;
   font-family: 'Poppins', sans-serif;
 }
 
 .shop-by-category-section {
-  background-color: #faf7f2;
+  background-color: transparent;
   padding: 30px 4% 60px 4%;
   font-family: 'Poppins', sans-serif;
 }
 
 .shop-by-bestseller-section {
-  background-color: #faf7f2;
+  background-color: transparent;
   padding: 30px 4% 60px 4%;
   font-family: 'Poppins', sans-serif;
 }
