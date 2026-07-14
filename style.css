@@ -717,8 +717,15 @@ hr{
   font-family: 'Poppins', sans-serif;
 }
 
+.shop-by-bestseller-section {
+  background-color: #faf7f2;
+  padding: 30px 4% 60px 4%;
+  font-family: 'Poppins', sans-serif;
+}
+
 .occasion-section-header,
-.category-section-header {
+.category-section-header,
+.bestseller-section-header {
   text-align: center;
   margin-bottom: 60px;
 }
@@ -766,7 +773,8 @@ hr{
 
 /* Occasions & Categories Grid Layout */
 .occasions-grid,
-.categories-grid {
+.categories-grid,
+.bestsellers-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 35px 30px;
@@ -776,7 +784,8 @@ hr{
 
 /* Card Styles */
 .occasion-card,
-.category-card {
+.category-card,
+.bestseller-card {
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
@@ -788,7 +797,8 @@ hr{
 }
 
 .occasion-card:hover,
-.category-card:hover {
+.category-card:hover,
+.bestseller-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
@@ -808,7 +818,8 @@ hr{
 }
 
 .occasion-card:hover .card-img-container img,
-.category-card:hover .card-img-container img {
+.category-card:hover .card-img-container img,
+.bestseller-card:hover .card-img-container img {
   transform: scale(1.06);
 }
 
@@ -845,7 +856,8 @@ hr{
 }
 
 .occasion-card:hover .circle-icon,
-.category-card:hover .circle-icon {
+.category-card:hover .circle-icon,
+.bestseller-card:hover .circle-icon {
   transform: translate(-50%, -50%) scale(1.08);
 }
 
@@ -950,6 +962,43 @@ hr{
 .icon-manymore { background-color: #283593; }
 .link-manymore { color: #283593; }
 
+/* Best Seller specific colors */
+.icon-sparkling-candles { background-color: #d1226b; }
+.link-sparkling-candles { color: #d1226b; }
+
+.icon-metallic-balloons { background-color: #1976d2; }
+.link-metallic-balloons { color: #1976d2; }
+
+.icon-cake-dolls { background-color: #673ab7; }
+.link-cake-dolls { color: #673ab7; }
+
+.icon-golden-candles { background-color: #d81b60; }
+.link-golden-candles { color: #d81b60; }
+
+.icon-balloon-pump { background-color: #e67e22; }
+.link-balloon-pump { color: #e67e22; }
+
+.icon-butterfly { background-color: #1976d2; }
+.link-butterfly { color: #1976d2; }
+
+.icon-snow-spray { background-color: #1976d2; }
+.link-snow-spray { color: #1976d2; }
+
+.icon-crazy-ribbon { background-color: #d1226b; }
+.link-crazy-ribbon { color: #d1226b; }
+
+.icon-party-poppers { background-color: #673ab7; }
+.link-party-poppers { color: #673ab7; }
+
+.icon-birthday-caps { background-color: #1976d2; }
+.link-birthday-caps { color: #1976d2; }
+
+.icon-theme-toppers { background-color: #d1226b; }
+.link-theme-toppers { color: #d1226b; }
+
+.icon-bestsellers-manymore { background-color: #e67e22; }
+.link-bestsellers-manymore { color: #e67e22; }
+
 /* Features Bar Section */
 .features-bar-section {
   display: flex;
@@ -1011,7 +1060,8 @@ hr{
 /* Responsiveness Media Queries */
 @media (max-width: 991px) {
   .occasions-grid,
-  .categories-grid {
+  .categories-grid,
+  .bestsellers-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
   }
@@ -1029,7 +1079,8 @@ hr{
 
 @media (max-width: 600px) {
   .shop-by-occasion-section,
-  .shop-by-category-section {
+  .shop-by-category-section,
+  .shop-by-bestseller-section {
     padding: 60px 4% 40px 4%;
   }
   
@@ -1039,7 +1090,8 @@ hr{
   }
   
   .occasions-grid,
-  .categories-grid {
+  .categories-grid,
+  .bestsellers-grid {
     grid-template-columns: 1fr;
     gap: 40px 20px;
     max-width: 400px;
