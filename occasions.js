@@ -505,11 +505,13 @@ function addToCart(productId, productName, event) {
             btn.textContent = "Added! ✓";
             btn.style.backgroundColor = "#2e7d32";
             btn.style.borderColor = "#2e7d32";
+            btn.style.color = "#ffffff";
             
             setTimeout(() => {
                 btn.textContent = "Add to Cart";
                 btn.style.backgroundColor = "";
                 btn.style.borderColor = "";
+                btn.style.color = "";
             }, 1800);
         }
     }

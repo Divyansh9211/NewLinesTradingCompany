@@ -153,6 +153,44 @@ function performSearch(query) {
         return;
     }
 
+    // Best Sellers keywords mapping
+    if (query.includes('sparkling candle')) {
+        window.location.href = 'sparkling-candles.html';
+        return;
+    }
+    if (query.includes('metallic balloon')) {
+        window.location.href = 'metallic-balloons.html';
+        return;
+    }
+    if (query.includes('cake doll')) {
+        window.location.href = 'cake-dolls.html';
+        return;
+    }
+    if (query.includes('golden no candle') || query.includes('golden candle')) {
+        window.location.href = 'golden-no-candles.html';
+        return;
+    }
+    if (query.includes('balloon pump') || query.includes('pump')) {
+        window.location.href = 'balloon-pump.html';
+        return;
+    }
+    if (query.includes('butterfly') || query.includes('3d butterfly')) {
+        window.location.href = '3d-butterfly.html';
+        return;
+    }
+    if (query.includes('snow spray') || query.includes('snow')) {
+        window.location.href = 'snow-spray.html';
+        return;
+    }
+    if (query.includes('crazy ribbon') || query.includes('ribbon')) {
+        window.location.href = 'crazy-ribbon.html';
+        return;
+    }
+    if (query.includes('theme cake topper') || query.includes('theme topper') || query.includes('cake topper')) {
+        window.location.href = 'theme-cake-toppers.html';
+        return;
+    }
+
     // Category mapping (fallbacks)
     let categorySlug = 'balloons';
     if (query.includes('balloon')) {
