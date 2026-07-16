@@ -94,6 +94,96 @@ const categoriesData = {
             { text: "Reusable", icon: "fa-rotate" }
         ],
         exploreTypes: ["Happy Birthday Banners", "Anniversary Banners", "Welcome Home Banners", "Baby Shower Banners", "Bunting Garlands", "Custom Letters"]
+    },
+    "cake-knives": {
+        title: "Cake Cutting Knives",
+        emoji: "🔪",
+        description: "Cut your celebration cake with elegance using our golden and decorated knives.",
+        bannerBg: "nltc_banner_candles_bg.png",
+        bannerTitle: "Perfect Cake Moments",
+        bannerSubtitle: "with Elegant Cutting Knives",
+        bannerBadges: [
+            { text: "Sharp Steel", icon: "fa-utensils" },
+            { text: "Decorated Handles", icon: "fa-gem" },
+            { text: "Premium Packaging", icon: "fa-box" },
+            { text: "Durable Build", icon: "fa-shield" }
+        ],
+        exploreTypes: ["Golden Knives", "Floral Knives", "Pastel Knives", "Acrylic Knives", "Knife Sets", "Cake Servers"]
+    },
+    "tiara": {
+        title: "Birthday Tiara",
+        emoji: "👑",
+        description: "Shine like a princess on your special day with our sparkling birthday tiaras.",
+        bannerBg: "nltc_banner_festive_bg.png",
+        bannerTitle: "Shine Like a Princess",
+        bannerSubtitle: "with Sparkling Birthday Tiaras",
+        bannerBadges: [
+            { text: "Sparkling Crystals", icon: "fa-wand-magic-sparkles" },
+            { text: "Comfortable Band", icon: "fa-circle-notch" },
+            { text: "Glitter Accents", icon: "fa-gem" },
+            { text: "Elegant Designs", icon: "fa-star" }
+        ],
+        exploreTypes: ["Crystal Tiaras", "Glitter Tiaras", "LED Tiaras", "Floral Tiaras", "Tiara Combos", "Princess Tiaras"]
+    },
+    "crowns": {
+        title: "Birthday Crowns",
+        emoji: "👑",
+        description: "Royal crowns for our birthday kings and queens to match the royal theme.",
+        bannerBg: "nltc_banner_festive_bg.png",
+        bannerTitle: "Rule Your Special Day",
+        bannerSubtitle: "with Royal Birthday Crowns",
+        bannerBadges: [
+            { text: "Royal Gold Foil", icon: "fa-crown" },
+            { text: "Adjustable Strap", icon: "fa-gear" },
+            { text: "Sturdy Paperboard", icon: "fa-scroll" },
+            { text: "Kids & Adults Fit", icon: "fa-users" }
+        ],
+        exploreTypes: ["Gold Crowns", "Silver Crowns", "LED Crowns", "Theme Crowns", "Paper Crowns", "Adult Crowns"]
+    },
+    "toppers": {
+        title: "Cake Toppers",
+        emoji: "🎂",
+        description: "Top your celebration cakes with our gold, acrylic, and glitter themed toppers.",
+        bannerBg: "nltc_banner_candles_bg.png",
+        bannerTitle: "Add Love to Your Cakes",
+        bannerSubtitle: "with Elegant Gold & Acrylic Toppers",
+        bannerBadges: [
+            { text: "Shiny Acrylic", icon: "fa-gem" },
+            { text: "Glitter Paper", icon: "fa-wand-magic-sparkles" },
+            { text: "Custom Themes", icon: "fa-signature" },
+            { text: "Food Grade Safe", icon: "fa-circle-check" }
+        ],
+        exploreTypes: ["Happy Birthday Toppers", "Anniversary Toppers", "Number Toppers", "Acrylic Toppers", "Wooden Toppers", "Floral Toppers"]
+    },
+    "combos": {
+        title: "Decor Combos",
+        emoji: "🎁",
+        description: "Get everything you need in one box with our all-in-one theme decoration kits.",
+        bannerBg: "nltc_banner_balloons_bg.png",
+        bannerTitle: "All-in-One Celebration Box",
+        bannerSubtitle: "with Premium Theme Decor Combos",
+        bannerBadges: [
+            { text: "Complete Kit", icon: "fa-box-open" },
+            { text: "Time Saving", icon: "fa-clock" },
+            { text: "Easy Setups", icon: "fa-check" },
+            { text: "Cost Effective", icon: "fa-tags" }
+        ],
+        exploreTypes: ["Birthday Combos", "Anniversary Combos", "Baby Shower Combos", "Welcome Baby Combos", "Haldi Combos", "Mehndi Combos"]
+    },
+    "manymore": {
+        title: "And More",
+        emoji: "➕",
+        description: "Explore our collection of other exciting party accessories and decoration essentials.",
+        bannerBg: "nltc_banner_festive_bg.png",
+        bannerTitle: "Discover More Excitement",
+        bannerSubtitle: "with Premium Party Essentials",
+        bannerBadges: [
+            { text: "Wide Range", icon: "fa-list" },
+            { text: "Trending Items", icon: "fa-fire" },
+            { text: "Premium Stock", icon: "fa-truck" },
+            { text: "Best Prices", icon: "fa-percent" }
+        ],
+        exploreTypes: ["Metallic Curtains", "Faux Balls", "LED Lights", "Glue Dots", "Balloon Pumps", "Celebration Sprays"]
     }
 };
 
@@ -152,6 +242,54 @@ const productsData = {
         { id: "ba4", name: "Baby Shower Pastel Bunting Banner", rating: 4.6, reviews: 74, price: 139, image: "nltc_prod_balloon_rosegoldchrome.png", popularRank: 5 },
         { id: "ba5", name: "Rainbow Paper Pennant Garland", rating: 4.5, reviews: 97, price: 119, image: "nltc_prod_balloon_hbfoil.png", popularRank: 2 },
         { id: "ba6", name: "Glitter Star Paper Garland (10 Feet)", rating: 4.6, reviews: 52, price: 99, image: "nltc_prod_balloon_starfoil.png", popularRank: 6 }
+    ],
+    "cake-knives": [
+        { id: "ck1", name: "Luxury Golden Cake Knife & Server Set", rating: 4.9, reviews: 78, price: 349, image: "nltc_prod_balloon_goldchrome.png", popularRank: 1 },
+        { id: "ck2", name: "Floral Handle Birthday Cake Knife", rating: 4.6, reviews: 43, price: 149, image: "cardtoppers.png", popularRank: 3 },
+        { id: "ck3", name: "Pastel Theme Cake Cutting Knife", rating: 4.5, reviews: 31, price: 99, image: "nltc_prod_balloon_pastel.png", popularRank: 5 },
+        { id: "ck4", name: "Silver Acrylic Engraved Knife", rating: 4.7, reviews: 52, price: 199, image: "nltc_prod_balloon_starfoil.png", popularRank: 4 },
+        { id: "ck5", name: "Classic Steel Cake Server", rating: 4.8, reviews: 64, price: 179, image: "nltc_prod_balloon_goldchrome.png", popularRank: 2 },
+        { id: "ck6", name: "Decorated Ribbon Knife (Pack of 2)", rating: 4.3, reviews: 29, price: 119, image: "nltc_prod_balloon_hbfoil.png", popularRank: 6 }
+    ],
+    "tiara": [
+        { id: "t1", name: "Premium Crystal Birthday Tiara (Princess)", rating: 5, reviews: 142, price: 299, image: "nltc_prod_balloon_goldchrome.png", popularRank: 1 },
+        { id: "t2", name: "Silver Glitter Birthday Girl Tiara", rating: 4.8, reviews: 92, price: 199, image: "nltc_prod_balloon_starfoil.png", popularRank: 2 },
+        { id: "t3", name: "LED Glowing Flower Tiara Crown", rating: 4.6, reviews: 58, price: 149, image: "nltc_prod_balloon_smiley.png", popularRank: 4 },
+        { id: "t4", name: "Rose Gold Rhinestone Crown Headband", rating: 4.7, reviews: 73, price: 249, image: "nltc_prod_balloon_rosegoldchrome.png", popularRank: 3 },
+        { id: "t5", name: "Theme Birthday Girl Tiara & Sash Combo", rating: 4.9, reviews: 108, price: 349, image: "nltc_prod_balloon_heartfoil.png", popularRank: 5 },
+        { id: "t6", name: "Sweet 16 Sparkle Headband Crown", rating: 4.5, reviews: 39, price: 179, image: "nltc_prod_balloon_pastel.png", popularRank: 6 }
+    ],
+    "crowns": [
+        { id: "cr1", name: "Royal Golden Foil Birthday Crowns (Pack of 6)", rating: 4.9, reviews: 88, price: 199, image: "nltc_prod_balloon_goldchrome.png", popularRank: 1 },
+        { id: "cr2", name: "Glitter Paper Crown Hats (Pack of 10)", rating: 4.6, reviews: 67, price: 149, image: "cardcaps.png", popularRank: 2 },
+        { id: "cr3", name: "LED Light Up King & Queen Crowns (Pack of 2)", rating: 4.8, reviews: 54, price: 249, image: "nltc_prod_balloon_goldchrome.png", popularRank: 3 },
+        { id: "cr4", name: "Adjustable Metal Birthday Boy Crown", rating: 4.7, reviews: 41, price: 299, image: "nltc_prod_balloon_redblack.png", popularRank: 4 },
+        { id: "cr5", name: "Cartoon Theme Kids Crowns (Pack of 8)", rating: 4.4, reviews: 31, price: 129, image: "nltc_prod_balloon_smiley.png", popularRank: 5 },
+        { id: "cr6", name: "Foil Fringe Celebration Party Crowns", rating: 4.3, reviews: 29, price: 120, image: "nltc_prod_balloon_starfoil.png", popularRank: 6 }
+    ],
+    "toppers": [
+        { id: "to1", name: "Happy Birthday Gold Acrylic Cake Topper", rating: 4.9, reviews: 201, price: 149, image: "cardtoppers.png", popularRank: 1 },
+        { id: "to2", name: "Love Anniversary Silver Acrylic Topper", rating: 4.8, reviews: 88, price: 149, image: "nltc_prod_balloon_heartfoil.png", popularRank: 3 },
+        { id: "to3", name: "Glitter Number 1 Cake Topper (Gold)", rating: 4.7, reviews: 63, price: 99, image: "nltc_prod_balloon_num1foil.png", popularRank: 4 },
+        { id: "to4", name: "Baby Shower Pastel Theme Cake Toppers", rating: 4.6, reviews: 74, price: 129, image: "nltc_prod_balloon_pastel.png", popularRank: 5 },
+        { id: "to5", name: "Cake Doll Princess Theme Decor topper", rating: 4.8, reviews: 52, price: 249, image: "cardtoppers.png", popularRank: 2 },
+        { id: "to6", name: "Multicolor Balloon Cloud Cake Topper Mini", rating: 4.5, reviews: 97, price: 119, image: "nltc_prod_balloon_hbfoil.png", popularRank: 6 }
+    ],
+    "combos": [
+        { id: "co1", name: "All-in-One Gold & Black Birthday Combo Set", rating: 4.9, reviews: 188, price: 499, image: "nltc_prod_balloon_redblack.png", popularRank: 1 },
+        { id: "co2", name: "Pastel Pink & Silver Anniversary Combo Set", rating: 4.8, reviews: 115, price: 499, image: "nltc_prod_balloon_rosegoldchrome.png", popularRank: 2 },
+        { id: "co3", name: "Baby Shower Complete Balloon Garland Combo Kit", rating: 4.7, reviews: 94, price: 399, image: "nltc_prod_balloon_pastel.png", popularRank: 3 },
+        { id: "co4", name: "Welcome Baby homecoming complete combo box", rating: 4.6, reviews: 72, price: 349, image: "nltc_prod_balloon_smiley.png", popularRank: 4 },
+        { id: "co5", name: "Traditional Haldi Marigold backdrop combo set", rating: 4.5, reviews: 63, price: 499, image: "nltc_prod_balloon_goldchrome.png", popularRank: 5 },
+        { id: "co6", name: "Mehndi Ceremony Garland & Backdrop Combo Kit", rating: 4.4, reviews: 39, price: 499, image: "nltc_prod_balloon_redblack.png", popularRank: 6 }
+    ],
+    "manymore": [
+        { id: "m1", name: "Gold Foil Fringe Metallic Curtains (Pack of 2)", rating: 4.8, reviews: 204, price: 199, image: "banner.png", popularRank: 1 },
+        { id: "m2", name: "Faux Decorative Cake Balls (Pack of 20)", rating: 4.6, reviews: 79, price: 149, image: "cardtoppers.png", popularRank: 2 },
+        { id: "m3", name: "Fairy Lights LED String Lights (Warm White, 20Ft)", rating: 4.9, reviews: 124, price: 149, image: "nltc_prod_balloon_goldchrome.png", popularRank: 3 },
+        { id: "m4", name: "Balloon Glue Dots & Arch Strip Tape Set", rating: 4.7, reviews: 156, price: 99, image: "nltc_prod_balloon_confetti.png", popularRank: 4 },
+        { id: "m5", name: "Double Action Balloon Hand Pump (Fast Air)", rating: 4.5, reviews: 88, price: 129, image: "cardpoppers.png", popularRank: 5 },
+        { id: "m6", name: "Snow Spray & Party String Spray (Pack of 2)", rating: 4.4, reviews: 67, price: 119, image: "nltc_prod_balloon_pastel.png", popularRank: 6 }
     ]
 };
 

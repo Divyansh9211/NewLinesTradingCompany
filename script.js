@@ -167,8 +167,20 @@ function performSearch(query) {
         categorySlug = 'sashes';
     } else if (query.includes('banner') || query.includes('garland') || query.includes('bunting')) {
         categorySlug = 'banners';
+    } else if (query.includes('knife') || query.includes('knives')) {
+        categorySlug = 'cake-knives';
+    } else if (query.includes('tiara')) {
+        categorySlug = 'tiara';
+    } else if (query.includes('crown')) {
+        categorySlug = 'crowns';
+    } else if (query.includes('topper')) {
+        categorySlug = 'toppers';
+    } else if (query.includes('combo') || query.includes('kit')) {
+        categorySlug = 'combos';
+    } else if (query.includes('more') || query.includes('other') || query.includes('pump') || query.includes('spray') || query.includes('curtain')) {
+        categorySlug = 'manymore';
     } else {
-        const supported = ['balloons', 'candles', 'birthday-caps', 'party-poppers', 'sashes', 'banners'];
+        const supported = ['balloons', 'candles', 'birthday-caps', 'party-poppers', 'sashes', 'banners', 'cake-knives', 'tiara', 'crowns', 'toppers', 'combos', 'manymore'];
         for (const cat of supported) {
             if (cat.replace('-', ' ').includes(query) || query.includes(cat.replace('-', ' '))) {
                 categorySlug = cat;
