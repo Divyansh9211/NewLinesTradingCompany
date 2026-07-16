@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="bestlogo.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="products.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Products | New Lines Trading Company</title>
+</head>
+
+<body>
+
+    <!-- Header/Navbar (Exactly Reused from index.html) -->
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="index.html"> <img src="NLTClogo.png" alt="NLTC Logo" srcset=""></a>
+                <ul class="nav-menu">
+                    <li>Balloons</li>
+                    <li>Party Poppers</li>
+                    <li>Candles</li>
+                    <li>Birthday Caps</li>
+                    <li>Sashes</li>
+                    <li class="love">Banners<span>New</span></li>
+                </ul>
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="nav-right">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search for Party Decoration Items...">
+                </div>
+
+                <div class="login">
+                    <a href="login.html" class="loginbtn"><i class="fa-regular fa-user"></i></a>
+                    <a href="login.html"><p>Login / Sign up </p></a>
+                </div>
+
+                <div class="wishlist">
+                    <i class="fa-regular fa-heart"></i>
+                    <p>Wishlist</p>
+                </div>
+
+                <div class="cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <p>Cart</p>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Products Content Page Container -->
+    <main class="products-page-container">
+
+        <!-- Breadcrumb Navigation -->
+        <div class="breadcrumb-trail">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-separator">></span>
+            <a href="#" id="breadcrumb-category">Balloons</a>
+        </div>
+
+        <!-- Category Title & Info Section -->
+        <div class="category-info-header">
+            <div class="category-text-group">
+                <h1 class="category-title-main" id="category-heading">Balloons <span class="category-emoji">🎈</span></h1>
+                <p class="category-description-sub" id="category-description">Add color, fun and joy to your celebrations with our amazing collection of balloons.</p>
+            </div>
+            <div class="sort-dropdown-wrapper">
+                <label for="sort-select">Sort by:</label>
+                <select id="sort-select" class="sort-dropdown-select">
+                    <option value="popular">Popular</option>
+                    <option value="low-high">Price: Low to High</option>
+                    <option value="high-low">Price: High to Low</option>
+                    <option value="rating">Customer Rating</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Dynamic Promotional Banner -->
+        <div class="promo-banner-card" id="promo-banner">
+            <div class="banner-content-wrapper">
+                <h2 class="banner-title-text" id="banner-title">Make Every Moment Special</h2>
+                <p class="banner-subtitle-text" id="banner-subtitle">with Perfect Balloons</p>
+                <div class="banner-badges-row" id="banner-badges-container">
+                    <!-- Badges populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Responsive Product Listing Grid -->
+        <div class="products-listing-grid" id="product-grid">
+            <!-- Product cards populated dynamically -->
+        </div>
+
+        <!-- Bottom Subcategory Section -->
+        <div class="explore-more-types-section">
+            <div class="explore-section-header">
+                <i class="fa-solid fa-crown"></i>
+                <h2 class="explore-section-heading" id="explore-title">Explore More Balloon Types</h2>
+            </div>
+            <div class="explore-buttons-grid" id="explore-buttons-container">
+                <!-- Buttons populated dynamically -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Section (Exactly Reused from index.html) -->
+    <section>
+        <footer>
+            <div class="row">
+                <div class="col">
+                    <img src="NLTClogo.png" class="footerlogo " alt="NLTC Logo">
+                    <p>Bringing celebrations to life with premium party decoration products. We offer quality balloons,
+                        candles, banners, party accessories, and more to make every occasion memorable.
+                    </p>
+                </div>
+
+                <div class="col">
+                    <h3>Office <div class="underline"><span></span></div>
+                    </h3>
+                    <p>East Babarpur</p>
+                    <p>Ambedkar Street, Shahdara</p>
+                    <p>Delhi, PIN 110032, India</p>
+                    <p class="email-id contact">newlinestrading.co.in@gmail.com</p>
+                    <h4 class="contact">+91 - 9811007773 </h4>
+                </div>
+                <div class="col">
+                    <h3>Links <div class="underline"><span></span></div>
+                    </h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="contact.html">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Newsletter <div class="underline"><span></span></div>
+                    </h3>
+                    <form>
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder="Enter Your Email-id..." required>
+                        <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+                    </form>
+
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=100079013771029"> <i
+                                class="fa-brands fa-facebook"></i></a>
+                        <a href="https://whatsapp.com/channel/0029Vb86e1g4o7qTkxfPVj41"> <i
+                                class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/lionapdj/">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="copyright">
+                &copy; 2026 New Lines Trading Company. All Rights Reserved.
+            </p>
+        </footer>
+    </section>
+
+    <!-- Scripts (Home page script + products logic script) -->
+    <script src="script.js?v=2"></script>
+    <script src="products.js?v=2"></script>
+
+</body>
+
+</html>

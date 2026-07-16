@@ -7,57 +7,56 @@ var nextBtn = document.querySelector('.next'),
 
 let timeRunning = 3000 
 let timeAutoNext = 7000
-
-nextBtn.onclick = function(){
-    showSlider('next')
-}
-
-prevBtn.onclick = function(){
-    showSlider('prev')
-}
-
 let runTimeOut 
+let runNextAuto 
 
-let runNextAuto = setTimeout(() => {
-    nextBtn.click()
-}, timeAutoNext)
-
-
-function resetTimeAnimation() {
-    runningTime.style.animation = 'none'
-    runningTime.offsetHeight /* trigger reflow */
-    runningTime.style.animation = null 
-    runningTime.style.animation = 'runningTime 7s linear 1 forwards'
-}
-
-
-function showSlider(type) {
-    let sliderItemsDom = list.querySelectorAll('.carousel .list .item')
-    if(type === 'next'){
-        list.appendChild(sliderItemsDom[0])
-        carousel.classList.add('next')
-    } else{
-        list.prepend(sliderItemsDom[sliderItemsDom.length - 1])
-        carousel.classList.add('prev')
+if (carousel && nextBtn && prevBtn && list && runningTime) {
+    nextBtn.onclick = function(){
+        showSlider('next')
     }
 
-    clearTimeout(runTimeOut)
-    runTimeOut = setTimeout(()=>{
-        carousel.classList.remove('next')
-        carousel.classList.remove('prev')
-    }, timeAutoNext)
+    prevBtn.onclick = function(){
+        showSlider('prev')
+    }
 
-    clearTimeout(runNextAuto)
-    runNextAuto = setTimeout(()=>{
+    runNextAuto = setTimeout(() => {
         nextBtn.click()
     }, timeAutoNext)
 
-    resetTimeAnimation() //reset the running time animation
+    function resetTimeAnimation() {
+        runningTime.style.animation = 'none'
+        runningTime.offsetHeight /* trigger reflow */
+        runningTime.style.animation = null 
+        runningTime.style.animation = 'runningTime 7s linear 1 forwards'
+    }
+
+    function showSlider(type) {
+        let sliderItemsDom = list.querySelectorAll('.carousel .list .item')
+        if(type === 'next'){
+            list.appendChild(sliderItemsDom[0])
+            carousel.classList.add('next')
+        } else{
+            list.prepend(sliderItemsDom[sliderItemsDom.length - 1])
+            carousel.classList.add('prev')
+        }
+
+        clearTimeout(runTimeOut)
+        runTimeOut = setTimeout(()=>{
+            carousel.classList.remove('next')
+            carousel.classList.remove('prev')
+        }, timeAutoNext)
+
+        clearTimeout(runNextAuto)
+        runNextAuto = setTimeout(()=>{
+            nextBtn.click()
+        }, timeAutoNext)
+
+        resetTimeAnimation() //reset the running time animation
+    }
+
+    //Start the initial animation
+    resetTimeAnimation()
 }
-
-//Start the initial animation
-
-resetTimeAnimation()
 
 // Mobile dropdown menu toggle
 const menuIcon = document.querySelector('.nav-left i');
@@ -81,3 +80,74 @@ if (menuIcon && navMenu) {
         }
     });
 }
+
+// ==========================================================================
+// NLTC Search and Category Navigation Redirect Logic
+// ==========================================================================
+
+const searchInput = document.querySelector('.search-bar input');
+const searchIcon = document.querySelector('.search-bar i');
+
+if (searchInput) {
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch(searchInput.value);
+        }
+    });
+}
+
+if (searchIcon && searchInput) {
+    searchIcon.style.cursor = 'pointer';
+    searchIcon.onclick = function() {
+        performSearch(searchInput.value);
+    };
+}
+
+function performSearch(query) {
+    if (!query) return;
+    query = query.toLowerCase().trim();
+    let categorySlug = 'balloons';
+
+    if (query.includes('balloon')) {
+        categorySlug = 'balloons';
+    } else if (query.includes('candle') || query.includes('anarcandle')) {
+        categorySlug = 'candles';
+    } else if (query.includes('cap') || query.includes('hat')) {
+        categorySlug = 'birthday-caps';
+    } else if (query.includes('popper')) {
+        categorySlug = 'party-poppers';
+    } else if (query.includes('sash')) {
+        categorySlug = 'sashes';
+    } else if (query.includes('banner') || query.includes('garland') || query.includes('bunting')) {
+        categorySlug = 'banners';
+    } else {
+        // Broad substring check
+        const supported = ['balloons', 'candles', 'birthday-caps', 'party-poppers', 'sashes', 'banners'];
+        for (const cat of supported) {
+            if (cat.replace('-', ' ').includes(query) || query.includes(cat.replace('-', ' '))) {
+                categorySlug = cat;
+                break;
+            }
+        }
+    }
+
+    window.location.href = `products.html?category=${categorySlug}`;
+}
+
+// Category Navbar Item Redirects (on homepage and other pages)
+const navMenuItems = document.querySelectorAll('.nav-menu li');
+navMenuItems.forEach(item => {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', function() {
+        const itemText = item.textContent.replace('New', '').trim().toLowerCase();
+        let catSlug = 'balloons';
+        if (itemText === 'balloons') catSlug = 'balloons';
+        else if (itemText === 'party poppers') catSlug = 'party-poppers';
+        else if (itemText === 'candles') catSlug = 'candles';
+        else if (itemText === 'birthday caps') catSlug = 'birthday-caps';
+        else if (itemText === 'sashes') catSlug = 'sashes';
+        else if (itemText === 'banners') catSlug = 'banners';
+
+        window.location.href = `products.html?category=${catSlug}`;
+    });
+});
