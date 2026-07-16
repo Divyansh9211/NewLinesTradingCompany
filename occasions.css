@@ -1,0 +1,508 @@
+/* ==========================================================================
+   NLTC Dedicated Occasions Page Styles
+   ========================================================================= */
+
+/* Main Container Layout */
+.products-page-container {
+    max-width: 1200px;
+    width: 94%;
+    margin: -60px auto 60px auto; /* Compenses for header's margin-bottom: 100px */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Breadcrumb Styling */
+.breadcrumb-trail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: #777777;
+    margin-bottom: 25px;
+}
+
+.breadcrumb-trail a {
+    color: #777777;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-trail a:hover {
+    color: red;
+}
+
+.breadcrumb-separator {
+    color: #cccccc;
+    font-size: 0.75rem;
+}
+
+/* Category Title & Info Section */
+.category-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 25px;
+    gap: 20px;
+}
+
+.category-text-group {
+    max-width: 75%;
+}
+
+.category-title-main {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #222222;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-emoji {
+    font-size: 2rem;
+}
+
+.category-description-sub {
+    font-size: 0.92rem;
+    color: #666666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Sort Dropdown styling */
+.sort-dropdown-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.sort-dropdown-wrapper label {
+    font-size: 0.85rem;
+    color: #555555;
+    font-weight: 500;
+}
+
+.sort-dropdown-select {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333333;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sort-dropdown-select:focus {
+    border-color: red;
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+}
+
+/* Promotional Banner Section */
+.promo-banner-card {
+    height: 260px;
+    border-radius: 16px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    padding: 30px;
+    overflow: hidden;
+}
+
+/* Dark Overlay to make banner text always readable */
+.promo-banner-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.3) 100%);
+    z-index: 1;
+}
+
+.banner-content-wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+.banner-title-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 850;
+    color: #a81c3c;
+    margin: 0 0 5px 0;
+    letter-spacing: 0.02em;
+}
+
+.banner-subtitle-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.6rem;
+    color: #4e3629;
+    margin: 0 0 20px 0;
+    line-height: 1;
+}
+
+/* Banner badges */
+.banner-badges-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(220, 100, 100, 0.15);
+    padding-top: 15px;
+}
+
+.banner-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #4e3629;
+}
+
+.banner-badge i {
+    color: #a81c3c;
+    font-size: 1rem;
+}
+
+/* Responsive Product Grid */
+.products-listing-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px 16px;
+    margin-bottom: 60px;
+}
+
+/* Product Card Styling */
+.product-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+    border-color: rgba(255, 0, 0, 0.15);
+}
+
+/* Floating Wishlist Icon on Image */
+.wishlist-icon-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.wishlist-icon-wrapper:hover {
+    transform: scale(1.1);
+    background-color: #ffffff;
+}
+
+.wishlist-icon-wrapper i {
+    font-size: 0.95rem;
+    color: #888888;
+    transition: color 0.3s ease;
+}
+
+.wishlist-icon-wrapper i.fa-solid {
+    color: red;
+}
+
+/* Image Container */
+.product-img-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+}
+
+.product-img-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img-container img {
+    transform: scale(1.06);
+}
+
+/* Product Info */
+.product-card-info {
+    padding: 14px 12px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.product-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #222222;
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+    height: 38px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-rating-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.product-rating-container .stars {
+    display: flex;
+    gap: 2px;
+    color: #ffbc00;
+    font-size: 0.72rem;
+}
+
+.product-rating-container .review-count {
+    font-size: 0.75rem;
+    color: #888888;
+    font-weight: 500;
+}
+
+.product-price-action {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.product-price {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #111111;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.add-to-cart-btn {
+    flex-grow: 1;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1.5px solid red;
+    background-color: transparent;
+    color: red;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: red;
+    color: #ffffff;
+}
+
+.wishlist-btn-small {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    border: 1.5px solid #dddddd;
+    background-color: transparent;
+    color: #777777;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.wishlist-btn-small:hover {
+    border-color: red;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.02);
+}
+
+.wishlist-btn-small i.fa-solid {
+    color: red;
+}
+
+/* Explore More Types Bottom Section */
+.explore-more-types-section {
+    border-top: 1px dashed #eaeaea;
+    padding: 50px 0 20px 0;
+    text-align: center;
+}
+
+.explore-section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.explore-section-header i.fa-crown {
+    color: #ffbc00;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.explore-section-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #222222;
+    margin: 0;
+}
+
+.explore-buttons-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.explore-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid #eaeaea;
+    background-color: #ffffff;
+    color: #444444;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.explore-btn i {
+    color: red;
+    font-size: 0.95rem;
+}
+
+.explore-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 0, 0, 0.08);
+    border-color: rgba(255, 0, 0, 0.15);
+    background-color: rgba(255, 0, 0, 0.01);
+    color: red;
+}
+
+/* Toast styling override (if any) */
+#nltc-toast {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* ==========================================================================
+   Responsive Media Queries
+   ========================================================================= */
+
+@media (max-width: 1200px) {
+    .products-listing-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .products-listing-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .category-info-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .category-text-group {
+        max-width: 100%;
+    }
+    .promo-banner-card {
+        height: auto;
+        padding: 30px 20px;
+    }
+    .banner-title-text {
+        font-size: 1.8rem;
+    }
+    .banner-subtitle-text {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .products-listing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 10px;
+    }
+    .products-page-container {
+        margin-top: -80px;
+    }
+    .category-title-main {
+        font-size: 1.8rem;
+    }
+    .banner-title-text {
+        font-size: 1.5rem;
+    }
+    .banner-subtitle-text {
+        font-size: 1.8rem;
+    }
+    .banner-badges-row {
+        gap: 12px;
+    }
+    .banner-badge {
+        font-size: 0.75rem;
+    }
+    .explore-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+}

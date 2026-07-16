@@ -106,8 +106,55 @@ if (searchIcon && searchInput) {
 function performSearch(query) {
     if (!query) return;
     query = query.toLowerCase().trim();
-    let categorySlug = 'balloons';
 
+    // Occasion keywords mapping
+    if (query.includes('birthday') || query.includes('bday')) {
+        window.location.href = 'birthday.html';
+        return;
+    }
+    if (query.includes('anniversary') || query.includes('anniversaries')) {
+        window.location.href = 'anniversary.html';
+        return;
+    }
+    if (query.includes('baby shower') || query.includes('babyshower')) {
+        window.location.href = 'baby-shower.html';
+        return;
+    }
+    if (query.includes('welcome baby') || query.includes('welcomebaby')) {
+        window.location.href = 'welcome-baby.html';
+        return;
+    }
+    if (query.includes('welcome home') || query.includes('welcomehome')) {
+        window.location.href = 'welcome-home.html';
+        return;
+    }
+    if (query.includes('haldi')) {
+        window.location.href = 'haldi.html';
+        return;
+    }
+    if (query.includes('mehndi') || query.includes('mehendi')) {
+        window.location.href = 'mehndi.html';
+        return;
+    }
+    if (query.includes('engagement') || query.includes('ring ceremony')) {
+        window.location.href = 'engagement.html';
+        return;
+    }
+    if (query.includes('farewell')) {
+        window.location.href = 'farewell.html';
+        return;
+    }
+    if (query.includes('annaprashan') || query.includes('annaprasan')) {
+        window.location.href = 'annaprashan.html';
+        return;
+    }
+    if (query.includes('krishna') || query.includes('janmashtami')) {
+        window.location.href = 'krishna-janmashtami.html';
+        return;
+    }
+
+    // Category mapping (fallbacks)
+    let categorySlug = 'balloons';
     if (query.includes('balloon')) {
         categorySlug = 'balloons';
     } else if (query.includes('candle') || query.includes('anarcandle')) {
@@ -121,7 +168,6 @@ function performSearch(query) {
     } else if (query.includes('banner') || query.includes('garland') || query.includes('bunting')) {
         categorySlug = 'banners';
     } else {
-        // Broad substring check
         const supported = ['balloons', 'candles', 'birthday-caps', 'party-poppers', 'sashes', 'banners'];
         for (const cat of supported) {
             if (cat.replace('-', ' ').includes(query) || query.includes(cat.replace('-', ' '))) {
