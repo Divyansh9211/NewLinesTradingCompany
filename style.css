@@ -62,6 +62,12 @@ nav {
   font-style: normal;
   color: rgb(63, 62, 62);
   font-size: 15px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-left ul li:hover {
+  color: red;
 }
 
 .search-bar {
@@ -113,24 +119,44 @@ nav {
   /* Removes the default top and bottom margin */
 }
 
+.wishlist {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
 .wishlist i {
   margin-bottom: 15px;
-  /* Reduce or increase this value */
+  transition: color 0.3s ease;
 }
 
 .wishlist p {
   margin: 0;
-  /* Removes the default top and bottom margin */
+  transition: color 0.3s ease;
+}
+
+.wishlist:hover i,
+.wishlist:hover p {
+  color: red;
+}
+
+.cart {
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .cart i {
   margin-bottom: 15px;
-  /* Reduce or increase this value */
+  transition: color 0.3s ease;
 }
 
 .cart p {
   margin: 0;
-  /* Removes the default top and bottom margin */
+  transition: color 0.3s ease;
+}
+
+.cart:hover i,
+.cart:hover p {
+  color: red;
 }
 
  a{
@@ -956,6 +982,15 @@ hr{
 
 .icon-welcomehome { background-color: #283593; }
 .link-welcomehome { color: #283593; }
+
+.icon-bangle { background-color: #c2185b; }
+.link-bangle { color: #c2185b; }
+
+.icon-independence { background-color: #388e3c; }
+.link-independence { color: #388e3c; }
+
+.icon-manymore-occ { background-color: #6a1b9a; }
+.link-manymore-occ { color: #6a1b9a; }
 
 /* Category specific colors */
 .icon-balloons { background-color: #d1226b; }
