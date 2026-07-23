@@ -423,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             return `
-                <div class="product-card" id="card-${prod.id}">
+                <div class="product-card" id="card-${prod.id}" onclick="goToProduct('${prod.id}', event)" style="cursor: pointer;">
                     <div class="wishlist-icon-wrapper" onclick="toggleWishlist('${prod.id}', event)">
                         <i class="fa-regular fa-heart wishlist-icon"></i>
                     </div>

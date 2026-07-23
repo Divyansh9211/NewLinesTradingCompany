@@ -247,3 +247,16 @@ navMenuItems.forEach(item => {
         window.location.href = `products.html?category=${catSlug}`;
     });
 });
+
+// Global navigation helper to Product Details Page
+function goToProduct(idOrSlug, event) {
+    if (event) {
+        // Prevent event propagation if triggered from nested child elements
+        const target = event.target;
+        if (target.closest('.wishlist-icon-wrapper') || target.closest('.add-to-cart-btn') || target.closest('.wishlist-btn-small')) {
+            return;
+        }
+    }
+    if (!idOrSlug) return;
+    window.location.href = `product.html?id=${idOrSlug}`;
+}

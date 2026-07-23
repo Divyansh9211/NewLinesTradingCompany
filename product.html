@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Buy premium party decoration products online at New Lines Trading Company (NLTC). Explore balloons, candles, cake toppers, party poppers, birthday caps, sashes, banners and theme decor items at best prices.">
+    <link rel="icon" href="bestlogo.png">
+    
+    <!-- Base & Custom Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="product.css">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <title>Product Details | New Lines Trading Company</title>
+</head>
+
+<body>
+
+    <!-- Header / Navbar Section (Exactly Reused from index.html) -->
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="index.html"> <img src="NLTClogo.png" alt="NLTC Logo" srcset=""></a>
+                <ul class="nav-menu">
+                    <li><a href="products.html?category=balloons" style="color:inherit; text-decoration:none;">Balloons</a></li>
+                    <li><a href="products.html?category=party-poppers" style="color:inherit; text-decoration:none;">Party Poppers</a></li>
+                    <li><a href="products.html?category=candles" style="color:inherit; text-decoration:none;">Candles</a></li>
+                    <li><a href="products.html?category=birthday-caps" style="color:inherit; text-decoration:none;">Birthday Caps</a></li>
+                    <li><a href="products.html?category=sashes" style="color:inherit; text-decoration:none;">Sashes</a></li>
+                    <li class="love"><a href="products.html?category=banners" style="color:inherit; text-decoration:none;">Banners<span>New</span></a></li>
+                </ul>
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="nav-right">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search for balloons, candles, cake toppers and more...">
+                </div>
+
+                <div class="login">
+                    <a href="login.html" class="loginbtn"><i class="fa-regular fa-user"></i></a>
+                    <a href="login.html"><p>Login / Signup</p></a>
+                </div>
+
+                <div class="wishlist" id="global-wishlist-nav" style="cursor: pointer;">
+                    <i class="fa-regular fa-heart"></i>
+                    <p>Wishlist</p>
+                </div>
+
+                <div class="cart" id="global-cart-nav" style="cursor: pointer;">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <p>Cart</p>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <!-- Subnav Category Navigation Bar (Match Reference Design Header Bar) -->
+    <div class="category-subnav-bar">
+        <div class="category-subnav-container">
+            <button class="shop-categories-btn" onclick="location.href='products.html'">
+                <i class="fa-solid fa-bars"></i>
+                <span>Shop by Categories</span>
+            </button>
+            <ul class="subnav-links-list">
+                <li><a href="products.html?category=balloons">Balloons <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
+                <li><a href="products.html?category=candles">Candles <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
+                <li><a href="products.html?category=toppers">Cake Toppers <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
+                <li><a href="products.html?category=party-poppers">Party Poppers</a></li>
+                <li><a href="products.html?category=sashes">Sashes</a></li>
+                <li><a href="products.html?category=birthday-caps">Birthday Caps</a></li>
+                <li><a href="sparkling-candles.html">Anarcandles</a></li>
+                <li><a href="birthday.html">Themes <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
+                <li><a href="products.html?category=manymore">More <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Container for Product Details Page -->
+    <main class="product-details-container">
+
+        <!-- Breadcrumb Navigation Trail -->
+        <nav class="breadcrumb-trail-wrapper" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-sep">></span>
+            <a href="products.html?category=balloons" id="breadcrumb-category">Balloons</a>
+            <span class="breadcrumb-sep">></span>
+            <a href="#" id="breadcrumb-subcategory">Foil Balloons</a>
+            <span class="breadcrumb-sep">></span>
+            <span class="breadcrumb-current" id="breadcrumb-current">Happy Birthday Foil Balloon (18 inch)</span>
+        </nav>
+
+        <!-- Main Product Showcase Card (2-Column Pixel-Perfect Layout) -->
+        <section class="product-showcase-card">
+
+            <!-- Left Column: Product Image Gallery -->
+            <div class="product-gallery-section">
+                <!-- Vertical Thumbnails Column -->
+                <div class="thumbnails-column" id="thumbnails-container">
+                    <!-- Thumbnails dynamically rendered -->
+                </div>
+
+                <!-- Main Display Box -->
+                <div class="main-image-display-container">
+                    <!-- Variant/Size Badge Overlay -->
+                    <div class="variant-size-badge" id="variant-badge">
+                        <span class="badge-val" id="variant-badge-val">18</span>
+                        <span class="badge-lbl">INCH</span>
+                    </div>
+                    <img id="main-product-image" src="nltc_prod_balloon_hbfoil.png" alt="Product Main Display">
+                </div>
+            </div>
+
+            <!-- Right Column: Product Details & Purchase Actions -->
+            <div class="product-info-details-section">
+                <h1 class="product-title-heading" id="product-title">Happy Birthday Foil Balloon (18 inch)</h1>
+
+                <!-- Rating & Reviews Header -->
+                <div class="ratings-reviews-row">
+                    <div class="stars-rating-icons" id="rating-stars-container">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <span class="rating-score-count" id="rating-text">4.8 (156 Reviews)</span>
+                    <span class="rating-divider">|</span>
+                    <a href="#tab-panel-reviews" class="add-review-link" onclick="switchTab('reviews', document.getElementById('tab-header-reviews'))">Add a Review</a>
+                </div>
+
+                <!-- Price Block -->
+                <div class="price-discount-block">
+                    <span class="sale-price-text" id="sale-price">₹149</span>
+                    <span class="original-price-text" id="original-price">₹199</span>
+                    <span class="discount-percentage-pill" id="discount-pill">25% OFF</span>
+                </div>
+                <div class="tax-inclusive-note">Inclusive of all taxes</div>
+
+                <!-- Stock Status & SKU Row -->
+                <div class="stock-sku-badge-bar">
+                    <span class="stock-status-green-badge" id="stock-status">
+                        <i class="fa-regular fa-circle-check"></i> In Stock
+                    </span>
+                    <span class="sku-code-text" id="sku-code">SKU: NLTC-BL-1001</span>
+                </div>
+
+                <!-- Short Description -->
+                <p class="product-short-description-p" id="short-description">
+                    Make your celebrations even more special with our premium Happy Birthday Foil Balloon. Perfect for birthday parties, surprises, and decorations. Can be filled with air or helium.
+                </p>
+
+                <!-- Key Attributes Grid (4 Icon Cards) -->
+                <div class="key-attributes-grid">
+                    <!-- Box 1: Occasion -->
+                    <div class="attribute-card-box">
+                        <i class="fa-solid fa-gift"></i>
+                        <div class="attr-text-stack">
+                            <span class="attr-lbl">Occasion</span>
+                            <span class="attr-val" id="attr-occasion">Birthday</span>
+                        </div>
+                    </div>
+                    <!-- Box 2: Material -->
+                    <div class="attribute-card-box">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <div class="attr-text-stack">
+                            <span class="attr-lbl">Material</span>
+                            <span class="attr-val" id="attr-material">Foil</span>
+                        </div>
+                    </div>
+                    <!-- Box 3: Color -->
+                    <div class="attribute-card-box">
+                        <i class="fa-solid fa-palette"></i>
+                        <div class="attr-text-stack">
+                            <span class="attr-lbl">Color</span>
+                            <span class="attr-val" id="attr-color">Multi Color</span>
+                        </div>
+                    </div>
+                    <!-- Box 4: Size -->
+                    <div class="attribute-card-box">
+                        <i class="fa-solid fa-ruler-combined"></i>
+                        <div class="attr-text-stack">
+                            <span class="attr-lbl">Size</span>
+                            <span class="attr-val" id="attr-size">18 inch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Purchase Controls Row 1: Quantity + Wishlist + Add to Cart -->
+                <div class="purchase-controls-row-1">
+                    <div class="quantity-stepper-box">
+                        <button class="qty-step-btn" onclick="decreaseQty()">-</button>
+                        <input type="text" class="qty-input-field" id="qty-input" value="1" readonly>
+                        <button class="qty-step-btn" onclick="increaseQty()">+</button>
+                    </div>
+
+                    <button class="btn-wishlist-outlined" id="btn-add-wishlist" onclick="toggleProductWishlist()">
+                        <i class="fa-regular fa-heart"></i>
+                        <span>Add to Wishlist</span>
+                    </button>
+
+                    <button class="btn-add-to-cart-red" id="btn-add-cart" onclick="addProductToCart()">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Add to Cart</span>
+                    </button>
+                </div>
+
+                <!-- Purchase Controls Row 2: Buy Now Button -->
+                <button class="btn-buy-now-golden" id="btn-buy-now" onclick="buyNowProduct()">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Buy Now</span>
+                </button>
+
+                <!-- Delivery Check Card -->
+                <div class="delivery-checker-card">
+                    <div class="pincode-left-group">
+                        <span class="pincode-label-heading">Check Delivery & Delivery Date</span>
+                        <div class="pincode-input-row">
+                            <input type="text" class="pincode-input" id="pincode-input" placeholder="Enter Pincode" maxlength="6">
+                            <button class="pincode-check-btn" onclick="checkPincodeDelivery()">Check</button>
+                        </div>
+                    </div>
+
+                    <div class="delivery-status-right-box">
+                        <i class="fa-solid fa-truck delivery-truck-icon"></i>
+                        <div class="delivery-details-text-stack">
+                            <span class="est-delivery-lbl">Estimated Delivery</span>
+                            <span class="est-delivery-date-val" id="est-delivery-date">May 20 - May 22</span>
+                            <span class="free-delivery-tag">Free Delivery on this product</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Bottom Split Section: Tabs (Left) + Related Products (Right) -->
+        <section class="product-bottom-split-section">
+
+            <!-- Left Container: Interactive Information Tabs -->
+            <div class="tabs-content-card">
+                <!-- Tabs Navigation Bar -->
+                <div class="tabs-navigation-header">
+                    <button class="tab-nav-btn active-tab" id="tab-header-desc" onclick="switchTab('desc', this)">Description</button>
+                    <button class="tab-nav-btn" id="tab-header-specs" onclick="switchTab('specs', this)">Specifications</button>
+                    <button class="tab-nav-btn" id="tab-header-shipping" onclick="switchTab('shipping', this)">Shipping & Returns</button>
+                    <button class="tab-nav-btn" id="tab-header-reviews" onclick="switchTab('reviews', this)">Reviews (156)</button>
+                </div>
+
+                <!-- Tab Panel 1: Description -->
+                <div class="tab-panel active-panel" id="tab-panel-desc">
+                    <p id="tab-desc-text">
+                        Our Happy Birthday Foil Balloon (18 inch) adds a vibrant touch to your party decorations. Made from high-quality foil material, it is durable, long-lasting and reusable. Suitable for helium and air inflation.
+                    </p>
+                    <div class="features-checklist-grid" id="checklist-container">
+                        <!-- Checklist features populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Tab Panel 2: Specifications -->
+                <div class="tab-panel" id="tab-panel-specs">
+                    <table class="specs-data-table">
+                        <tbody id="specs-table-body">
+                            <!-- Specs key-value pairs populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tab Panel 3: Shipping & Returns -->
+                <div class="tab-panel" id="tab-panel-shipping">
+                    <p><strong>Shipping Policy:</strong> We process all orders within 24 hours. Express shipping takes 2 to 4 business days depending on your location across India.</p>
+                    <p style="margin-top: 10px;"><strong>Return Policy:</strong> Easy 7-day return/replacement guarantee if the product is damaged or defective upon arrival. Contact our support team with opening video proof.</p>
+                </div>
+
+                <!-- Tab Panel 4: Reviews -->
+                <div class="tab-panel" id="tab-panel-reviews">
+                    <div id="reviews-list-container">
+                        <!-- Customer reviews populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Container: "You May Also Like" Related Products -->
+            <div class="related-products-card">
+                <div class="related-section-header">
+                    <h3 class="related-heading-text">You May Also Like</h3>
+                    <a href="#" class="view-all-related-link" id="view-all-related-link">View All</a>
+                </div>
+
+                <div class="related-products-grid" id="related-products-grid">
+                    <!-- Related product mini cards populated dynamically -->
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer Section (Exactly Reused from index.html) -->
+    <section>
+        <footer>
+            <div class="row">
+                <div class="col">
+                    <img src="NLTClogo.png" class="footerlogo" alt="NLTC Logo">
+                    <p>Bringing celebrations to life with premium party decoration products. We offer quality balloons,
+                        candles, banners, party accessories, and more to make every occasion memorable.
+                    </p>
+                </div>
+
+                <div class="col">
+                    <h3>Office <div class="underline"><span></span></div></h3>
+                    <p>East Babarpur</p>
+                    <p>Ambedkar Street, Shahdara</p>
+                    <p>Delhi, PIN 110032, India</p>
+                    <p class="email-id contact">newlinestrading.co.in@gmail.com</p>
+                    <h4 class="contact">+91 - 9811007773</h4>
+                </div>
+                <div class="col">
+                    <h3>Links <div class="underline"><span></span></div></h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="contact.html">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Newsletter <div class="underline"><span></span></div></h3>
+                    <form>
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder="Enter Your Email-id..." required>
+                        <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+                    </form>
+
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=100079013771029"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="https://whatsapp.com/channel/0029Vb86e1g4o7qTkxfPVj41"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/lionapdj/"><i class="fa-brands fa-instagram"></i></a>
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="copyright">
+                &copy; 2026 New Lines Trading Company. All Rights Reserved.
+            </p>
+        </footer>
+    </section>
+
+    <!-- Scripts (Master DB + Common Script + Product Page Logic) -->
+    <script src="product-data.js?v=1"></script>
+    <script src="script.js?v=2"></script>
+    <script src="product.js?v=1"></script>
+
+</body>
+
+</html>
