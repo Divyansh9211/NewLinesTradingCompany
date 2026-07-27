@@ -256,13 +256,14 @@ const productsData = {
         { id: "b58", name: "Happy Birthday Printed Foil Balloon (18 inch)", rating: 4.5, reviews: 143, price: 149, image: "nltc_prod_balloon_hbfoil.png", popularRank: 58 },
         { id: "b59", name: "Yellow Emoji Smiley Face Balloons (Pack of 10)", rating: 4.5, reviews: 87, price: 129, image: "nltc_prod_balloon_smiley.png", popularRank: 59 },
         { id: "b60", name: "Red Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 5, reviews: 198, price: 349, image: "redinflated.png", popularRank: 60 },
-
         { id: "b61", name: "Dark Blue Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 105, price: 349, image: "darkblueinflated.png", popularRank: 61 },
-        { id: "b62", name: "Sky Blue Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 5, reviews: 118, price: 349, image: "skyblueinflated.png", popularRank: 62 },
-        { id: "b63", name: "Golden Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 5, reviews: 176, price: 399, image: "goldeninflated.png", popularRank: 63 },
-        { id: "b64", name: "White Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 5, reviews: 132, price: 339, image: "whiteinflated.png", popularRank: 64 },
-        { id: "b65", name: "Pink Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 5, reviews: 154, price: 349, image: "pinkinflated.png", popularRank: 65 },
-        { id: "b66", name: "Yellow Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 79, price: 329, image: "yellowinflated.png", popularRank: 66 },
+
+        //straight candles
+        { id: "b62", name: "Rose Gold Cake Candles – Straight (6 pcs)", rating: 5, reviews: 118, price: 349, image: "rosegoldstraightcandle.png", popularRank: 62 },
+        { id: "b63", name: "Golden Cake Candles – Straight (6 pcs)", rating: 5, reviews: 176, price: 399, image: "goldenstraightcandle.png", popularRank: 63 },
+        { id: "b64", name: "Blue Cake Candles – Straight (6 pcs))", rating: 5, reviews: 132, price: 339, image: "bluestraightcandle.png", popularRank: 64 },
+        { id: "b65", name: "Pink Cake Candles – Straight (6 pcs)", rating: 5, reviews: 154, price: 349, image: "pinkstraightcandle.png", popularRank: 65 },
+        { id: "b66", name: "Silver Cake Candles – Straight (6 pcs)", rating: 4.5, reviews: 79, price: 329, image: "silverstraightcandle.png", popularRank: 66 },
 
         { id: "b67", name: "Black Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 92, price: 379, image: "blackinflated.png", popularRank: 67 },
         { id: "b68", name: "Grey Metallic Inflated Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 81, price: 359, image: "greyinflated.png", popularRank: 68 },
@@ -308,12 +309,12 @@ const productsData = {
     ],
 
     "candles": [
-        { id: "c1", name: "Sparkling Anaar Candle (Pack of 4)", rating: 5, reviews: 112, price: 180, image: "nltc_prod_balloon_goldchrome.png", popularRank: 1 },
-        { id: "c2", name: "Number Birthday Candles (0-9)", rating: 4.5, reviews: 74, price: 79, image: "nltc_prod_balloon_num1foil.png", popularRank: 3 },
-        { id: "c3", name: "Metallic Gold Slim Candles (Pack of 12)", rating: 4.8, reviews: 61, price: 120, image: "nltc_prod_balloon_goldchrome.png", popularRank: 2 },
-        { id: "c4", name: "Magic Relighting Candles (Pack of 10)", rating: 4.2, reviews: 48, price: 99, image: "nltc_prod_balloon_pastel.png", popularRank: 5 },
-        { id: "c5", name: "Multi-Color Flame Birthday Candles", rating: 4.6, reviews: 85, price: 149, image: "nltc_prod_balloon_hbfoil.png", popularRank: 4 },
-        { id: "c6", name: "Musical Rotating Lotus Candle", rating: 4.7, reviews: 93, price: 299, image: "nltc_prod_balloon_smiley.png", popularRank: 6 }
+        { id: "c1", name: "Golden Cake Candles – Straight (6 pcs)", rating: 5, reviews: 112, price: 180, image: "goldenstraightcandle.png", popularRank: 1 },
+        { id: "c2", name: "Silver Cake Candles – Straight (6 pcs)", rating: 4.5, reviews: 74, price: 79, image: "silverstraightcandle.png", popularRank: 3 },
+        { id: "c3", name: "Rose Gold Cake Candles – Straight (6 pcs)", rating: 4.8, reviews: 61, price: 120, image: "rosegoldstraightcandle.png", popularRank: 2 },
+        { id: "c4", name: "Pink Cake Candles – Straight (6 pcs)", rating: 4.2, reviews: 48, price: 99, image: "pinkstraightcandle.png", popularRank: 5 },
+        { id: "c5", name: "Blue Cake Candles – Straight (6 pcs)", rating: 4.6, reviews: 85, price: 149, image: "bluestraightcandle.png", popularRank: 4 },
+        { id: "c6", name: "Mix Cake Candles – Straight (6 pcs)", rating: 4.7, reviews: 93, price: 299, image: "mixstraightcandle.png", popularRank: 6 }
     ],
     "birthday-caps": [
         { id: "h1", name: "Glitter Birthday King & Queen Crowns (Pack of 2)", rating: 5, reviews: 59, price: 199, image: "nltc_prod_balloon_goldchrome.png", popularRank: 1 },
