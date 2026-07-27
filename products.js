@@ -236,20 +236,19 @@ const productsData = {
         { id: "b41", name: "Golden-Black Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 5, reviews: 121, price: 199, image: "anngoldenblackinflated.png", popularRank: 41 },
         { id: "b42", name: "Mix Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 5, reviews: 182, price: 289, image: "annmixinflated.png", popularRank: 42 },
 
-        { id: "b43", name: "Dark Blue Metallic Latex Balloons (50 Pcs × 5 Packs)", rating: 5, reviews: 114, price: 299, image: "darkbluepack50.png", popularRank: 43 },
-        { id: "b44", name: "Golden Chrome Latex Balloons (50 Pcs × 5 Packs)", rating: 5, reviews: 148, price: 349, image: "goldenpack50.png", popularRank: 44 },
-        { id: "b45", name: "Emerald Green Metallic Latex Balloons (50 Pcs × 5 Packs)", rating: 4.5, reviews: 82, price: 289, image: "greenpack50.png", popularRank: 45 },
-        { id: "b46", name: "Sunset Orange Metallic Latex Balloons (50 Pcs × 5 Packs)", rating: 4.5, reviews: 67, price: 279, image: "orangepack50.png", popularRank: 46 },
-        { id: "b47", name: "Pastel Pink Metallic Latex Balloons (50 Pcs × 5 Packs)", rating: 5, reviews: 135, price: 299, image: "pinkpack50.png", popularRank: 47 },
-        { id: "b48", name: "Sky Blue Metallic Latex Balloons (50 Pcs × 5 Packs)", rating: 4.5, reviews: 94, price: 299, image: "skybluepack50.png", popularRank: 48 },
+        { id: "b43", name: "Golden Number 0 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 114, price: 299, image: "golden0inflated.png", popularRank: 43 },
+        { id: "b44", name: "Golden Number 1 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 148, price: 349, image: "golden1inflated.png", popularRank: 44 },
+        { id: "b45", name: "Golden Number 2 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 4.5, reviews: 82, price: 289, image: "golden2inflated.png", popularRank: 45 },
+        { id: "b46", name: "Golden Number 3 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 4.5, reviews: 67, price: 279, image: "golden3inflated.png", popularRank: 46 },
+        { id: "b47", name: "Golden Number 4 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 135, price: 299, image: "golden4inflated.png", popularRank: 47 },
+        { id: "b48", name: "Golden Number 5 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 4.5, reviews: 94, price: 299, image: "golden5inflated.png", popularRank: 48 },
+        { id: "b49", name: "Golden Number 6 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 108, price: 289, image: "golden6inflated.png", popularRank: 49 },
+        { id: "b50", name: "Golden Number 7 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 172, price: 249, image: "golden7inflated.png", popularRank: 50 },
+        { id: "b51", name: "Golden Number 8 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 189, price: 249, image: "golden8inflated.png", popularRank: 51 },
+        { id: "b52", name: "Golden Number 9 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 156, price: 199, image: "golden9inflated.png", popularRank: 52 },
 
-        { id: "b49", name: "Pure White Metallic Latex Balloons (50 Pcs × 5 Packs)", rating: 5, reviews: 108, price: 289, image: "whitepack50.png", popularRank: 49 },
-        { id: "b50", name: "Red & Black Latex Balloon Combo (Pack of 50)", rating: 5, reviews: 172, price: 249, image: "nltc_prod_balloon_redblack.png", popularRank: 50 },
-        { id: "b51", name: "Pastel Rainbow Mix Latex Balloons (Pack of 50)", rating: 5, reviews: 189, price: 249, image: "nltc_prod_balloon_pastel.png", popularRank: 51 },
-        { id: "b52", name: "Luxury Gold Chrome Foil Balloon (18 inch)", rating: 5, reviews: 156, price: 199, image: "nltc_prod_balloon_goldchrome.png", popularRank: 52 },
-        { id: "b53", name: "Rose Gold Chrome Latex Balloons (Pack of 50)", rating: 5, reviews: 141, price: 269, image: "nltc_prod_balloon_rosegoldchrome.png", popularRank: 53 },
+        { id: "b53", name: "Rose Gold Chrome Latex Balloons (Pack of 50)", rating: 5, reviews: 141, price: 269, image: "", popularRank: 53 },
         { id: "b54", name: "Confetti Sparkle Latex Balloons (Pack of 10)", rating: 4.5, reviews: 95, price: 179, image: "nltc_prod_balloon_confetti.png", popularRank: 54 },
-
         { id: "b55", name: "Golden Star Foil Balloons (18 inch, Pack of 5)", rating: 4.5, reviews: 112, price: 199, image: "nltc_prod_balloon_starfoil.png", popularRank: 55 },
         { id: "b56", name: "Romantic Red Heart Foil Balloon (18 inch)", rating: 5, reviews: 168, price: 149, image: "nltc_prod_balloon_heartfoil.png", popularRank: 56 },
         { id: "b57", name: "Number 1 Golden Foil Balloon (32 inch)", rating: 5, reviews: 124, price: 149, image: "nltc_prod_balloon_num1foil.png", popularRank: 57 },
@@ -306,7 +305,7 @@ const productsData = {
         { id: "b101", name: "Neon Orange Inflated Party Pack (50 Pcs)", rating: 4, reviews: 52, price: 189, image: "orangeinflated.png", popularRank: 101 },
         { id: "b102", name: "Ultimate Rainbow Celebration Mix Inflated Balloons (100 Pcs)", rating: 5, reviews: 228, price: 399, image: "mixinflated.png", popularRank: 102 }
     ],
-    
+
     "candles": [
         { id: "c1", name: "Sparkling Anaar Candle (Pack of 4)", rating: 5, reviews: 112, price: 180, image: "nltc_prod_balloon_goldchrome.png", popularRank: 1 },
         { id: "c2", name: "Number Birthday Candles (0-9)", rating: 4.5, reviews: 74, price: 79, image: "nltc_prod_balloon_num1foil.png", popularRank: 3 },
@@ -535,7 +534,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <img src="${prod.image}" alt="${prod.name}">
                     </div>
                     <div class="product-card-info">
-                        <h3 class="product-name">${prod.name}</h3>
+                        <h3 class="product-name"><a href="product.html?id=${prod.id}" onclick="goToProduct('${prod.id}', event)">${prod.name}</a></h3>
                         <div class="product-rating-container">
                             <div class="stars">${starsMarkup}</div>
                             <span class="review-count">(${prod.reviews})</span>

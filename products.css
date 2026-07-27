@@ -292,6 +292,16 @@
     overflow: hidden;
 }
 
+.product-name a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.product-name a:hover {
+    color: red;
+}
+
 .product-rating-container {
     display: flex;
     align-items: center;

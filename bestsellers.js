@@ -410,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <img src="${prod.image}" alt="${prod.name}">
                     </div>
                     <div class="product-card-info">
-                        <h3 class="product-name">${prod.name}</h3>
+                        <h3 class="product-name"><a href="product.html?id=${prod.id}" onclick="goToProduct('${prod.id}', event)">${prod.name}</a></h3>
                         <div class="product-rating-container">
                             <div class="stars">${starsMarkup}</div>
                             <span class="review-count">(${prod.reviews})</span>

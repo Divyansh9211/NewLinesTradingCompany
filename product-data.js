@@ -83,51 +83,25 @@
     const rawProducts = [
         // Balloons Category
         {
-            id: "b4",
-            numericId: "101",
-            slug: "happy-birthday-foil-balloon",
-            name: "Happy Birthday Foil Balloon (18 inch)",
-            rating: 4.8,
-            reviews: 156,
-            price: 149,
-            originalPrice: 199,
-            discount: "25% OFF",
-            image: "nltc_prod_balloon_hbfoil.png",
-            category: "Balloons",
-            categorySlug: "balloons",
-            occasion: "Birthday",
-            material: "Foil",
-            color: "Multi Color",
-            size: "18 inch",
-            sku: "NLTC-BL-1001",
-            stockStatus: "In Stock",
-            description: "Make your celebrations even more special with our premium Happy Birthday Foil Balloon. Perfect for birthday parties, surprises, and decorations. Can be filled with air or helium.",
-            bulletPoints: [
-                "High quality foil material",
-                "Reusable & durable",
-                "Bright and colorful print",
-                "Easy to inflate (Air/Helium)"
-            ]
-        },
-        {
             id: "b1",
-            slug: "red-black-latex-balloons-pack-of-50",
-            name: "Red & Black Latex Balloons (Pack of 50)",
+            numericId: "101",
+            slug: "red-metallic-balloons-50-pcs-10-packs",
+            name: "Red Metallic Balloons (50 Pcs × 10 Packs)",
             rating: 5,
             reviews: 124,
             price: 199,
             originalPrice: 269,
             discount: "26% OFF",
-            image: "nltc_prod_balloon_redblack.png",
+            image: "redinflated.png",
             category: "Balloons",
             categorySlug: "balloons",
             occasion: "Birthday",
             material: "Latex",
-            color: "Red & Black",
+            color: "Red",
             size: "12 inch",
-            sku: "NLTC-BL-1002",
+            sku: "NLTC-BL-1001",
             stockStatus: "In Stock",
-            description: "Add a bold and elegant touch to your event decor with premium Red & Black latex balloons. Ideal for theme parties, anniversaries, and birthday setups.",
+            description: "Add a bold and elegant touch to your event decor with premium Red Metallic Balloons (50 Pcs × 10 Packs). Ideal for theme parties, anniversaries, and birthday setups.",
             bulletPoints: [
                 "100% Biodegradable Latex",
                 "Vibrant contrast colors",
@@ -137,25 +111,25 @@
         },
         {
             id: "b2",
-            slug: "pastel-mix-latex-balloons-pack-of-50",
-            name: "Pastel Mix Latex Balloons (Pack of 50)",
+            slug: "dark-blue-metallic-balloons-50-pcs-10-packs",
+            name: "Dark-Blue Metallic Balloons (50 Pcs × 10 Packs)",
             rating: 4.5,
             reviews: 98,
             price: 199,
             originalPrice: 249,
             discount: "20% OFF",
-            image: "nltc_prod_balloon_pastel.png",
+            image: "darkblueinflated.png",
             category: "Balloons",
             categorySlug: "balloons",
-            occasion: "Baby Shower",
+            occasion: "Birthday",
             material: "Latex",
-            color: "Pastel Mix",
+            color: "Dark Blue",
             size: "12 inch",
-            sku: "NLTC-BL-1003",
+            sku: "NLTC-BL-1002",
             stockStatus: "In Stock",
-            description: "Soft aesthetic pastel balloons set for aesthetic birthday celebrations, baby showers, and anniversary arches.",
+            description: "Add a bold and elegant touch to your event decor with premium Dark-Blue Metallic Balloons (50 Pcs × 10 Packs). Ideal for theme parties, anniversaries, and birthday setups.",
             bulletPoints: [
-                "Soft pastel aesthetic shades",
+                "Soft metallic shiny finish",
                 "Extra stretchy premium latex",
                 "Long lasting air retention",
                 "Great for balloon arches & garlands"
@@ -163,23 +137,23 @@
         },
         {
             id: "b3",
-            slug: "golden-chrome-balloons-pack-of-50",
-            name: "Golden Chrome Balloons (Pack of 50)",
+            slug: "sky-blue-metallic-balloons-50-pcs-10-packs",
+            name: "Sky-Blue Metallic Balloons (50 Pcs × 10 Packs)",
             rating: 5,
             reviews: 87,
             price: 249,
             originalPrice: 349,
             discount: "28% OFF",
-            image: "nltc_prod_balloon_goldchrome.png",
+            image: "skyblueinflated.png",
             category: "Balloons",
             categorySlug: "balloons",
-            occasion: "Anniversary",
-            material: "Chrome Latex",
-            color: "Metallic Gold",
+            occasion: "Birthday",
+            material: "Latex",
+            color: "Sky Blue",
             size: "12 inch",
-            sku: "NLTC-BL-1004",
+            sku: "NLTC-BL-1003",
             stockStatus: "In Stock",
-            description: "Super shiny high-gloss metallic gold balloons to give a royal touch to your celebrations and party backdrops.",
+            description: "Super shiny high-gloss sky blue metallic balloons to give a royal touch to your celebrations and party backdrops.",
             bulletPoints: [
                 "Ultra high-gloss metallic sheen",
                 "Heavy-weight durable rubber",
@@ -188,54 +162,80 @@
             ]
         },
         {
+            id: "b4",
+            slug: "golden-metallic-balloons-50-pcs-10-packs",
+            name: "Golden Metallic Balloons (50 Pcs × 10 Packs)",
+            rating: 4.5,
+            reviews: 156,
+            price: 149,
+            originalPrice: 199,
+            discount: "25% OFF",
+            image: "goldeninflated.png",
+            category: "Balloons",
+            categorySlug: "balloons",
+            occasion: "Birthday",
+            material: "Latex",
+            color: "Golden",
+            size: "12 inch",
+            sku: "NLTC-BL-1004",
+            stockStatus: "In Stock",
+            description: "Make your celebrations even more special with our premium Golden Metallic Balloons (50 Pcs × 10 Packs). Perfect for birthday parties, surprises, and decorations.",
+            bulletPoints: [
+                "High quality metallic finish",
+                "Reusable & durable",
+                "Bright and colorful print",
+                "Easy to inflate (Air/Helium)"
+            ]
+        },
+        {
             id: "b5",
-            slug: "number-foil-balloon-1-32-inch",
-            name: "Number Foil Balloon (1) (32 inch)",
+            slug: "white-metallic-balloons-50-pcs-10-packs",
+            name: "White Metallic Balloons (50 Pcs × 10 Packs)",
             rating: 4.5,
             reviews: 64,
             price: 149,
             originalPrice: 199,
             discount: "25% OFF",
-            image: "nltc_prod_balloon_num1foil.png",
+            image: "whiteinflated.png",
             category: "Balloons",
             categorySlug: "balloons",
             occasion: "Birthday",
-            material: "Foil",
-            color: "Golden",
-            size: "32 inch",
+            material: "Latex",
+            color: "White",
+            size: "12 inch",
             sku: "NLTC-BL-1005",
             stockStatus: "In Stock",
-            description: "Giant 32 inch golden number foil balloon for 1st birthday milestone celebrations and anniversaries.",
+            description: "Pure white metallic balloons for birthday milestone celebrations, theme setups, and anniversaries.",
             bulletPoints: [
-                "Jumbo 32-inch size",
-                "Self-sealing valve mechanism",
-                "Refillable & reusable foil",
-                "Eye-catching gold finish"
+                "Standard 12-inch size",
+                "Self-sealing balloon ties",
+                "Refillable & durable latex",
+                "Eye-catching white finish"
             ]
         },
         {
             id: "b6",
-            slug: "heart-foil-balloon-18-inch",
-            name: "Heart Foil Balloon (18 inch)",
+            slug: "pink-metallic-balloons-50-pcs-10-packs",
+            name: "Pink Metallic Balloons (50 Pcs × 10 Packs)",
             rating: 5,
             reviews: 112,
             price: 149,
             originalPrice: 199,
             discount: "25% OFF",
-            image: "nltc_prod_balloon_heartfoil.png",
+            image: "pinkinflated.png",
             category: "Balloons",
             categorySlug: "balloons",
-            occasion: "Anniversary",
-            material: "Foil",
-            color: "Red / Pink",
-            size: "18 inch",
+            occasion: "Birthday",
+            material: "Latex",
+            color: "Pink",
+            size: "12 inch",
             sku: "NLTC-BL-1006",
             stockStatus: "In Stock",
-            description: "Express your love with gorgeous heart-shaped foil balloons for anniversary surprises and Valentine decorations.",
+            description: "Gorgeous pink metallic balloons for birthday surprises and party decorations.",
             bulletPoints: [
-                "Romantic heart shape",
+                "Vibrant pink color",
                 "Metallic metallic shine",
-                "Self sealing valve",
+                "Durable latex material",
                 "Helium floating duration 24h+"
             ]
         },
@@ -538,6 +538,58 @@
     // Build lookup indexes
     const productLookup = {};
 
+    function inferColor(name) {
+        if (!name) return "Multi Color";
+        const n = name.toLowerCase();
+        if (n.includes("red & black") || n.includes("red-black")) return "Red & Black";
+        if (n.includes("golden-black") || n.includes("golden black") || n.includes("gold-black") || n.includes("black & gold") || n.includes("gold & black")) return "Gold & Black";
+        if (n.includes("dark-blue") || n.includes("dark blue")) return "Dark Blue";
+        if (n.includes("sky-blue") || n.includes("sky blue")) return "Sky Blue";
+        if (n.includes("rose-gold") || n.includes("rose gold")) return "Rose Gold";
+        if (n.includes("golden") || n.includes("gold")) return "Golden";
+        if (n.includes("silver")) return "Silver";
+        if (n.includes("red")) return "Red";
+        if (n.includes("blue")) return "Blue";
+        if (n.includes("pink")) return "Pink";
+        if (n.includes("yellow")) return "Yellow";
+        if (n.includes("black")) return "Black";
+        if (n.includes("grey") || n.includes("gray")) return "Grey";
+        if (n.includes("green")) return "Green";
+        if (n.includes("orange")) return "Orange";
+        if (n.includes("purple")) return "Purple";
+        if (n.includes("white")) return "White";
+        if (n.includes("pastel")) return "Pastel Mix";
+        return "Multi Color";
+    }
+
+    function inferMaterial(name) {
+        if (!name) return "Latex";
+        const n = name.toLowerCase();
+        if (n.includes("foil") || n.includes("hbd") || n.includes("anniversary")) return "Foil";
+        if (n.includes("latex") || n.includes("metallic") || n.includes("chrome") || n.includes("inflated")) return "Latex";
+        return "Latex";
+    }
+
+    function inferSize(name) {
+        if (!name) return "12 inch";
+        const n = name.toLowerCase();
+        if (n.includes("32 inch")) return "32 inch";
+        if (n.includes("18 inch")) return "18 inch";
+        if (n.includes("10 pack") || n.includes("16 letters") || n.includes("13 letters")) return "16 inch";
+        if (n.includes("50 pcs") || n.includes("pack of 50") || n.includes("pack of 10")) return "12 inch";
+        return "12 inch";
+    }
+
+    function inferOccasion(name) {
+        if (!name) return "Birthday";
+        const n = name.toLowerCase();
+        if (n.includes("anniversary")) return "Anniversary";
+        if (n.includes("birthday") || n.includes("hbd")) return "Birthday";
+        if (n.includes("love") || n.includes("heart")) return "Anniversary / Romantic";
+        if (n.includes("baby")) return "Baby Shower";
+        return "Birthday";
+    }
+
     function processProduct(p) {
         // Ensure defaults
         const id = String(p.id);
@@ -548,7 +600,16 @@
         const discount = p.discount || `${Math.round(((originalPrice - price) / originalPrice) * 100)}% OFF`;
         const category = p.category || "Balloons";
         const categorySlug = p.categorySlug || (category.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
-        const images = p.images && p.images.length ? p.images : getGalleryForImage(p.image);
+        const primaryImage = p.image || "nltc_prod_balloon_hbfoil.png";
+        const images = p.images && p.images.length ? p.images : [primaryImage, ...getGalleryForImage(primaryImage).filter(img => img !== primaryImage)];
+
+        const color = p.color || inferColor(p.name);
+        const material = p.material || inferMaterial(p.name);
+        const size = p.size || inferSize(p.name);
+        const occasion = p.occasion || inferOccasion(p.name);
+        const numIdPart = parseInt(id.replace(/\D/g, '')) || 1002;
+        const sku = p.sku || `NLTC-BL-${1000 + numIdPart}`;
+        const description = p.description || `Add a bold and elegant touch to your event decor with premium ${p.name || 'party balloons'}. Ideal for theme parties, anniversaries, and birthday setups.`;
 
         const normalized = {
             id: id,
@@ -560,17 +621,17 @@
             price: price,
             originalPrice: originalPrice,
             discount: discount,
-            image: p.image || images[0],
+            image: primaryImage,
             images: images,
             category: category,
             categorySlug: categorySlug,
-            occasion: p.occasion || "Birthday",
-            material: p.material || "Foil",
-            color: p.color || "Multi Color",
-            size: p.size || "Standard",
-            sku: p.sku || `NLTC-${categorySlug.slice(0, 2).toUpperCase()}-${id.toUpperCase()}`,
+            occasion: occasion,
+            material: material,
+            color: color,
+            size: size,
+            sku: sku,
             stockStatus: p.stockStatus || "In Stock",
-            description: p.description || "Make your celebrations even more special with our premium decoration products. Perfect for birthday parties, surprises, and events.",
+            description: description,
             bulletPoints: p.bulletPoints || [
                 "High quality material",
                 "Reusable & durable",
@@ -580,10 +641,10 @@
             specificationsTable: p.specificationsTable || {
                 "Brand": "New Lines Trading Company (NLTC)",
                 "Category": category,
-                "Occasion": p.occasion || "Birthday",
-                "Material": p.material || "Foil",
-                "Color": p.color || "Multi Color",
-                "Size / Dimensions": p.size || "Standard",
+                "Occasion": occasion,
+                "Material": material,
+                "Color": color,
+                "Size / Dimensions": size,
                 "Package Contains": "1 Set / Pack of items",
                 "Country of Origin": "India"
             },
@@ -627,10 +688,14 @@
             if (window.productsData) {
                 Object.keys(window.productsData).forEach(catKey => {
                     window.productsData[catKey].forEach(p => {
-                        if (!productLookup[p.id]) {
-                            p.categorySlug = catKey;
-                            p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
-                            allProducts.push(processProduct(p));
+                        p.categorySlug = catKey;
+                        p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
+                        const processed = processProduct(p);
+                        const existingIdx = allProducts.findIndex(item => item.id.toLowerCase() === String(p.id).toLowerCase());
+                        if (existingIdx !== -1) {
+                            allProducts[existingIdx] = processed;
+                        } else {
+                            allProducts.push(processed);
                         }
                     });
                 });
@@ -638,10 +703,14 @@
             if (window.bestsellersProducts) {
                 Object.keys(window.bestsellersProducts).forEach(catKey => {
                     window.bestsellersProducts[catKey].forEach(p => {
-                        if (!productLookup[p.id]) {
-                            p.categorySlug = catKey;
-                            p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
-                            allProducts.push(processProduct(p));
+                        p.categorySlug = catKey;
+                        p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
+                        const processed = processProduct(p);
+                        const existingIdx = allProducts.findIndex(item => item.id.toLowerCase() === String(p.id).toLowerCase());
+                        if (existingIdx !== -1) {
+                            allProducts[existingIdx] = processed;
+                        } else {
+                            allProducts.push(processed);
                         }
                     });
                 });
@@ -649,10 +718,14 @@
             if (window.occasionsProducts) {
                 Object.keys(window.occasionsProducts).forEach(catKey => {
                     window.occasionsProducts[catKey].forEach(p => {
-                        if (!productLookup[p.id]) {
-                            p.categorySlug = catKey;
-                            p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
-                            allProducts.push(processProduct(p));
+                        p.categorySlug = catKey;
+                        p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
+                        const processed = processProduct(p);
+                        const existingIdx = allProducts.findIndex(item => item.id.toLowerCase() === String(p.id).toLowerCase());
+                        if (existingIdx !== -1) {
+                            allProducts[existingIdx] = processed;
+                        } else {
+                            allProducts.push(processed);
                         }
                     });
                 });
@@ -662,8 +735,22 @@
 
     // Lookup functions
     function getProductByIdOrSlug(idOrSlug) {
+        if (typeof window !== "undefined" && window.productsData) {
+            const searchKey = String(idOrSlug || "b1").trim().toLowerCase();
+            let matchedInProductsData = null;
+            Object.keys(window.productsData).forEach(catKey => {
+                const found = window.productsData[catKey].find(p => String(p.id).toLowerCase() === searchKey || (p.slug && p.slug.toLowerCase() === searchKey));
+                if (found) {
+                    found.categorySlug = catKey;
+                    found.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
+                    matchedInProductsData = processProduct(found);
+                }
+            });
+            if (matchedInProductsData) return matchedInProductsData;
+        }
+
         importExternalProducts();
-        if (!idOrSlug) return productLookup["b4"];
+        if (!idOrSlug) return productLookup["b1"] || productLookup["b4"];
 
         const key = String(idOrSlug).trim().toLowerCase();
         if (productLookup[key]) return productLookup[key];
@@ -672,8 +759,8 @@
         const match = allProducts.find(p => p.id.toLowerCase() === key || p.slug.toLowerCase() === key || p.numericId === key);
         if (match) return match;
 
-        // Fallback default product (Happy Birthday Foil Balloon)
-        return productLookup["b4"];
+        // Fallback default product
+        return productLookup["b1"] || productLookup["b4"];
     }
 
     function getRelatedProducts(categorySlug, currentId, limit = 4) {
