@@ -162,17 +162,18 @@ nav {
  a{
   text-decoration: none;
 }
-.loginbtn i:hover  {
-    color: red;
-    transition: 0.3s;
-}
-
-.login p{
+.login p {
   cursor: pointer;
-  transition: 0.3s;
+  transition: color 0.3s ease;
 }
 
-.login p:hover{
+.login i {
+  transition: color 0.3s ease;
+}
+
+.login:hover i,
+.login:hover p,
+.login:hover a {
   color: red;
 }
 
