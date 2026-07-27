@@ -190,8 +190,8 @@ const categoriesData = {
 // Full Products Dataset
 const productsData = {
     "balloons": [
-        { id: "b1", name: "Red & Black Latex Balloons (Pack of 50)", rating: 5, reviews: 124, price: 199, image: "redinflated.png", popularRank: 1 },
-        { id: "b2", name: "Pastel Mix Latex Balloons (Pack of 50)", rating: 4.5, reviews: 98, price: 199, image: "darkblueinflated.png", popularRank: 5 },
+        { id: "b1", name: "Red Metallic Balloons (50 Pcs × 10 Packs)", rating: 5, reviews: 124, price: 199, image: "redinflated.png", popularRank: 1 },
+        { id: "b2", name: "Dark-Blue Metallic Balloons (50 Pcs × 10 Packs)", rating: 4.5, reviews: 98, price: 199, image: "darkblueinflated.png", popularRank: 5 },
         { id: "b3", name: "Golden Chrome Balloons (Pack of 50)", rating: 5, reviews: 87, price: 249, image: "skyblueinflated.png", popularRank: 2 },
         { id: "b4", name: "Happy Birthday Foil Balloon (18 inch)", rating: 4.5, reviews: 156, price: 149, image: "goldeninflated.png", popularRank: 3 },
         { id: "b5", name: "Number Foil Balloon (1) (32 inch)", rating: 4.5, reviews: 64, price: 149, image: "whiteinflated.png", popularRank: 8 },
