@@ -227,13 +227,14 @@ const productsData = {
         { id: "b33", name: "Red Metallic Balloons (25 Pcs × 10 Packs)", rating: 5, reviews: 153, price: 199, image: "redinflated.png", popularRank: 33 },
         { id: "b34", name: "Black Metallic Balloons (25 Pcs × 10 Packs)", rating: 4.5, reviews: 89, price: 229, image: "blackinflated.png", popularRank: 34 },
         { id: "b35", name: "Purple Metallic Balloons (25 Pcs × 10 Packs)", rating: 5, reviews: 104, price: 219, image: "purpleinflated.png", popularRank: 35 },
-        { id: "b36", name: "Golden Chrome Premium Balloons (Pack of 50)", rating: 5, reviews: 160, price: 269, image: "nltc_prod_balloon_goldchrome.png", popularRank: 36 },
-        { id: "b37", name: "Rose Gold Chrome Balloons (Pack of 50)", rating: 5, reviews: 137, price: 269, image: "nltc_prod_balloon_rosegoldchrome.png", popularRank: 37 },
-        { id: "b38", name: "Confetti Filled Party Balloons (Pack of 10)", rating: 4.5, reviews: 88, price: 179, image: "nltc_prod_balloon_confetti.png", popularRank: 38 },
-        { id: "b39", name: "Dark Blue Metallic Value Pack (Pack of 50)", rating: 4.5, reviews: 76, price: 199, image: "darkbluepack50.png", popularRank: 39 },
-        { id: "b40", name: "Vibrant Green Metallic Balloons (Pack of 50)", rating: 4.5, reviews: 63, price: 209, image: "greenpack50.png", popularRank: 40 },
-        { id: "b41", name: "Pastel Pink Theme Balloons (Pack of 50)", rating: 5, reviews: 121, price: 199, image: "pinkpack50.png", popularRank: 41 },
-        { id: "b42", name: "Ultimate Festive Mix Inflated Balloons (Pack of 50)", rating: 5, reviews: 182, price: 289, image: "mixinflated.png", popularRank: 42 }
+
+        { id: "b36", name: "Silver Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 5, reviews: 160, price: 269, image: "annsilverinflated.png", popularRank: 36 },
+        { id: "b37", name: "Black Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 5, reviews: 137, price: 269, image: "annblackinflated.png", popularRank: 37 },
+        { id: "b38", name: "Red Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 4.5, reviews: 88, price: 179, image: "annredinflated.png", popularRank: 38 },
+        { id: "b39", name: "Pink Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 4.5, reviews: 76, price: 199, image: "annpinkinflated.png", popularRank: 39 },
+        { id: "b40", name: "Golden Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 4.5, reviews: 63, price: 209, image: "anngoldeninflated.png", popularRank: 40 },
+        { id: "b41", name: "Golden-Black Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 5, reviews: 121, price: 199, image: "anngoldenblackinflated.png", popularRank: 41 },
+        { id: "b42", name: "Mix Happy Anniversary Foil Balloon (10 Pack Bundle | 16 Letters per Pack)", rating: 5, reviews: 182, price: 289, image: "annmixinflated.png", popularRank: 42 }
     ],
     "candles": [
         { id: "c1", name: "Sparkling Anaar Candle (Pack of 4)", rating: 5, reviews: 112, price: 180, image: "nltc_prod_balloon_goldchrome.png", popularRank: 1 },
