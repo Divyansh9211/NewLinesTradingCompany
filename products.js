@@ -246,7 +246,8 @@ const productsData = {
         { id: "b50", name: "Golden Number 7 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 172, price: 249, image: "golden7inflated.png", popularRank: 50 },
         { id: "b51", name: "Golden Number 8 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 189, price: 249, image: "golden8inflated.png", popularRank: 51 },
         { id: "b52", name: "Golden Number 9 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 156, price: 199, image: "golden9inflated.png", popularRank: 52 },
-
+        
+                           //silver foil balloon
         { id: "b53", name: "Rose Gold Chrome Latex Balloons (Pack of 50)", rating: 5, reviews: 141, price: 269, image: "", popularRank: 53 },
         { id: "b54", name: "Confetti Sparkle Latex Balloons (Pack of 10)", rating: 4.5, reviews: 95, price: 179, image: "nltc_prod_balloon_confetti.png", popularRank: 54 },
         { id: "b55", name: "Golden Star Foil Balloons (18 inch, Pack of 5)", rating: 4.5, reviews: 112, price: 199, image: "nltc_prod_balloon_starfoil.png", popularRank: 55 },
