@@ -190,11 +190,11 @@ const categoriesData = {
 // Full Products Dataset
 const productsData = {
     "balloons": [
-        { id: "b1", name: "Red & Black Latex Balloons (Pack of 50)", rating: 5, reviews: 124, price: 199, image: "nltc_prod_balloon_redblack.png", popularRank: 1 },
-        { id: "b2", name: "Pastel Mix Latex Balloons (Pack of 50)", rating: 4.5, reviews: 98, price: 199, image: "nltc_prod_balloon_pastel.png", popularRank: 5 },
-        { id: "b3", name: "Golden Chrome Balloons (Pack of 50)", rating: 5, reviews: 87, price: 249, image: "nltc_prod_balloon_goldchrome.png", popularRank: 2 },
-        { id: "b4", name: "Happy Birthday Foil Balloon (18 inch)", rating: 4.5, reviews: 156, price: 149, image: "nltc_prod_balloon_hbfoil.png", popularRank: 3 },
-        { id: "b5", name: "Number Foil Balloon (1) (32 inch)", rating: 4.5, reviews: 64, price: 149, image: "nltc_prod_balloon_num1foil.png", popularRank: 8 },
+        { id: "b1", name: "Red & Black Latex Balloons (Pack of 50)", rating: 5, reviews: 124, price: 199, image: "redinflated.png", popularRank: 1 },
+        { id: "b2", name: "Pastel Mix Latex Balloons (Pack of 50)", rating: 4.5, reviews: 98, price: 199, image: "darkblueinflated.png", popularRank: 5 },
+        { id: "b3", name: "Golden Chrome Balloons (Pack of 50)", rating: 5, reviews: 87, price: 249, image: "skyblueinflated.png", popularRank: 2 },
+        { id: "b4", name: "Happy Birthday Foil Balloon (18 inch)", rating: 4.5, reviews: 156, price: 149, image: "goldeninflated.png", popularRank: 3 },
+        { id: "b5", name: "Number Foil Balloon (1) (32 inch)", rating: 4.5, reviews: 64, price: 149, image: "whiteinflated.png", popularRank: 8 },
         { id: "b6", name: "Heart Foil Balloon (18 inch)", rating: 5, reviews: 112, price: 149, image: "nltc_prod_balloon_heartfoil.png", popularRank: 4 },
         { id: "b7", name: "Confetti Balloons (Pack of 10)", rating: 4, reviews: 73, price: 149, image: "nltc_prod_balloon_confetti.png", popularRank: 9 },
         { id: "b8", name: "Rose Gold Chrome Balloons (Pack of 50)", rating: 4.5, reviews: 91, price: 249, image: "nltc_prod_balloon_rosegoldchrome.png", popularRank: 6 },
