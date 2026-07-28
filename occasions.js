@@ -220,11 +220,11 @@ const occasionsProducts = {
         { id: "ob43", name: "Vibrant Orange Party Balloons (Pack of 50)", rating: 4.5, reviews: 87, price: 219, image: "hbdblackinflated.png", popularRank: 43 },
 
         //snowspray
-        { id: "ob44", name: "Golden Metallic Chrome Balloons (Pack of 50)", rating: 4.9, reviews: 195, price: 279, image: "goldenpack50.png", popularRank: 44 },
+        { id: "ob44", name: "Golden Metallic Chrome Balloons (Pack of 50)", rating: 4.9, reviews: 195, price: 279, image: "snowspray.png", popularRank: 44 },
         //crazyribbon
 
-        { id: "ob45", name: "Classic White Latex Balloons (Pack of 50)", rating: 4.6, reviews: 108, price: 199, image: "whitepack50.png", popularRank: 45 },
-        
+        { id: "ob45", name: "Classic White Latex Balloons (Pack of 50)", rating: 4.6, reviews: 108, price: 199, image: "crazyribbon.png", popularRank: 45 },
+
         { id: "ob46", name: "Golden Straight Birthday Candle Set (Pack of 10)", rating: 4.7, reviews: 132, price: 89, image: "goldenstraightcandle.png", popularRank: 46 },
         { id: "ob47", name: "Blue Metallic Straight Birthday Candles (Pack of 10)", rating: 4.6, reviews: 94, price: 89, image: "bluestraightcandle.png", popularRank: 47 },
         { id: "ob48", name: "Pink Pastel Straight Birthday Candles (Pack of 10)", rating: 4.8, reviews: 140, price: 89, image: "pinkstraightcandle.png", popularRank: 48 },
@@ -233,11 +233,11 @@ const occasionsProducts = {
         { id: "ob51", name: "Multicolor Rainbow Birthday Candle Pack (12 Pcs)", rating: 4.8, reviews: 155, price: 99, image: "mixstraightcandle.png", popularRank: 51 },
         { id: "ob52", name: "Happy Birthday Blue Foil Alphabet Banner", rating: 4.6, reviews: 102, price: 189, image: "hbdblueinflated.png", popularRank: 52 },
         { id: "ob53", name: "Happy Birthday Black & Gold Theme Banner", rating: 4.8, reviews: 178, price: 199, image: "hbdgoldenblackinflated.png", popularRank: 53 },
-        { id: "ob54", name: "Happy Birthday Red Theme Foil Banner", rating: 4.5, reviews: 89, price: 189, image: "hbdredinflated.png", popularRank: 54 },
-        { id: "ob55", name: "Happy Birthday Red & Black Combo Foil Banner", rating: 4.7, reviews: 114, price: 199, image: "hbdredblackinflated.png", popularRank: 55 },
-        { id: "ob56", name: "Happy Birthday Rose Gold Foil Banner Deluxe", rating: 4.9, reviews: 210, price: 219, image: "hbdrosegoldinflated.png", popularRank: 56 },
+        { id: "ob54", name: "Happy Birthday Red Theme Foil Banner", rating: 4.5, reviews: 89, price: 189, image: "partypopper.png", popularRank: 54 },
+        { id: "ob55", name: "Happy Birthday Red & Black Combo Foil Banner", rating: 4.7, reviews: 114, price: 199, image: "lightknife.png", popularRank: 55 },
+        { id: "ob56", name: "Happy Birthday Rose Gold Foil Banner Deluxe", rating: 4.9, reviews: 210, price: 219, image: "pyrogun.png", popularRank: 56 },
         { id: "ob57", name: "Happy Birthday Pink Foil Banner Deluxe", rating: 4.8, reviews: 165, price: 199, image: "hbdpinkinflated.png", popularRank: 57 },
-        { id: "ob58", name: "Happy Birthday Black Matte Foil Banner", rating: 4.6, reviews: 95, price: 189, image: "hbdblackinflated.png", popularRank: 58 },
+        { id: "ob58", name: "Happy Birthday Black Matte Foil Banner", rating: 4.6, reviews: 95, price: 189, image: "pyrogunled.png", popularRank: 58 },
         { id: "ob59", name: "Happy Birthday Rainbow Multicolor Banner", rating: 4.7, reviews: 130, price: 199, image: "hbdmixinflated.png", popularRank: 59 },
         { id: "ob60", name: "Birthday Queen Sash (Glitter Black & Gold)", rating: 4.9, reviews: 182, price: 149, image: "redinflated.png", popularRank: 60 },
         { id: "ob61", name: "Birthday Boy Satin Sash (Royal Blue)", rating: 4.8, reviews: 144, price: 139, image: "goldeninflated.png", popularRank: 61 },
