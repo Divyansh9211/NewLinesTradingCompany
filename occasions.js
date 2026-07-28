@@ -1000,7 +1000,7 @@ const occasionsProducts = {
             "rating": 4.7,
             "reviews": 114,
             "price": 169,
-            "image": "banner14.png",
+            "image": "partypopper.png",
             "popularRank": 92
         },
         {
@@ -1018,7 +1018,7 @@ const occasionsProducts = {
             "rating": 4.9,
             "reviews": 220,
             "price": 599,
-            "image": "bestsellers2.png",
+            "image": "partypopper.png",
             "popularRank": 94
         },
         {
