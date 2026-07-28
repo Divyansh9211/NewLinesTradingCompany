@@ -1092,6 +1092,276 @@ const occasionsProducts = {
             "price": 799,
             "image": "hbd1starblue.png",
             "popularRank": 102
+        },
+        {
+            "id": "ob103",
+            "name": "Glitter Birthday Sash 'Birthday Boy' (Blue & Silver)",
+            "rating": 4.8,
+            "reviews": 142,
+            "price": 149,
+            "image": "hbd1starpinkgolden.png",
+            "popularRank": 103
+        },
+        {
+            "id": "ob104",
+            "name": "Glitter Birthday Sash 'Birthday Girl' (Pink & Gold)",
+            "rating": 4.9,
+            "reviews": 165,
+            "price": 149,
+            "image": "hbd1starfrozen.png",
+            "popularRank": 104
+        },
+        {
+            "id": "ob105",
+            "name": "Royal King Golden Birthday Crown Headband",
+            "rating": 4.7,
+            "reviews": 110,
+            "price": 199,
+            "image": "hbd1starmix.png",
+            "popularRank": 105
+        },
+        {
+            "id": "ob106",
+            "name": "Sparkling Diamond Princess Birthday Tiara",
+            "rating": 4.9,
+            "reviews": 188,
+            "price": 249,
+            "image": "cardtiara.png",
+            "popularRank": 106
+        },
+        {
+            "id": "ob107",
+            "name": "Birthday Balloon Garland Arch Strip & Glue Dots Set",
+            "rating": 4.6,
+            "reviews": 95,
+            "price": 129,
+            "image": "cardballoons.png",
+            "popularRank": 107
+        },
+        {
+            "id": "ob108",
+            "name": "Multicolor Polka Dot Party Paper Caps (Pack of 10)",
+            "rating": 4.5,
+            "reviews": 78,
+            "price": 119,
+            "image": "cardcaps.png",
+            "popularRank": 108
+        },
+        {
+            "id": "ob109",
+            "name": "Golden Shimmer Foil Fringe Backdrop Curtain (6x3ft)",
+            "rating": 4.8,
+            "reviews": 156,
+            "price": 189,
+            "image": "banner1.png",
+            "popularRank": 109
+        },
+        {
+            "id": "ob110",
+            "name": "Rose Gold Shimmer Fringe Curtain Backdrop (6x3ft)",
+            "rating": 4.9,
+            "reviews": 174,
+            "price": 189,
+            "image": "banner6.png",
+            "popularRank": 110
+        },
+        {
+            "id": "ob111",
+            "name": "Silver Metallic Foil Fringe Backdrop Curtain (6x3ft)",
+            "rating": 4.7,
+            "reviews": 122,
+            "price": 179,
+            "image": "banner7.png",
+            "popularRank": 111
+        },
+        {
+            "id": "ob112",
+            "name": "Laser Metallic Party Poppers (Pack of 4)",
+            "rating": 4.8,
+            "reviews": 140,
+            "price": 299,
+            "image": "cardpoppers.png",
+            "popularRank": 112
+        },
+        {
+            "id": "ob113",
+            "name": "Happy Birthday Neon Sign LED Light Board",
+            "rating": 5,
+            "reviews": 215,
+            "price": 799,
+            "image": "bestsellers7.png",
+            "popularRank": 113
+        },
+        {
+            "id": "ob114",
+            "name": "Pastel Macaron Latex Balloons Mix (Pack of 50)",
+            "rating": 4.8,
+            "reviews": 160,
+            "price": 249,
+            "image": "nltc_prod_balloon_pastel.png",
+            "popularRank": 114
+        },
+        {
+            "id": "ob115",
+            "name": "Chrome Rose Gold Latex Balloons (Pack of 50)",
+            "rating": 4.9,
+            "reviews": 190,
+            "price": 269,
+            "image": "nltc_prod_balloon_rosegoldchrome.png",
+            "popularRank": 115
+        },
+        {
+            "id": "ob116",
+            "name": "Giant Golden Star Foil Balloon (24 Inch)",
+            "rating": 4.7,
+            "reviews": 105,
+            "price": 99,
+            "image": "nltc_prod_balloon_starfoil.png",
+            "popularRank": 116
+        },
+        {
+            "id": "ob117",
+            "name": "Heart Shape Red Foil Balloon Bunch (Pack of 5)",
+            "rating": 4.9,
+            "reviews": 182,
+            "price": 199,
+            "image": "nltc_prod_balloon_heartfoil.png",
+            "popularRank": 117
+        },
+        {
+            "id": "ob118",
+            "name": "Happy Birthday Gold Foil Alphabet Banner Set",
+            "rating": 4.8,
+            "reviews": 168,
+            "price": 199,
+            "image": "hbdgoldeninflated.png",
+            "popularRank": 118
+        },
+        {
+            "id": "ob119",
+            "name": "Happy Birthday Silver Foil Alphabet Banner Set",
+            "rating": 4.6,
+            "reviews": 114,
+            "price": 189,
+            "image": "hbdsilverinflated.png",
+            "popularRank": 119
+        },
+        {
+            "id": "ob120",
+            "name": "Happy Birthday Rose Gold Foil Alphabet Banner Set",
+            "rating": 4.9,
+            "reviews": 195,
+            "price": 219,
+            "image": "hbdrosegoldinflated.png",
+            "popularRank": 120
+        },
+        {
+            "id": "ob121",
+            "name": "Musical Lotus Flower Birthday Cake Candle",
+            "rating": 4.7,
+            "reviews": 135,
+            "price": 199,
+            "image": "mixstraightcandle.png",
+            "popularRank": 121
+        },
+        {
+            "id": "ob122",
+            "name": "Golden Straight Metallic Birthday Candles (Pack of 12)",
+            "rating": 4.8,
+            "reviews": 150,
+            "price": 99,
+            "image": "goldenstraightcandle.png",
+            "popularRank": 122
+        },
+        {
+            "id": "ob123",
+            "name": "Silver Straight Metallic Birthday Candles (Pack of 12)",
+            "rating": 4.6,
+            "reviews": 98,
+            "price": 89,
+            "image": "silverstraightcandle.png",
+            "popularRank": 123
+        },
+        {
+            "id": "ob124",
+            "name": "Pink Pastels Straight Birthday Candles (Pack of 12)",
+            "rating": 4.7,
+            "reviews": 112,
+            "price": 89,
+            "image": "pinkstraightcandle.png",
+            "popularRank": 124
+        },
+        {
+            "id": "ob125",
+            "name": "Blue Metallic Straight Birthday Candles (Pack of 12)",
+            "rating": 4.6,
+            "reviews": 104,
+            "price": 89,
+            "image": "bluestraightcandle.png",
+            "popularRank": 125
+        },
+        {
+            "id": "ob126",
+            "name": "Party Pyro Gun Dual Streamer Shooter",
+            "rating": 4.9,
+            "reviews": 210,
+            "price": 349,
+            "image": "pyrogun.png",
+            "popularRank": 126
+        },
+        {
+            "id": "ob127",
+            "name": "Snow Spray Can Box for Birthday Celebration",
+            "rating": 4.8,
+            "reviews": 175,
+            "price": 199,
+            "image": "snowspray.png",
+            "popularRank": 127
+        },
+        {
+            "id": "ob128",
+            "name": "Silly Crazy Ribbon Spray Box (24 Cans)",
+            "rating": 4.6,
+            "reviews": 130,
+            "price": 249,
+            "image": "crazyribbon.png",
+            "popularRank": 128
+        },
+        {
+            "id": "ob129",
+            "name": "Acrylic Mirror Golden Happy Birthday Cake Topper",
+            "rating": 4.9,
+            "reviews": 188,
+            "price": 149,
+            "image": "cardtoppers.png",
+            "popularRank": 129
+        },
+        {
+            "id": "ob130",
+            "name": "3D Metallic Butterfly Cake & Wall Decor (Pack of 12)",
+            "rating": 4.8,
+            "reviews": 162,
+            "price": 149,
+            "image": "paperdecoration.png",
+            "popularRank": 130
+        },
+        {
+            "id": "ob131",
+            "name": "Bestseller Luxury Birthday Arch & Lighting Setup Kit",
+            "rating": 5,
+            "reviews": 280,
+            "price": 899,
+            "image": "bestsellers10.png",
+            "popularRank": 131
+        },
+        {
+            "id": "ob132",
+            "name": "Grand Masterpiece Celebration Birthday Combo Box",
+            "rating": 5,
+            "reviews": 310,
+            "price": 999,
+            "image": "cardcombos.png",
+            "popularRank": 132
         }
     ],
     "anniversary": [
