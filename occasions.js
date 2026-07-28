@@ -802,7 +802,7 @@ const occasionsProducts = {
             "rating": 4.8,
             "reviews": 162,
             "price": 199,
-            "image": "m.png",
+            "image": "l.png",
             "popularRank": 70
         },
         {
@@ -811,7 +811,7 @@ const occasionsProducts = {
             "rating": 4.7,
             "reviews": 125,
             "price": 189,
-            "image": "yellowinflated.png",
+            "image": "m.png",
             "popularRank": 71
         },
         {
@@ -820,7 +820,7 @@ const occasionsProducts = {
             "rating": 4.9,
             "reviews": 190,
             "price": 219,
-            "image": "mixinflated.png",
+            "image": "n.png",
             "popularRank": 72
         },
         {
@@ -829,7 +829,7 @@ const occasionsProducts = {
             "rating": 4.9,
             "reviews": 205,
             "price": 289,
-            "image": "nltc_prod_balloon_rosegoldchrome.png",
+            "image": "o.png",
             "popularRank": 73
         },
         {
@@ -838,7 +838,7 @@ const occasionsProducts = {
             "rating": 4.8,
             "reviews": 172,
             "price": 249,
-            "image": "nltc_prod_balloon_pastel.png",
+            "image": "p.png",
             "popularRank": 74
         },
         {
@@ -847,7 +847,7 @@ const occasionsProducts = {
             "rating": 4.6,
             "reviews": 110,
             "price": 229,
-            "image": "nltc_prod_balloon_redblack.png",
+            "image": "q.png",
             "popularRank": 75
         },
         {
@@ -856,7 +856,7 @@ const occasionsProducts = {
             "rating": 4.7,
             "reviews": 98,
             "price": 149,
-            "image": "captainamerica.png",
+            "image": "r.png",
             "popularRank": 76
         },
         {
@@ -865,7 +865,7 @@ const occasionsProducts = {
             "rating": 4.5,
             "reviews": 84,
             "price": 159,
-            "image": "paperdecoration.png",
+            "image": "s.png",
             "popularRank": 77
         },
         {
@@ -874,7 +874,7 @@ const occasionsProducts = {
             "rating": 4.8,
             "reviews": 148,
             "price": 129,
-            "image": "cardtoppers.png",
+            "image": "t.png",
             "popularRank": 78
         },
         {
@@ -883,7 +883,7 @@ const occasionsProducts = {
             "rating": 4.7,
             "reviews": 135,
             "price": 199,
-            "image": "nltc_prod_balloon_starfoil.png",
+            "image": "u.png",
             "popularRank": 79
         },
         {
@@ -892,7 +892,7 @@ const occasionsProducts = {
             "rating": 4.6,
             "reviews": 112,
             "price": 119,
-            "image": "cardcandles.png",
+            "image": "v.png",
             "popularRank": 80
         },
         {
@@ -901,7 +901,7 @@ const occasionsProducts = {
             "rating": 4.9,
             "reviews": 188,
             "price": 349,
-            "image": "banner1.png",
+            "image": "w.png",
             "popularRank": 81
         },
         {
@@ -910,7 +910,7 @@ const occasionsProducts = {
             "rating": 4.6,
             "reviews": 94,
             "price": 179,
-            "image": "banner2.png",
+            "image": "x.png",
             "popularRank": 82
         },
         {
@@ -919,7 +919,7 @@ const occasionsProducts = {
             "rating": 4.8,
             "reviews": 160,
             "price": 249,
-            "image": "banner3.png",
+            "image": "y.png",
             "popularRank": 83
         },
         {
@@ -928,7 +928,7 @@ const occasionsProducts = {
             "rating": 4.7,
             "reviews": 142,
             "price": 249,
-            "image": "banner4.png",
+            "image": "z.png",
             "popularRank": 84
         },
         {
@@ -1045,7 +1045,7 @@ const occasionsProducts = {
             "rating": 4.7,
             "reviews": 138,
             "price": 599,
-            "image": "bestsellers5.png",
+            "image": "hbd1stargolden.png",
             "popularRank": 97
         },
         {
@@ -1054,7 +1054,7 @@ const occasionsProducts = {
             "rating": 4.9,
             "reviews": 210,
             "price": 599,
-            "image": "bestsellers6.png",
+            "image": "hbd1starpink.png",
             "popularRank": 98
         },
         {
@@ -1063,7 +1063,7 @@ const occasionsProducts = {
             "rating": 4.9,
             "reviews": 195,
             "price": 699,
-            "image": "bestsellers7.png",
+            "image": "hbd1starred.png",
             "popularRank": 99
         },
         {
@@ -1072,7 +1072,7 @@ const occasionsProducts = {
             "rating": 4.7,
             "reviews": 499,
             "price": 499,
-            "image": "bestsellers8.png",
+            "image": "hbd1starcyan.png",
             "popularRank": 100
         },
         {
@@ -1081,7 +1081,7 @@ const occasionsProducts = {
             "rating": 4.8,
             "reviews": 160,
             "price": 549,
-            "image": "bestsellers9.png",
+            "image": "hbd1starrosegold.png",
             "popularRank": 101
         },
         {
@@ -1090,7 +1090,7 @@ const occasionsProducts = {
             "rating": 5,
             "reviews": 260,
             "price": 799,
-            "image": "bestsellers10.png",
+            "image": "hbd1starblue.png",
             "popularRank": 102
         }
     ],
