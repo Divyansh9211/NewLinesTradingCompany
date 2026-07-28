@@ -937,7 +937,7 @@ const occasionsProducts = {
             "rating": 4.5,
             "reviews": 78,
             "price": 169,
-            "image": "banner5.png",
+            "image": "hbd2starred.png",
             "popularRank": 85
         },
         {
@@ -946,7 +946,7 @@ const occasionsProducts = {
             "rating": 4.9,
             "reviews": 202,
             "price": 189,
-            "image": "banner6.png",
+            "image": "hbd2stargolden.png",
             "popularRank": 86
         },
         {
@@ -955,7 +955,7 @@ const occasionsProducts = {
             "rating": 4.6,
             "reviews": 86,
             "price": 169,
-            "image": "banner7.png",
+            "image": "hbd2starsilver.png",
             "popularRank": 87
         },
         {
@@ -964,7 +964,7 @@ const occasionsProducts = {
             "rating": 4.7,
             "reviews": 104,
             "price": 169,
-            "image": "banner8.png",
+            "image": "hbd2starfrozen.png",
             "popularRank": 88
         },
         {
@@ -973,7 +973,7 @@ const occasionsProducts = {
             "rating": 4.8,
             "reviews": 156,
             "price": 199,
-            "image": "banner9.png",
+            "image": "hbd2starrosegold.png",
             "popularRank": 89
         },
         {
@@ -982,7 +982,7 @@ const occasionsProducts = {
             "rating": 4.9,
             "reviews": 198,
             "price": 179,
-            "image": "banner11.png",
+            "image": "hbd2starblue.png",
             "popularRank": 90
         },
         {
@@ -991,7 +991,7 @@ const occasionsProducts = {
             "rating": 4.6,
             "reviews": 90,
             "price": 169,
-            "image": "banner12.png",
+            "image": "hbd2starmix.png",
             "popularRank": 91
         },
         {
