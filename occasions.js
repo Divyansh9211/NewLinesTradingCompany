@@ -218,8 +218,13 @@ const occasionsProducts = {
         { id: "ob41", name: "Dark Blue Latex Party Balloons (Pack of 50)", rating: 4.6, reviews: 98, price: 219, image: "hbdrosegoldinflated.png", popularRank: 41 },
         { id: "ob42", name: "Emerald Green Metallic Balloons (Pack of 50)", rating: 4.7, reviews: 115, price: 229, image: "hbdredblackinflated.png", popularRank: 42 },
         { id: "ob43", name: "Vibrant Orange Party Balloons (Pack of 50)", rating: 4.5, reviews: 87, price: 219, image: "hbdblackinflated.png", popularRank: 43 },
+
+        //snowspray
         { id: "ob44", name: "Golden Metallic Chrome Balloons (Pack of 50)", rating: 4.9, reviews: 195, price: 279, image: "goldenpack50.png", popularRank: 44 },
+        //crazyribbon
+
         { id: "ob45", name: "Classic White Latex Balloons (Pack of 50)", rating: 4.6, reviews: 108, price: 199, image: "whitepack50.png", popularRank: 45 },
+        
         { id: "ob46", name: "Golden Straight Birthday Candle Set (Pack of 10)", rating: 4.7, reviews: 132, price: 89, image: "goldenstraightcandle.png", popularRank: 46 },
         { id: "ob47", name: "Blue Metallic Straight Birthday Candles (Pack of 10)", rating: 4.6, reviews: 94, price: 89, image: "bluestraightcandle.png", popularRank: 47 },
         { id: "ob48", name: "Pink Pastel Straight Birthday Candles (Pack of 10)", rating: 4.8, reviews: 140, price: 89, image: "pinkstraightcandle.png", popularRank: 48 },
