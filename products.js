@@ -248,15 +248,15 @@ const productsData = {
         { id: "b52", name: "Golden Number 9 Foil Balloon (10 Packs | 1 Pc/Pack)", rating: 5, reviews: 156, price: 199, image: "golden9inflated.png", popularRank: 52 },
         
                            //silver foil balloon
-        { id: "b53", name: "Rose Gold Chrome Latex Balloons (Pack of 50)", rating: 5, reviews: 141, price: 269, image: "", popularRank: 53 },
-        { id: "b54", name: "Confetti Sparkle Latex Balloons (Pack of 10)", rating: 4.5, reviews: 95, price: 179, image: "nltc_prod_balloon_confetti.png", popularRank: 54 },
-        { id: "b55", name: "Golden Star Foil Balloons (18 inch, Pack of 5)", rating: 4.5, reviews: 112, price: 199, image: "nltc_prod_balloon_starfoil.png", popularRank: 55 },
-        { id: "b56", name: "Romantic Red Heart Foil Balloon (18 inch)", rating: 5, reviews: 168, price: 149, image: "nltc_prod_balloon_heartfoil.png", popularRank: 56 },
-        { id: "b57", name: "Number 1 Golden Foil Balloon (32 inch)", rating: 5, reviews: 124, price: 149, image: "nltc_prod_balloon_num1foil.png", popularRank: 57 },
-        { id: "b58", name: "Happy Birthday Printed Foil Balloon (18 inch)", rating: 4.5, reviews: 143, price: 149, image: "nltc_prod_balloon_hbfoil.png", popularRank: 58 },
-        { id: "b59", name: "Yellow Emoji Smiley Face Balloons (Pack of 10)", rating: 4.5, reviews: 87, price: 129, image: "nltc_prod_balloon_smiley.png", popularRank: 59 },
-        { id: "b60", name: "Red Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 5, reviews: 198, price: 349, image: "redinflated.png", popularRank: 60 },
-        { id: "b61", name: "Dark Blue Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 105, price: 349, image: "darkblueinflated.png", popularRank: 61 },
+        { id: "b53", name: "Rose Gold Chrome Latex Balloons (Pack of 50)", rating: 5, reviews: 141, price: 269, image: "silver0inflated.png", popularRank: 53 },
+        { id: "b54", name: "Confetti Sparkle Latex Balloons (Pack of 10)", rating: 4.5, reviews: 95, price: 179, image: "silver1inflated.png", popularRank: 54 },
+        { id: "b55", name: "Golden Star Foil Balloons (18 inch, Pack of 5)", rating: 4.5, reviews: 112, price: 199, image: "silver2inflated.png", popularRank: 55 },
+        { id: "b56", name: "Romantic Red Heart Foil Balloon (18 inch)", rating: 5, reviews: 168, price: 149, image: "silver3inflated.png", popularRank: 56 },
+        { id: "b57", name: "Number 1 Golden Foil Balloon (32 inch)", rating: 5, reviews: 124, price: 149, image: "silver4inflated.png", popularRank: 57 },
+        { id: "b58", name: "Happy Birthday Printed Foil Balloon (18 inch)", rating: 4.5, reviews: 143, price: 149, image: "silver5inflated.png", popularRank: 58 },
+        { id: "b59", name: "Yellow Emoji Smiley Face Balloons (Pack of 10)", rating: 4.5, reviews: 87, price: 129, image: "silver6inflated.png", popularRank: 59 },
+        { id: "b60", name: "Red Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 5, reviews: 198, price: 349, image: "silver7inflated.png", popularRank: 60 },
+        { id: "b61", name: "Dark Blue Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 105, price: 349, image: "silver8inflated.png", popularRank: 61 },
 
         //straight candles
         { id: "b62", name: "Rose Gold Cake Candles – Straight (6 pcs)", rating: 5, reviews: 118, price: 349, image: "rosegoldstraightcandle.png", popularRank: 62 },
