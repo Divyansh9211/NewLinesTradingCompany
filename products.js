@@ -1256,20 +1256,20 @@ const productsData = {
         },
         {
             "id": "c17",
-            "name": "Sparkling Anaar Fountain Candle (Pack of 4)",
+            "name": "15 CM Sparkling Birthday Candles (6 Pieces Per Pack)",
             "rating": 4.9,
             "reviews": 195,
             "price": 180,
-            "image": "cardcandles.png",
+            "image": "15cmanaar.png",
             "popularRank": 17
         },
         {
             "id": "c18",
-            "name": "Together Forever Heart Shape Confetti Popper",
+            "name": "Round Birthday Candles (6 PCS Pack)",
             "rating": 4.4,
             "reviews": 212,
             "price": 169,
-            "image": "cardpoppers.png",
+            "image": "roundcandle.png",
             "popularRank": 18
         },
         {
