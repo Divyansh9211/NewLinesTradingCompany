@@ -1198,3 +1198,55 @@ hr{
 .link-caps {
   color: #000000;
 }
+
+/* Universal Uniform Product Card Image Layout & Aspect Ratio Rules */
+.product-img-container,
+.card-img-container,
+.mini-card-img-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 8px 8px 0 0;
+}
+
+.product-img-container img,
+.card-img-container img,
+.mini-card-img-box img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.product-card:hover .product-img-container img,
+.occasion-card:hover .card-img-container img,
+.category-card:hover .card-img-container img,
+.bestseller-card:hover .card-img-container img,
+.mini-related-card:hover .mini-card-img-box img {
+  transform: scale(1.08) !important;
+}
+
+/* Special Handling for Foil Balloon Letter Set Images (HAPPY BIRTHDAY / HAPPY ANNIVERSARY) */
+.product-img-container img[src*="hbd"],
+.product-img-container img[src*="ann"],
+.card-img-container img[src*="hbd"],
+.card-img-container img[src*="ann"],
+.mini-card-img-box img[src*="hbd"],
+.mini-card-img-box img[src*="ann"],
+.main-image-display-container img[src*="hbd"],
+.main-image-display-container img[src*="ann"],
+img.foil-banner-img,
+.product-img-container.is-foil-set img,
+.card-img-container.is-foil-set img {
+  object-fit: contain !important;
+  padding: 6px !important;
+  background-color: #fafafa !important;
+  object-position: center !important;
+}

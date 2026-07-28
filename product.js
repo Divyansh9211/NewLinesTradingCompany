@@ -118,8 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // 10. Populate Image Gallery & Main Image Display
     const mainImageDisplay = document.getElementById("main-product-image");
     if (mainImageDisplay) {
-        mainImageDisplay.src = product.images[0] || product.image;
+        const initialImg = (product.images && product.images[0]) || product.image;
+        mainImageDisplay.src = initialImg;
         mainImageDisplay.alt = product.name;
+        const isFoil = initialImg && (initialImg.toLowerCase().includes('hbd') || initialImg.toLowerCase().includes('ann'));
+        if (isFoil) mainImageDisplay.classList.add('foil-banner-img');
+        else mainImageDisplay.classList.remove('foil-banner-img');
     }
 
     const thumbnailsContainer = document.getElementById("thumbnails-container");
@@ -134,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 11. Populate Description & Features Tab Panel
     const tabDescText = document.getElementById("tab-desc-text");
     if (tabDescText) {
-        tabDescText.textContent = `Our ${product.name} adds a vibrant and joyful touch to your party decorations. Made from high-quality ${product.material} material, it is durable, long-lasting, and reusable. Suitable for all celebrations and surprise setups.`;
+        tabDescText.textContent = product.description || `Our ${product.name} adds a vibrant and joyful touch to your party decorations. Made from high-quality ${product.material} material, it is durable, long-lasting, and reusable. Suitable for all celebrations and surprise setups.`;
     }
 
     const checklistContainer = document.getElementById("checklist-container");
@@ -179,18 +183,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const relatedGrid = document.getElementById("related-products-grid");
     if (relatedGrid) {
         const relatedProds = window.NLTCProductDB.getRelatedProducts(product.categorySlug, product.id, 4);
-        relatedGrid.innerHTML = relatedProds.map(rel => `
-            <div class="mini-related-card" onclick="location.href='product.html?id=${rel.id}'">
-                <div class="mini-card-img-box">
-                    <img src="${rel.image}" alt="${rel.name}">
+        relatedGrid.innerHTML = relatedProds.map(rel => {
+            const isFoilRel = rel.image && (rel.image.toLowerCase().includes('hbd') || rel.image.toLowerCase().includes('ann'));
+            return `
+                <div class="mini-related-card" onclick="location.href='product.html?id=${rel.id}'">
+                    <div class="mini-card-img-box ${isFoilRel ? 'is-foil-set' : ''}">
+                        <img src="${rel.image}" alt="${rel.name}" class="${isFoilRel ? 'foil-banner-img' : ''}">
+                    </div>
+                    <div class="mini-card-title">${rel.name}</div>
+                    <div class="mini-card-footer">
+                        <span class="mini-card-price">₹${rel.price}</span>
+                        <i class="fa-regular fa-heart mini-wishlist-icon" onclick="event.stopPropagation(); alert('${rel.name} added to Wishlist!')"></i>
+                    </div>
                 </div>
-                <div class="mini-card-title">${rel.name}</div>
-                <div class="mini-card-footer">
-                    <span class="mini-card-price">₹${rel.price}</span>
-                    <i class="fa-regular fa-heart mini-wishlist-icon" onclick="event.stopPropagation(); alert('${rel.name} added to Wishlist!')"></i>
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
     const viewAllRelatedLink = document.getElementById("view-all-related-link");
@@ -208,6 +215,9 @@ document.addEventListener("DOMContentLoaded", () => {
             mainImageDisplay.style.opacity = "0.4";
             setTimeout(() => {
                 mainImageDisplay.src = imgUrl;
+                const isFoil = imgUrl && (imgUrl.toLowerCase().includes('hbd') || imgUrl.toLowerCase().includes('ann'));
+                if (isFoil) mainImageDisplay.classList.add('foil-banner-img');
+                else mainImageDisplay.classList.remove('foil-banner-img');
                 mainImageDisplay.style.opacity = "1";
             }, 150);
         }

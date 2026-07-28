@@ -685,12 +685,21 @@
     // Also import dynamic products if productsData, bestsellersProducts, or occasionsProducts exist globally
     function importExternalProducts() {
         if (typeof window !== "undefined") {
-            if (window.productsData) {
-                Object.keys(window.productsData).forEach(catKey => {
-                    window.productsData[catKey].forEach(p => {
+            const sources = [window.productsData, window.bestsellersProducts, window.occasionsProducts];
+            sources.forEach(src => {
+                if (!src) return;
+                Object.keys(src).forEach(catKey => {
+                    src[catKey].forEach(p => {
                         p.categorySlug = catKey;
                         p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
                         const processed = processProduct(p);
+                        
+                        // Register in lookup dictionary
+                        productLookup[processed.id] = processed;
+                        productLookup[processed.id.toLowerCase()] = processed;
+                        if (processed.numericId) productLookup[processed.numericId] = processed;
+                        if (processed.slug) productLookup[processed.slug.toLowerCase()] = processed;
+
                         const existingIdx = allProducts.findIndex(item => item.id.toLowerCase() === String(p.id).toLowerCase());
                         if (existingIdx !== -1) {
                             allProducts[existingIdx] = processed;
@@ -699,68 +708,28 @@
                         }
                     });
                 });
-            }
-            if (window.bestsellersProducts) {
-                Object.keys(window.bestsellersProducts).forEach(catKey => {
-                    window.bestsellersProducts[catKey].forEach(p => {
-                        p.categorySlug = catKey;
-                        p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
-                        const processed = processProduct(p);
-                        const existingIdx = allProducts.findIndex(item => item.id.toLowerCase() === String(p.id).toLowerCase());
-                        if (existingIdx !== -1) {
-                            allProducts[existingIdx] = processed;
-                        } else {
-                            allProducts.push(processed);
-                        }
-                    });
-                });
-            }
-            if (window.occasionsProducts) {
-                Object.keys(window.occasionsProducts).forEach(catKey => {
-                    window.occasionsProducts[catKey].forEach(p => {
-                        p.categorySlug = catKey;
-                        p.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
-                        const processed = processProduct(p);
-                        const existingIdx = allProducts.findIndex(item => item.id.toLowerCase() === String(p.id).toLowerCase());
-                        if (existingIdx !== -1) {
-                            allProducts[existingIdx] = processed;
-                        } else {
-                            allProducts.push(processed);
-                        }
-                    });
-                });
-            }
+            });
         }
     }
 
     // Lookup functions
     function getProductByIdOrSlug(idOrSlug) {
-        if (typeof window !== "undefined" && window.productsData) {
-            const searchKey = String(idOrSlug || "b1").trim().toLowerCase();
-            let matchedInProductsData = null;
-            Object.keys(window.productsData).forEach(catKey => {
-                const found = window.productsData[catKey].find(p => String(p.id).toLowerCase() === searchKey || (p.slug && p.slug.toLowerCase() === searchKey));
-                if (found) {
-                    found.categorySlug = catKey;
-                    found.category = catKey.charAt(0).toUpperCase() + catKey.slice(1).replace('-', ' ');
-                    matchedInProductsData = processProduct(found);
-                }
-            });
-            if (matchedInProductsData) return matchedInProductsData;
-        }
-
         importExternalProducts();
-        if (!idOrSlug) return productLookup["b1"] || productLookup["b4"];
+        if (!idOrSlug) return productLookup["b1"] || allProducts[0];
 
         const key = String(idOrSlug).trim().toLowerCase();
         if (productLookup[key]) return productLookup[key];
 
-        // Search by partial match or ID
-        const match = allProducts.find(p => p.id.toLowerCase() === key || p.slug.toLowerCase() === key || p.numericId === key);
+        // Search by ID, slug, or numericId match
+        const match = allProducts.find(p => 
+            String(p.id).toLowerCase() === key || 
+            (p.slug && p.slug.toLowerCase() === key) || 
+            String(p.numericId) === key
+        );
         if (match) return match;
 
         // Fallback default product
-        return productLookup["b1"] || productLookup["b4"];
+        return productLookup["b1"] || productLookup["b4"] || allProducts[0];
     }
 
     function getRelatedProducts(categorySlug, currentId, limit = 4) {

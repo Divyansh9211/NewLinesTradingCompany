@@ -7451,13 +7451,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            const isFoilLetterSet = prod.image && (prod.image.toLowerCase().includes('hbd') || prod.image.toLowerCase().includes('ann'));
+            const imgClass = isFoilLetterSet ? 'foil-banner-img' : '';
+
             return `
                 <div class="product-card" id="card-${prod.id}" onclick="goToProduct('${prod.id}', event)" style="cursor: pointer;">
                     <div class="wishlist-icon-wrapper" onclick="toggleWishlist('${prod.id}', event)">
                         <i class="fa-regular fa-heart wishlist-icon"></i>
                     </div>
-                    <div class="product-img-container">
-                        <img src="${prod.image}" alt="${prod.name}">
+                    <div class="product-img-container ${isFoilLetterSet ? 'is-foil-set' : ''}">
+                        <img src="${prod.image}" alt="${prod.name}" class="${imgClass}">
                     </div>
                     <div class="product-card-info">
                         <h3 class="product-name"><a href="product.html?id=${prod.id}" onclick="goToProduct('${prod.id}', event)">${prod.name}</a></h3>
@@ -7625,4 +7628,9 @@ function showToast(msg) {
         toast.style.opacity = "0";
         toast.style.transform = "translateY(10px)";
     }, 2500);
+}
+
+if (typeof window !== "undefined") {
+    window.occasionsData = occasionsData;
+    window.occasionsProducts = occasionsProducts;
 }
