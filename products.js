@@ -258,12 +258,12 @@ const productsData = {
         { id: "b60", name: "Red Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 5, reviews: 198, price: 349, image: "silver7inflated.png", popularRank: 60 },
         { id: "b61", name: "Dark Blue Inflated Latex Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 105, price: 349, image: "silver8inflated.png", popularRank: 61 },
         { id: "b62", name: "Rose Gold Cake Candles – Straight (6 pcs)", rating: 5, reviews: 118, price: 349, image: "silver9inflated.png", popularRank: 62 },
-        
+
         { id: "b63", name: "Golden Cake Candles – Straight (6 pcs)", rating: 5, reviews: 176, price: 399, image: "goldenstraightcandle.png", popularRank: 63 },
         { id: "b64", name: "Blue Cake Candles – Straight (6 pcs))", rating: 5, reviews: 132, price: 339, image: "bluestraightcandle.png", popularRank: 64 },
         { id: "b65", name: "Pink Cake Candles – Straight (6 pcs)", rating: 5, reviews: 154, price: 349, image: "pinkstraightcandle.png", popularRank: 65 },
         { id: "b66", name: "Silver Cake Candles – Straight (6 pcs)", rating: 4.5, reviews: 79, price: 329, image: "silverstraightcandle.png", popularRank: 66 },
-        { id: "b67", name: "Rose Gold Cake Candles – Straight (6 pcs)", rating: 4.5, reviews: 92, price: 379, image: "rosegoldstriaghtcandle.png", popularRank: 67 },
+        { id: "b67", name: "Rose Gold Cake Candles – Straight (6 pcs)", rating: 4.5, reviews: 92, price: 379, image: "rosegoldstraightcandle.png", popularRank: 67 },
 
         { id: "b68", name: "Grey Metallic Inflated Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 81, price: 359, image: "greyinflated.png", popularRank: 68 },
         { id: "b69", name: "Green Metallic Inflated Party Balloons (100 Pcs Bulk)", rating: 4.5, reviews: 88, price: 349, image: "greeninflated.png", popularRank: 69 },
