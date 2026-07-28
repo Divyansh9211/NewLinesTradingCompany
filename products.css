@@ -282,7 +282,7 @@
 .product-name {
     font-size: 0.88rem;
     font-weight: 700;
-    color: #222222;
+    color: #000000;
     margin: 0 0 6px 0;
     line-height: 1.4;
     height: 38px;
@@ -292,10 +292,19 @@
     overflow: hidden;
 }
 
-.product-name a {
-    color: inherit;
+.product-name a,
+.product-name a:link,
+.product-name a:visited {
+    color: #000000;
     text-decoration: none;
     transition: color 0.2s ease;
+}
+
+.product-name a:hover,
+.product-name a:active,
+.product-name a:focus {
+    color: #222222;
+    text-decoration: underline;
 }
 
 .product-name a:hover {

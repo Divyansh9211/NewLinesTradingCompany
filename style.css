@@ -1178,3 +1178,23 @@ hr{
     width: 100%;
   }
 }
+
+/* Card Product Title & Text Link Colors (Convert Blue Text to Black) */
+.product-name,
+.product-name a,
+.product-name a:link,
+.product-name a:visited {
+  color: #000000 !important;
+  text-decoration: none;
+}
+
+.product-name a:hover,
+.product-name a:active,
+.product-name a:focus {
+  color: #222222 !important;
+}
+
+.link-welcomebaby,
+.link-caps {
+  color: #000000;
+}

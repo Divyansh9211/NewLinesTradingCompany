@@ -1166,92 +1166,92 @@ const productsData = {
         },
         {
             "id": "c7",
-            "name": "Romantic Red Heart Foil Balloon (18 inch, Pack of 5)",
+            "name": "Golden Number Candles – 0 | 12 PCS / BOX",
             "rating": 4.3,
             "reviews": 25,
             "price": 199,
-            "image": "nltc_prod_balloon_heartfoil.png",
+            "image": "golden0.png",
             "popularRank": 7
         },
         {
             "id": "c8",
-            "name": "Happy Anniversary Golden Script Foil Banner",
+            "name": "Golden Number Candles – 1 | 12 PCS / BOX",
             "rating": 4.6,
             "reviews": 42,
             "price": 189,
-            "image": "anngoldeninflated.png",
+            "image": "golden1.png",
             "popularRank": 8
         },
         {
             "id": "c9",
-            "name": "Rose Gold Chrome Metallic Latex Balloons (Pack of 50)",
+            "name": "Golden Number Candles – 2 | 12 PCS / BOX",
             "rating": 4.9,
             "reviews": 59,
             "price": 249,
-            "image": "nltc_prod_balloon_rosegoldchrome.png",
+            "image": "golden2.png",
             "popularRank": 9
         },
         {
             "id": "c10",
-            "name": "Anniversary LED Heart Fairy Lights (Warm White)",
+            "name": "Golden Number Candles – 3 | 12 PCS / BOX",
             "rating": 4.4,
             "reviews": 76,
             "price": 299,
-            "image": "nltc_prod_balloon_goldchrome.png",
+            "image": "golden3.png",
             "popularRank": 10
         },
         {
             "id": "c11",
-            "name": "Silver Happy Anniversary Foil Letter Balloons",
+            "name": "Golden Number Candles – 4 | 12 PCS / BOX",
             "rating": 4.7,
             "reviews": 93,
             "price": 369,
-            "image": "annsilverinflated.png",
+            "image": "golden4.png",
             "popularRank": 11
         },
         {
             "id": "c12",
-            "name": "Black & Gold Anniversary Backdrop Curtain Set",
+            "name": "Golden Number Candles – 5 | 12 PCS / BOX",
             "rating": 5,
             "reviews": 110,
             "price": 199,
-            "image": "banner5.png",
+            "image": "golden5.png",
             "popularRank": 12
         },
         {
             "id": "c13",
-            "name": "Golden Anniversary Acrylic Cake Topper",
+            "name": "Golden Number Candles – 6 | 12 PCS / BOX",
             "rating": 4.5,
             "reviews": 127,
             "price": 149,
-            "image": "cardtoppers.png",
+            "image": "golden6.png",
             "popularRank": 13
         },
         {
             "id": "c14",
-            "name": "Red & Black Anniversary Latex Balloon Pack (50 Pcs)",
+            "name": "Golden Number Candles – 7 | 12 PCS / BOX",
             "rating": 4.8,
             "reviews": 144,
             "price": 229,
-            "image": "nltc_prod_balloon_redblack.png",
+            "image": "golden7.png",
             "popularRank": 14
         },
         {
             "id": "c15",
-            "name": "Champagne Bottle Big Foil Balloon",
+            "name": "Golden Number Candles – 8 | 12 PCS / BOX",
             "rating": 4.3,
             "reviews": 161,
             "price": 179,
-            "image": "banner11.png",
+            "image": "golden8.png",
             "popularRank": 15
         },
         {
             "id": "c16",
-            "name": "Anniversary King & Queen Satin Sashes Set",
+            "name": "Golden Number Candles – 9 | 12 PCS / BOX",
             "rating": 4.6,
             "reviews": 178,
             "price": 199,
-            "image": "cardsashes.png",
+            "image": "golden9.png",
             "popularRank": 16
         },
         {
