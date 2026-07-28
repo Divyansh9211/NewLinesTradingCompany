@@ -177,7 +177,7 @@ const occasionsProducts = {
     "birthday": [
         {
             "id": "ob1",
-            "name": "Happy Birthday Foil Banner (Rose Gold)",
+            "name": "Golden Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 124,
             "price": 199,
@@ -186,7 +186,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob2",
-            "name": "Black & Gold Latex Balloons (Pack of 50)",
+            "name": "Red Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 98,
             "price": 249,
@@ -195,7 +195,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob3",
-            "name": "Happy Birthday Cake Topper (Golden)",
+            "name": "Black Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 87,
             "price": 149,
@@ -204,7 +204,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob4",
-            "name": "Happy Birthday Foil Balloon (18 inch)",
+            "name": "Grey Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 156,
             "price": 149,
@@ -213,7 +213,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob5",
-            "name": "Number Candle (1) (Golden)",
+            "name": "Pink Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 64,
             "price": 49,
@@ -222,7 +222,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob6",
-            "name": "Birthday Candles (Pack of 24)",
+            "name": "Green Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 112,
             "price": 49,
@@ -231,7 +231,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob7",
-            "name": "Star Foil Balloons (Pack of 5)",
+            "name": "Orange Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 73,
             "price": 199,
@@ -240,7 +240,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob8",
-            "name": "Fringe Curtain (Pink)",
+            "name": "Mix Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 91,
             "price": 199,
@@ -249,7 +249,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob9",
-            "name": "Birthday Cap (Blue)",
+            "name": "Purple Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 68,
             "price": 79,
@@ -258,7 +258,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob10",
-            "name": "Cake Doll (Princess)",
+            "name": "Sky-Blue Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 52,
             "price": 249,
@@ -267,7 +267,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob11",
-            "name": "Confetti Cannon (Pack of 2)",
+            "name": "Dark-Blue Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 38,
             "price": 149,
@@ -276,7 +276,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob12",
-            "name": "Happy Birthday LED Light (Warm White)",
+            "name": "Yellow Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.5,
             "reviews": 47,
             "price": 349,
@@ -285,7 +285,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob13",
-            "name": "Glitter Metallic Birthday Banner (Golden)",
+            "name": "White Metallic Balloons (50 Pcs × 10 Packs)",
             "rating": 4.8,
             "reviews": 142,
             "price": 179,
@@ -294,7 +294,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob14",
-            "name": "Multicolor Latex Birthday Balloons (Pack of 100)",
+            "name": "Golden Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.6,
             "reviews": 185,
             "price": 349,
@@ -303,7 +303,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob15",
-            "name": "Silver Star Foil Balloon Set (Pack of 10)",
+            "name": "Silver Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.7,
             "reviews": 96,
             "price": 299,
@@ -312,7 +312,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob16",
-            "name": "3D Acrylic Happy Birthday Cake Topper",
+            "name": "Blue Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.9,
             "reviews": 118,
             "price": 199,
@@ -321,7 +321,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob17",
-            "name": "Metallic Pink Party Foil Fringe Curtain",
+            "name": "Pink Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.5,
             "reviews": 77,
             "price": 169,
@@ -330,7 +330,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob18",
-            "name": "Crown Foil Balloon (Golden Large)",
+            "name": "Golden-Black Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.8,
             "reviews": 130,
             "price": 219,
@@ -519,7 +519,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob39",
-            "name": "Pastel Pink & White Latex Balloons (Pack of 50)",
+            "name": "Red Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.8,
             "reviews": 145,
             "price": 229,
@@ -528,7 +528,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob40",
-            "name": "Sky Blue Metallic Latex Balloons (Pack of 50)",
+            "name": "Mix Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.7,
             "reviews": 120,
             "price": 229,
@@ -537,7 +537,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob41",
-            "name": "Dark Blue Latex Party Balloons (Pack of 50)",
+            "name": "Rose-Gold Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.6,
             "reviews": 98,
             "price": 219,
@@ -546,7 +546,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob42",
-            "name": "Emerald Green Metallic Balloons (Pack of 50)",
+            "name": "Red-Black Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.7,
             "reviews": 115,
             "price": 229,
@@ -555,7 +555,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob43",
-            "name": "Vibrant Orange Party Balloons (Pack of 50)",
+            "name": "Black Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.5,
             "reviews": 87,
             "price": 219,
@@ -582,7 +582,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob46",
-            "name": "Golden Straight Birthday Candle Set (Pack of 10)",
+            "name": "Golden Cake Candles – Straight (6 pcs)",
             "rating": 4.7,
             "reviews": 132,
             "price": 89,
@@ -591,7 +591,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob47",
-            "name": "Blue Metallic Straight Birthday Candles (Pack of 10)",
+            "name": "Blue Cake Candles – Straight (6 pcs)",
             "rating": 4.6,
             "reviews": 94,
             "price": 89,
@@ -600,7 +600,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob48",
-            "name": "Pink Pastel Straight Birthday Candles (Pack of 10)",
+            "name": "Pink Cake Candles – Straight (6 pcs)",
             "rating": 4.8,
             "reviews": 140,
             "price": 89,
@@ -609,7 +609,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob49",
-            "name": "Rose Gold Metallic Birthday Candles (Pack of 10)",
+            "name": "Rose-Gold Cake Candles – Straight (6 pcs)",
             "rating": 4.9,
             "reviews": 168,
             "price": 99,
@@ -618,7 +618,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob50",
-            "name": "Silver Chrome Straight Birthday Candles (Pack of 10)",
+            "name": "Silver Cake Candles – Straight (6 pcs)",
             "rating": 4.7,
             "reviews": 110,
             "price": 89,
@@ -627,7 +627,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob51",
-            "name": "Multicolor Rainbow Birthday Candle Pack (12 Pcs)",
+            "name": "Mix Cake Candles – Straight (6 pcs)",
             "rating": 4.8,
             "reviews": 155,
             "price": 99,
@@ -636,7 +636,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob52",
-            "name": "Happy Birthday Blue Foil Alphabet Banner",
+            "name": "Blue Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.6,
             "reviews": 102,
             "price": 189,
@@ -645,7 +645,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob53",
-            "name": "Happy Birthday Black & Gold Theme Banner",
+            "name": "Golden-Black Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.8,
             "reviews": 178,
             "price": 199,
@@ -933,7 +933,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob85",
-            "name": "Royal Blue Fringe Curtain Backdrop",
+            "name": "HBD 2 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.5,
             "reviews": 78,
             "price": 169,
@@ -942,7 +942,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob86",
-            "name": "Rose Gold Foil Fringe Curtain Backdrop",
+            "name": "HBD 2 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.9,
             "reviews": 202,
             "price": 189,
@@ -951,7 +951,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob87",
-            "name": "Purple Shimmer Curtain Backdrop",
+            "name": "HBD 2 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.6,
             "reviews": 86,
             "price": 169,
@@ -960,7 +960,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob88",
-            "name": "Magenta Pink Foil Curtain Backdrop",
+            "name": "HBD 2 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.7,
             "reviews": 104,
             "price": 169,
@@ -969,7 +969,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob89",
-            "name": "Rainbow Foil Fringe Curtain Backdrop",
+            "name": "HBD 2 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.8,
             "reviews": 156,
             "price": 199,
@@ -978,7 +978,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob90",
-            "name": "Champagne Bottle Foil Balloon (Big Size)",
+            "name": "HBD 2 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.9,
             "reviews": 198,
             "price": 179,
@@ -987,7 +987,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob91",
-            "name": "Whisky Bottle Theme Foil Balloon",
+            "name": "HBD 2 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.6,
             "reviews": 90,
             "price": 169,
@@ -996,7 +996,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob92",
-            "name": "Giant Beer Mug Foil Balloon",
+            "name": "Golden Party Popper – 40 cm (100 Pieces per Box)",
             "rating": 4.7,
             "reviews": 114,
             "price": 169,
@@ -1005,16 +1005,16 @@ const occasionsProducts = {
         },
         {
             "id": "ob93",
-            "name": "Bestseller Birthday Decoration Kit (Gold & Black)",
+            "name": "Decorative Paper Palm Leaves (2 PCS Per Pack)",
             "rating": 5,
             "reviews": 245,
             "price": 599,
-            "image": "bestsellers1.png",
+            "image": "palmleaf.png",
             "popularRank": 93
         },
         {
             "id": "ob94",
-            "name": "Bestseller Birthday Decoration Kit (Rose Gold)",
+            "name": "Golden Party Popper – 50 cm (100 Pieces per Box)",
             "rating": 4.9,
             "reviews": 220,
             "price": 599,
@@ -1023,25 +1023,25 @@ const occasionsProducts = {
         },
         {
             "id": "ob95",
-            "name": "Bestseller Birthday Balloon Garland Kit",
+            "name": "Round Birthday Candles (6 PCS Pack)",
             "rating": 4.8,
             "reviews": 185,
             "price": 499,
-            "image": "bestsellers3.png",
+            "image": "roundcandle.png",
             "popularRank": 95
         },
         {
             "id": "ob96",
-            "name": "Bestseller Pastel Theme Birthday Kit",
+            "name": "15 CM Sparkling Birthday Candles (6 Pieces Per Pack)",
             "rating": 4.8,
             "reviews": 170,
             "price": 549,
-            "image": "bestsellers4.png",
+            "image": "15cmanaar.png",
             "popularRank": 96
         },
         {
             "id": "ob97",
-            "name": "Bestseller Kids Superhero Birthday Kit",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.7,
             "reviews": 138,
             "price": 599,
@@ -1050,7 +1050,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob98",
-            "name": "Bestseller Princess Theme Birthday Kit",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.9,
             "reviews": 210,
             "price": 599,
@@ -1059,7 +1059,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob99",
-            "name": "Bestseller Birthday LED Backdrop Combo",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.9,
             "reviews": 195,
             "price": 699,
@@ -1068,7 +1068,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob100",
-            "name": "Bestseller Neon Theme Birthday Balloon Kit",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.7,
             "reviews": 499,
             "price": 499,
@@ -1077,7 +1077,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob101",
-            "name": "Bestseller Silver & Blue Birthday Garland Kit",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.8,
             "reviews": 160,
             "price": 549,
@@ -1086,7 +1086,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob102",
-            "name": "Bestseller Grand Celebration Birthday Set",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 5,
             "reviews": 260,
             "price": 799,
@@ -1095,7 +1095,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob103",
-            "name": "Glitter Birthday Sash 'Birthday Boy' (Blue & Silver)",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.8,
             "reviews": 142,
             "price": 149,
@@ -1104,7 +1104,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob104",
-            "name": "Glitter Birthday Sash 'Birthday Girl' (Pink & Gold)",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.9,
             "reviews": 165,
             "price": 149,
@@ -1113,7 +1113,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob105",
-            "name": "Royal King Golden Birthday Crown Headband",
+            "name": "HBD 1 Star Banner Decoration Combo (5 PCS Bundle)",
             "rating": 4.7,
             "reviews": 110,
             "price": 199,
@@ -1122,101 +1122,101 @@ const occasionsProducts = {
         },
         {
             "id": "ob106",
-            "name": "Sparkling Diamond Princess Birthday Tiara",
+            "name": "Golden Number Candles – 0 | 12 PCS / BOX",
             "rating": 4.9,
             "reviews": 188,
             "price": 249,
-            "image": "cardtiara.png",
+            "image": "golden0.png",
             "popularRank": 106
         },
         {
             "id": "ob107",
-            "name": "Birthday Balloon Garland Arch Strip & Glue Dots Set",
+            "name": "Golden Number Candles – 1 | 12 PCS / BOX",
             "rating": 4.6,
             "reviews": 95,
             "price": 129,
-            "image": "cardballoons.png",
+            "image": "golden1.png",
             "popularRank": 107
         },
         {
             "id": "ob108",
-            "name": "Multicolor Polka Dot Party Paper Caps (Pack of 10)",
+            "name": "Golden Number Candles – 2 | 12 PCS / BOX",
             "rating": 4.5,
             "reviews": 78,
             "price": 119,
-            "image": "cardcaps.png",
+            "image": "golden2.png",
             "popularRank": 108
         },
         {
             "id": "ob109",
-            "name": "Golden Shimmer Foil Fringe Backdrop Curtain (6x3ft)",
+            "name": "Golden Number Candles – 3 | 12 PCS / BOX)",
             "rating": 4.8,
             "reviews": 156,
             "price": 189,
-            "image": "banner1.png",
+            "image": "golden3.png",
             "popularRank": 109
         },
         {
             "id": "ob110",
-            "name": "Rose Gold Shimmer Fringe Curtain Backdrop (6x3ft)",
+            "name": "Golden Number Candles – 4 | 12 PCS / BOX",
             "rating": 4.9,
             "reviews": 174,
             "price": 189,
-            "image": "banner6.png",
+            "image": "golden4.png",
             "popularRank": 110
         },
         {
             "id": "ob111",
-            "name": "Silver Metallic Foil Fringe Backdrop Curtain (6x3ft)",
+            "name": "Round Birthday Candles (6 PCS Pack)",
             "rating": 4.7,
             "reviews": 122,
             "price": 179,
-            "image": "banner7.png",
+            "image": "roundcandle.png",
             "popularRank": 111
         },
         {
             "id": "ob112",
-            "name": "Laser Metallic Party Poppers (Pack of 4)",
+            "name": "Golden Number Candles – 5 | 12 PCS / BOX",
             "rating": 4.8,
             "reviews": 140,
             "price": 299,
-            "image": "cardpoppers.png",
+            "image": "golden5.png",
             "popularRank": 112
         },
         {
             "id": "ob113",
-            "name": "Happy Birthday Neon Sign LED Light Board",
+            "name": "Golden Number Candles – 6 | 12 PCS / BOX",
             "rating": 5,
             "reviews": 215,
             "price": 799,
-            "image": "bestsellers7.png",
+            "image": "golden6.png",
             "popularRank": 113
         },
         {
             "id": "ob114",
-            "name": "Pastel Macaron Latex Balloons Mix (Pack of 50)",
+            "name": "Golden Number Candles – 7 | 12 PCS / BOX",
             "rating": 4.8,
             "reviews": 160,
             "price": 249,
-            "image": "nltc_prod_balloon_pastel.png",
+            "image": "golden7.png",
             "popularRank": 114
         },
         {
             "id": "ob115",
-            "name": "Chrome Rose Gold Latex Balloons (Pack of 50)",
+            "name": "Golden Number Candles – 8 | 12 PCS / BOX",
             "rating": 4.9,
             "reviews": 190,
             "price": 269,
-            "image": "nltc_prod_balloon_rosegoldchrome.png",
+            "image": "golden8.png",
             "popularRank": 115
         },
         {
             "id": "ob116",
-            "name": "Giant Golden Star Foil Balloon (24 Inch)",
+            "name": "Golden Number Candles – 9 | 12 PCS / BOX",
             "rating": 4.7,
             "reviews": 105,
             "price": 99,
-            "image": "nltc_prod_balloon_starfoil.png",
+            "image": "golden9.png",
             "popularRank": 116
         },
         {
@@ -1230,7 +1230,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob118",
-            "name": "Happy Birthday Gold Foil Alphabet Banner Set",
+            "name": "Golden Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.8,
             "reviews": 168,
             "price": 199,
@@ -1239,7 +1239,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob119",
-            "name": "Happy Birthday Silver Foil Alphabet Banner Set",
+            "name": "Silver Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.6,
             "reviews": 114,
             "price": 189,
@@ -1248,7 +1248,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob120",
-            "name": "Happy Birthday Rose Gold Foil Alphabet Banner Set",
+            "name": "Rose-Gold Happy Birthday Foil Balloon (10 Pack Bundle | 13 Letters per Pack)",
             "rating": 4.9,
             "reviews": 195,
             "price": 219,
@@ -1257,7 +1257,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob121",
-            "name": "Musical Lotus Flower Birthday Cake Candle",
+            "name": "Mix Cake Candles – Straight (6 pcs)",
             "rating": 4.7,
             "reviews": 135,
             "price": 199,
@@ -1266,7 +1266,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob122",
-            "name": "Golden Straight Metallic Birthday Candles (Pack of 12)",
+            "name": "Golden Cake Candles – Straight (6 pcs)",
             "rating": 4.8,
             "reviews": 150,
             "price": 99,
@@ -1275,7 +1275,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob123",
-            "name": "Silver Straight Metallic Birthday Candles (Pack of 12)",
+            "name": "Silver Cake Candles – Straight (6 pcs)",
             "rating": 4.6,
             "reviews": 98,
             "price": 89,
@@ -1284,7 +1284,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob124",
-            "name": "Pink Pastels Straight Birthday Candles (Pack of 12)",
+            "name": "Pink Cake Candles – Straight (6 pcs)",
             "rating": 4.7,
             "reviews": 112,
             "price": 89,
@@ -1293,7 +1293,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob125",
-            "name": "Blue Metallic Straight Birthday Candles (Pack of 12)",
+            "name": "Blue Cake Candles – Straight (6 pcs)",
             "rating": 4.6,
             "reviews": 104,
             "price": 89,
@@ -1302,7 +1302,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob126",
-            "name": "Party Pyro Gun Dual Streamer Shooter",
+            "name": "Party Pyro Gun – Black Edition",
             "rating": 4.9,
             "reviews": 210,
             "price": 349,
@@ -1311,7 +1311,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob127",
-            "name": "Snow Spray Can Box for Birthday Celebration",
+            "name": "Premium Snow Spray (24 Pieces per Box)",
             "rating": 4.8,
             "reviews": 175,
             "price": 199,
@@ -1320,7 +1320,7 @@ const occasionsProducts = {
         },
         {
             "id": "ob128",
-            "name": "Silly Crazy Ribbon Spray Box (24 Cans)",
+            "name": "Premium Crazy Ribbon Spray (24 Pieces per Box)",
             "rating": 4.6,
             "reviews": 130,
             "price": 249,
@@ -1329,38 +1329,38 @@ const occasionsProducts = {
         },
         {
             "id": "ob129",
-            "name": "Acrylic Mirror Golden Happy Birthday Cake Topper",
+            "name": "Round Birthday Candles (6 PCS Pack)",
             "rating": 4.9,
             "reviews": 188,
             "price": 149,
-            "image": "cardtoppers.png",
+            "image": "roundcandle.png",
             "popularRank": 129
         },
         {
             "id": "ob130",
-            "name": "3D Metallic Butterfly Cake & Wall Decor (Pack of 12)",
+            "name": "Golden Party Popper – 40 cm (100 Pieces per Box)",
             "rating": 4.8,
             "reviews": 162,
             "price": 149,
-            "image": "paperdecoration.png",
+            "image": "partypopper.png",
             "popularRank": 130
         },
         {
             "id": "ob131",
-            "name": "Bestseller Luxury Birthday Arch & Lighting Setup Kit",
+            "name": "Party Pyro Gun – LED Edition",
             "rating": 5,
             "reviews": 280,
             "price": 899,
-            "image": "bestsellers10.png",
+            "image": "pyrogunled.png",
             "popularRank": 131
         },
         {
             "id": "ob132",
-            "name": "Grand Masterpiece Celebration Birthday Combo Box",
+            "name": "Decorative Paper Palm Leaves (2 PCS Per Pack)",
             "rating": 5,
             "reviews": 310,
             "price": 999,
-            "image": "cardcombos.png",
+            "image": "palmleaf.png",
             "popularRank": 132
         }
     ],
