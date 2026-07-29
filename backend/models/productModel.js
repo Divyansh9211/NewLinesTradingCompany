@@ -97,6 +97,11 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+// Optimize MongoDB Search & Filter Queries
+productSchema.index({ name: 'text', description: 'text', shortDescription: 'text' });
+productSchema.index({ category: 1, price: 1, stock: 1, isActive: 1 });
+
+
 /**
  * Pre-save middleware to automatically generate or update the product URL slug.
  */

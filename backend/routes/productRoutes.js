@@ -16,6 +16,7 @@ const { upload, handleUpload } = require('../middleware/uploadMiddleware');
 
 // Public Product Routes
 router.get('/', getProducts);
+router.get('/search', getProducts);
 router.get('/:id', getProductById);
 
 // Admin Product Image Upload & Management Routes

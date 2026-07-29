@@ -1,4 +1,4 @@
-# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 11)
+# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 12)
 
 This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, Razorpay SDK, and slugify.
 
@@ -14,17 +14,17 @@ backend/
 │   └── razorpay.js           # Razorpay SDK initialization & HMAC signature verifier
 ├── controllers/
 │   ├── addressController.js  # Address Management CRUD
-│   ├── adminDashboardController.js # Admin Dashboard KPI Stats, Analytics & User Block/Role [NEW]
+│   ├── adminDashboardController.js # Admin Dashboard KPI Stats & Analytics
 │   ├── authController.js     # User Authentication (register, login, profile)
 │   ├── cartController.js     # Shopping Cart Management
 │   ├── categoryController.js # Category Management CRUD
 │   ├── checkoutController.js # Checkout summary generation & inventory validation
 │   ├── orderController.js    # Customer & Admin Order Management
 │   ├── paymentController.js  # Razorpay Order creation & payment verification
-│   ├── productController.js  # Product Management CRUD & Image Management
+│   ├── productController.js  # Product Management, Search, Filters & Image Uploads [UPDATED]
 │   └── wishlistController.js # Wishlist Management
 ├── middleware/
-│   ├── authMiddleware.js     # JWT protect (with isBlocked check) & admin authorization [UPDATED]
+│   ├── authMiddleware.js     # JWT protect & admin authorization middlewares
 │   ├── errorMiddleware.js    # Global error handler
 │   ├── notFoundMiddleware.js # 404 handler
 │   └── uploadMiddleware.js   # Multer file validation
@@ -32,20 +32,20 @@ backend/
 │   ├── addressModel.js       # Address schema
 │   ├── cartModel.js          # Shopping Cart schema
 │   ├── categoryModel.js      # Category schema with auto slugify hook
-│   ├── orderModel.js         # Order schema with snapshots & statusHistory
-│   ├── productModel.js       # Product schema
-│   ├── userModel.js          # User schema (includes isBlocked field) [UPDATED]
+│   ├── orderModel.js         # Order schema
+│   ├── productModel.js       # Product schema (text index & compound index for search/filters) [UPDATED]
+│   ├── userModel.js          # User schema
 │   └── wishlistModel.js      # Wishlist schema
 ├── routes/
 │   ├── addressRoutes.js      # Address endpoints (/api/addresses)
-│   ├── adminRoutes.js        # Admin Dashboard & Business Analytics (/api/admin) [NEW]
+│   ├── adminRoutes.js        # Admin Dashboard & Business Analytics (/api/admin)
 │   ├── authRoutes.js         # Auth endpoints (/api/auth)
 │   ├── cartRoutes.js         # Shopping Cart endpoints (/api/cart)
 │   ├── categoryRoutes.js     # Category endpoints (/api/categories)
 │   ├── checkoutRoutes.js     # Checkout endpoints (/api/checkout)
 │   ├── orderRoutes.js        # Customer & Admin Order endpoints (/api/orders)
 │   ├── paymentRoutes.js      # Payment endpoints (/api/payment)
-│   ├── productRoutes.js      # Product endpoints (/api/products)
+│   ├── productRoutes.js      # Product endpoints (/api/products & /api/products/search) [UPDATED]
 │   └── wishlistRoutes.js     # Wishlist endpoints (/api/wishlist)
 ├── utils/
 │   ├── checkoutCalculator.js # Configurable shipping fee & checkout totals helper
@@ -56,125 +56,92 @@ backend/
 ├── .env.example              # Environment template
 ├── package.json              # Project dependencies
 ├── README.md                 # Technical documentation & testing guide
-└── server.js                 # Express application entry point (mounted /api/admin)
+└── server.js                 # Express application entry point
 ```
 
 ---
 
-## 📊 Admin Dashboard & Analytics API Endpoints (`/api/admin`)
+## 🔍 Product Search, Multi-Filter, Sorting & Pagination APIs (`/api/products`)
 
-All Admin Dashboard and Business Analytics endpoints require JWT Authentication and Admin Role (`Authorization: Bearer <admin_token>`).
-
-### 1. Dashboard KPI Metrics & Analytics Endpoints
-
-| Method | Endpoint | Access | Required Header | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/admin/dashboard/stats` | Admin | `Authorization: Bearer <admin_token>` | Fetch real-time dashboard KPI metrics (Users, Products, Orders, Revenue, Inventory, Carts/Wishlists) |
-| `GET` | `/api/admin/analytics/revenue` | Admin | `Authorization: Bearer <admin_token>` | Fetch revenue analytics (Today, Weekly, Monthly, Yearly, Lifetime & 12-month trend) |
-| `GET` | `/api/admin/analytics/top-products` | Admin | `Authorization: Bearer <admin_token>` | Fetch top 10 best-selling products by quantity sold & total revenue |
-| `GET` | `/api/admin/analytics/categories` | Admin | `Authorization: Bearer <admin_token>` | Fetch category sales performance and revenue distribution |
-| `GET` | `/api/admin/analytics/recent-activity` | Admin | `Authorization: Bearer <admin_token>` | Fetch recent activity feed (5 recent orders & 5 recent user registrations) |
+### Endpoints
+- `GET /api/products` — Main product discovery endpoint with full search, filter, sort, and pagination query params.
+- `GET /api/products/search` — Dedicated search endpoint.
 
 ---
 
-### 2. User Management Endpoints
+### 📋 Supported Query Parameters
 
-| Method | Endpoint | Access | Required Header | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/admin/users` | Admin | `Authorization: Bearer <admin_token>` | Fetch registered users (supports `search`, `role`, `isBlocked`, `page`, `limit`) |
-| `PUT` | `/api/admin/users/:id/block` | Admin | `Authorization: Bearer <admin_token>` | Block or unblock a user account |
-| `PUT` | `/api/admin/users/:id/role` | Admin | `Authorization: Bearer <admin_token>` | Update a user's role (`user` / `admin`) |
+| Parameter | Type | Example | Description |
+| :--- | :--- | :--- | :--- |
+| `search` / `q` / `keyword` | String | `?search=balloon` | Case-insensitive partial matching search on `name`, `description`, `slug`, `brand`, and `subcategory` |
+| `category` | String | `?category=balloons-and-foil-combos` | Filter products by Category ObjectId or category slug/name |
+| `minPrice` | Number | `?minPrice=100` | Minimum selling price filter |
+| `maxPrice` | Number | `?maxPrice=1000` | Maximum selling price filter (validates `minPrice <= maxPrice`) |
+| `inStock` | Boolean | `?inStock=true` | Filter by stock availability (`true` for in-stock `stock > 0`, `false` for out-of-stock `stock === 0`) |
+| `isFeatured` | Boolean | `?isFeatured=true` | Filter featured products |
+| `isTrending` | Boolean | `?isTrending=true` | Filter trending products |
+| `isBestSeller` | Boolean | `?isBestSeller=true` | Filter best-seller products |
+| `sort` / `sortBy` | String | `?sort=price_asc` | Sorting mode (see supported sorting modes below) |
+| `page` | Integer | `?page=1` | Target page number (default `1`) |
+| `limit` | Integer | `?limit=12` | Items per page (default `12`, max `100`) |
+
+---
+
+### 🔃 Supported Sorting Modes (`sort` parameter)
+
+- `price_asc` / `price-low-high` — Price (Low to High)
+- `price_desc` / `price-high-low` — Price (High to Low)
+- `newest` — Newest First (Default)
+- `oldest` — Oldest First
+- `name_asc` / `a-z` — Alphabetical (A-Z)
+- `name_desc` / `z-a` — Alphabetical (Z-A)
+- `popular` / `bestselling` — Popular & Best Sellers First
 
 ---
 
 ## 🧪 Testing Guide (Thunder Client / Postman)
 
-### 1. Fetch Real-time Dashboard KPI Stats (`GET /api/admin/dashboard/stats`)
-- **URL**: `http://localhost:5000/api/admin/dashboard/stats`
+### 1. Multi-Attribute Search & Filter (`GET /api/products/search`)
+- **URL**: `http://localhost:5000/api/products/search?q=balloon&minPrice=100&maxPrice=1000&inStock=true&sort=price_asc&page=1&limit=12`
 - **Method**: `GET`
-- **Headers**:
-  - `Authorization`: `Bearer <admin_jwt_token>`
 - **Success Response (`200 OK`)**:
 ```json
 {
   "success": true,
-  "data": {
-    "users": {
-      "totalUsers": 25,
-      "totalAdmins": 2,
-      "blockedUsers": 1
-    },
-    "catalog": {
-      "totalProducts": 50,
-      "totalCategories": 8,
-      "lowStockProducts": 3,
-      "outOfStockProducts": 1
-    },
-    "orders": {
-      "totalOrders": 12,
-      "orderStatusCounts": {
-        "Processing": 2,
-        "Confirmed": 3,
-        "Delivered": 6,
-        "Cancelled": 1
+  "count": 2,
+  "totalProducts": 2,
+  "totalPages": 1,
+  "currentPage": 1,
+  "pageSize": 12,
+  "hasNextPage": false,
+  "hasPrevPage": false,
+  "nextPage": null,
+  "prevPage": null,
+  "data": [
+    {
+      "_id": "66a7c987654321fedcba0987",
+      "name": "Golden Metallic Balloons (Pack of 50)",
+      "slug": "golden-metallic-balloons-pack-of-50",
+      "price": 299,
+      "stock": 150,
+      "category": {
+        "name": "Balloons & Foil Combos",
+        "slug": "balloons-and-foil-combos"
       }
-    },
-    "financials": {
-      "totalRevenue": 14350.5
     }
-  }
+  ]
 }
 ```
 
 ---
 
-### 2. Fetch Revenue & Sales Trend Analytics (`GET /api/admin/analytics/revenue`)
-- **URL**: `http://localhost:5000/api/admin/analytics/revenue`
+### 2. Invalid Price Range Validation Error (`GET /api/products`)
+- **URL**: `http://localhost:5000/api/products?minPrice=1000&maxPrice=100`
 - **Method**: `GET`
-- **Headers**:
-  - `Authorization`: `Bearer <admin_jwt_token>`
-- **Success Response (`200 OK`)**:
+- **Error Response (`400 Bad Request`)**:
 ```json
 {
-  "success": true,
-  "data": {
-    "summary": {
-      "today": { "revenue": 1196, "orderCount": 1 },
-      "weekly": { "revenue": 4500, "orderCount": 4 },
-      "monthly": { "revenue": 14350.5, "orderCount": 12 },
-      "lifetime": { "revenue": 14350.5, "orderCount": 12 }
-    },
-    "monthlyTrends": [
-      { "period": "2026-07", "revenue": 14350.5, "ordersCount": 12 }
-    ]
-  }
-}
-```
-
----
-
-### 3. Block / Unblock User Account (`PUT /api/admin/users/:id/block`)
-- **URL**: `http://localhost:5000/api/admin/users/66a7b123456789abcdef0123/block`
-- **Method**: `PUT`
-- **Headers**:
-  - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer <admin_jwt_token>`
-- **Request Body**:
-```json
-{
-  "isBlocked": true
-}
-```
-- **Success Response (`200 OK`)**:
-```json
-{
-  "success": true,
-  "message": "User account 'John Doe' has been blocked successfully",
-  "data": {
-    "_id": "66a7b123456789abcdef0123",
-    "name": "John Doe",
-    "email": "john@example.com",
-    "isBlocked": true
-  }
+  "success": false,
+  "message": "Invalid price range: minPrice (1000) cannot be greater than maxPrice (100)."
 }
 ```

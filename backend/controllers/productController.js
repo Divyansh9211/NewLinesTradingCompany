@@ -25,58 +25,96 @@ const resolveCategoryId = async (categoryInput) => {
 };
 
 /**
- * @desc    Fetch all products with search, filter, sort, and pagination
- * @route   GET /api/products
+ * @desc    Fetch all products with multi-attribute search, filtering, sorting, and pagination
+ * @route   GET /api/products or GET /api/products/search
  * @access  Public
  */
 const getProducts = async (req, res, next) => {
   try {
     const {
       keyword,
+      search,
+      q,
       category,
       subcategory,
       brand,
       isFeatured,
       isTrending,
       isBestSeller,
+      inStock,
       minPrice,
       maxPrice,
       sortBy,
+      sort,
       page,
       limit,
     } = req.query;
 
     const query = {};
 
+    // Active status filter (defaults to true for public endpoint)
     if (req.query.isActive !== undefined) {
       query.isActive = req.query.isActive === 'true';
     } else {
       query.isActive = true;
     }
 
-    if (keyword) {
+    // Search query resolution (search, q, keyword)
+    const searchTerm = (search || q || keyword || '').trim();
+    if (searchTerm) {
+      const searchRegex = new RegExp(searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
       query.$or = [
-        { name: { $regex: keyword, $options: 'i' } },
-        { shortDescription: { $regex: keyword, $options: 'i' } },
-        { description: { $regex: keyword, $options: 'i' } },
+        { name: searchRegex },
+        { shortDescription: searchRegex },
+        { description: searchRegex },
+        { slug: searchRegex },
+        { brand: searchRegex },
+        { subcategory: searchRegex },
       ];
     }
 
+    // Category filter (supports ObjectId or slug/name)
     if (category) {
       const catId = await resolveCategoryId(category);
       if (catId) {
         query.category = catId;
+      } else {
+        // If an invalid category slug is provided, return empty paginated result
+        return res.status(200).json({
+          success: true,
+          count: 0,
+          totalProducts: 0,
+          totalPages: 0,
+          currentPage: 1,
+          pageSize: parseInt(limit, 10) || 12,
+          hasNextPage: false,
+          hasPrevPage: false,
+          nextPage: null,
+          prevPage: null,
+          data: [],
+        });
       }
     }
 
     if (subcategory) {
-      query.subcategory = { $regex: new RegExp(`^${subcategory}$`, 'i') };
+      query.subcategory = { $regex: new RegExp(`^${subcategory.trim()}$`, 'i') };
     }
 
     if (brand) {
-      query.brand = { $regex: new RegExp(`^${brand}$`, 'i') };
+      query.brand = { $regex: new RegExp(`^${brand.trim()}$`, 'i') };
     }
 
+    // Stock availability filter
+    if (inStock !== undefined) {
+      const stockBool = String(inStock).toLowerCase() === 'true';
+      if (stockBool) {
+        query.stock = { $gt: 0 };
+      } else {
+        query.stock = 0;
+      }
+    }
+
+    // Attribute flags
     if (isFeatured !== undefined) {
       query.isFeatured = isFeatured === 'true';
     }
@@ -87,47 +125,76 @@ const getProducts = async (req, res, next) => {
       query.isBestSeller = isBestSeller === 'true';
     }
 
+    // Price range filter with validation
     if (minPrice !== undefined || maxPrice !== undefined) {
       query.price = {};
-      if (minPrice !== undefined && !isNaN(Number(minPrice))) {
-        query.price.$gte = Number(minPrice);
+      const minVal = minPrice !== undefined && !isNaN(Number(minPrice)) ? Number(minPrice) : null;
+      const maxVal = maxPrice !== undefined && !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;
+
+      if (minVal !== null && maxVal !== null && minVal > maxVal) {
+        res.status(400);
+        return next(
+          new Error(
+            `Invalid price range: minPrice (${minVal}) cannot be greater than maxPrice (${maxVal}).`
+          )
+        );
       }
-      if (maxPrice !== undefined && !isNaN(Number(maxPrice))) {
-        query.price.$lte = Number(maxPrice);
+
+      if (minVal !== null && minVal >= 0) {
+        query.price.$gte = minVal;
+      }
+      if (maxVal !== null && maxVal >= 0) {
+        query.price.$lte = maxVal;
       }
     }
 
-    let sortOptions = { createdAt: -1 };
+    // Sorting Modes
+    let sortOptions = { createdAt: -1 }; // Default: Newest first
+    const sortVal = (sort || sortBy || '').toLowerCase();
 
-    if (sortBy === 'price-asc') {
+    if (sortVal === 'price_asc' || sortVal === 'price-asc' || sortVal === 'price-low-high') {
       sortOptions = { price: 1 };
-    } else if (sortBy === 'price-desc') {
+    } else if (sortVal === 'price_desc' || sortVal === 'price-desc' || sortVal === 'price-high-low') {
       sortOptions = { price: -1 };
-    } else if (sortBy === 'name-asc') {
+    } else if (sortVal === 'name_asc' || sortVal === 'name-asc' || sortVal === 'a-z') {
       sortOptions = { name: 1 };
-    } else if (sortBy === 'popular') {
+    } else if (sortVal === 'name_desc' || sortVal === 'name-desc' || sortVal === 'z-a') {
+      sortOptions = { name: -1 };
+    } else if (sortVal === 'oldest') {
+      sortOptions = { createdAt: 1 };
+    } else if (sortVal === 'newest') {
+      sortOptions = { createdAt: -1 };
+    } else if (sortVal === 'popular' || sortVal === 'bestselling') {
       sortOptions = { isBestSeller: -1, isTrending: -1, createdAt: -1 };
     }
 
+    // Pagination calculations
     const pageNum = Math.max(1, parseInt(page, 10) || 1);
-    const limitNum = Math.max(1, Math.min(100, parseInt(limit, 10) || 10));
+    const limitNum = Math.max(1, Math.min(100, parseInt(limit, 10) || 12));
     const skip = (pageNum - 1) * limitNum;
 
-    const total = await Product.countDocuments(query);
+    const totalProducts = await Product.countDocuments(query);
     const products = await Product.find(query)
       .populate('category', 'name slug image isActive')
       .sort(sortOptions)
       .skip(skip)
       .limit(limitNum);
 
-    const pages = Math.ceil(total / limitNum) || 1;
+    const totalPages = Math.ceil(totalProducts / limitNum) || 0;
+    const hasNextPage = pageNum < totalPages;
+    const hasPrevPage = pageNum > 1;
 
     return res.status(200).json({
       success: true,
       count: products.length,
-      total,
-      page: pageNum,
-      pages,
+      totalProducts,
+      totalPages,
+      currentPage: pageNum,
+      pageSize: limitNum,
+      hasNextPage,
+      hasPrevPage,
+      nextPage: hasNextPage ? pageNum + 1 : null,
+      prevPage: hasPrevPage ? pageNum - 1 : null,
       data: products,
     });
   } catch (error) {
