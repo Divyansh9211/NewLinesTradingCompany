@@ -70,9 +70,40 @@ const orderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      enum: ['Processing', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'],
+      enum: [
+        'Pending',
+        'Processing',
+        'Confirmed',
+        'Packed',
+        'Shipped',
+        'Out for Delivery',
+        'Delivered',
+        'Cancelled',
+        'Returned',
+        'Refunded',
+      ],
       default: 'Processing',
     },
+    cancellationReason: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    cancelledAt: {
+      type: Date,
+    },
+    isStockRestored: {
+      type: Boolean,
+      default: false,
+    },
+    statusHistory: [
+      {
+        status: { type: String, required: true },
+        updatedBy: { type: String, default: 'System' },
+        updatedAt: { type: Date, default: Date.now },
+        note: { type: String, default: '' },
+      },
+    ],
     itemsSubtotal: {
       type: Number,
       required: true,
