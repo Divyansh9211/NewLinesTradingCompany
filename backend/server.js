@@ -19,6 +19,7 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const couponRoutes = require('./routes/couponRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 // Load Environment Variables
 dotenv.config();
@@ -87,6 +88,9 @@ app.use('/api/admin', adminRoutes);
 
 // Coupons & Discount Management API Routes
 app.use('/api/coupons', couponRoutes);
+
+// Reviews & Ratings API Routes
+app.use('/api/reviews', reviewRoutes);
 
 // 404 Handler for Undefined Routes
 app.use(notFound);

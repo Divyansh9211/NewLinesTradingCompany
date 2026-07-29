@@ -1,4 +1,4 @@
-# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 13)
+# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 14)
 
 This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, Razorpay SDK, and slugify.
 
@@ -19,10 +19,11 @@ backend/
 │   ├── cartController.js     # Shopping Cart Management
 │   ├── categoryController.js # Category Management CRUD
 │   ├── checkoutController.js # Checkout summary generation & inventory validation
-│   ├── couponController.js   # Customer Coupon Validation & Admin Coupon CRUD [NEW]
+│   ├── couponController.js   # Customer Coupon Validation & Admin Coupon CRUD
 │   ├── orderController.js    # Customer & Admin Order Management
 │   ├── paymentController.js  # Razorpay Order creation & payment verification
 │   ├── productController.js  # Product Management, Search, Filters & Image Uploads
+│   ├── reviewController.js   # Customer & Admin Product Reviews & Ratings [NEW]
 │   └── wishlistController.js # Wishlist Management
 ├── middleware/
 │   ├── authMiddleware.js     # JWT protect (with isBlocked check) & admin authorization
@@ -33,9 +34,10 @@ backend/
 │   ├── addressModel.js       # Address schema
 │   ├── cartModel.js          # Shopping Cart schema
 │   ├── categoryModel.js      # Category schema with auto slugify hook
-│   ├── couponModel.js        # Coupon schema with usage limits & discount rules [NEW]
+│   ├── couponModel.js        # Coupon schema with usage limits & discount rules
 │   ├── orderModel.js         # Order schema with snapshots & statusHistory
-│   ├── productModel.js       # Product schema (text index & compound index for search/filters)
+│   ├── productModel.js       # Product schema (with averageRating & numReviews fields) [UPDATED]
+│   ├── reviewModel.js        # Review schema (compound unique index for 1 review per product) [NEW]
 │   ├── userModel.js          # User schema
 │   └── wishlistModel.js      # Wishlist schema
 ├── routes/
@@ -45,157 +47,113 @@ backend/
 │   ├── cartRoutes.js         # Shopping Cart endpoints (/api/cart)
 │   ├── categoryRoutes.js     # Category endpoints (/api/categories)
 │   ├── checkoutRoutes.js     # Checkout endpoints (/api/checkout)
-│   ├── couponRoutes.js       # Coupon endpoints (/api/coupons) [NEW]
+│   ├── couponRoutes.js       # Coupon endpoints (/api/coupons)
 │   ├── orderRoutes.js        # Customer & Admin Order endpoints (/api/orders)
 │   ├── paymentRoutes.js      # Payment endpoints (/api/payment)
 │   ├── productRoutes.js      # Product endpoints (/api/products & /api/products/search)
+│   ├── reviewRoutes.js       # Review & Rating endpoints (/api/reviews) [NEW]
 │   └── wishlistRoutes.js     # Wishlist endpoints (/api/wishlist)
 ├── utils/
-│   ├── checkoutCalculator.js # Configurable shipping fee & checkout totals helper (with coupon support) [UPDATED]
-│   ├── couponValidator.js    # Validation engine for dates, limits, and subtotals [NEW]
-│   └── generateToken.js      # JWT signing helper
+│   ├── checkoutCalculator.js # Configurable shipping fee & checkout totals helper
+│   ├── couponValidator.js    # Validation engine for dates, limits, and subtotals
+│   ├── generateToken.js      # JWT signing helper
+│   └── ratingCalculator.js   # MongoDB aggregation engine for real-time rating stats [NEW]
 ├── public/                   # Static directory
 ├── uploads/                  # Uploads directory
 ├── .env                      # Environment variables (ignored in Git)
 ├── .env.example              # Environment template
 ├── package.json              # Project dependencies
 ├── README.md                 # Technical documentation & testing guide
-└── server.js                 # Express application entry point (mounted /api/coupons)
+└── server.js                 # Express application entry point (mounted /api/reviews)
 ```
 
 ---
 
-## 🎟️ Coupons & Discount Management API Endpoints (`/api/coupons`)
+## ⭐ Reviews & Ratings API Endpoints (`/api/reviews`)
 
-### 1. Customer Coupon Endpoint
-
-| Method | Endpoint | Access | Required Header | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/api/coupons/validate` | Private | `Authorization: Bearer <token>` | Validates coupon code against order subtotal and user limits, returning calculated discount preview |
-
----
-
-### 2. Administrator Coupon Endpoints
+### 1. Public & Customer Review Endpoints
 
 | Method | Endpoint | Access | Required Header | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/api/coupons/admin` | Admin | `Authorization: Bearer <admin_token>` | Create a new promotional coupon (code uppercase, unique) |
-| `GET` | `/api/coupons/admin/all` | Admin | `Authorization: Bearer <admin_token>` | Fetch all coupons (`search`, `isActive`, `page`, `limit`) |
-| `GET` | `/api/coupons/admin/:id` | Admin | `Authorization: Bearer <admin_token>` | Fetch single coupon by ID or Coupon Code |
-| `PUT` | `/api/coupons/admin/:id` | Admin | `Authorization: Bearer <admin_token>` | Update an existing coupon |
-| `PUT` | `/api/coupons/admin/:id/status` | Admin | `Authorization: Bearer <admin_token>` | Toggle active/inactive status of a coupon |
-| `DELETE` | `/api/coupons/admin/:id` | Admin | `Authorization: Bearer <admin_token>` | Delete a coupon from database |
+| `GET` | `/api/reviews/product/:productId` | Public | None | Fetch paginated reviews for a product with 1-to-5 star rating breakdown metrics |
+| `POST` | `/api/reviews` | Private | `Authorization: Bearer <token>` | Submit product review (requires Verified Purchase from delivered/completed order) |
+| `GET` | `/api/reviews/my-reviews` | Private | `Authorization: Bearer <token>` | Fetch reviews submitted by the authenticated customer |
+| `PUT` | `/api/reviews/:id` | Private | `Authorization: Bearer <token>` | Update customer's own product review (recalculates product rating stats) |
+| `DELETE` | `/api/reviews/:id` | Private | `Authorization: Bearer <token>` | Delete customer's own product review (recalculates product rating stats) |
 
 ---
 
-## ⚡ Coupon Validation & Checkout Rules
+### 2. Administrator Review Moderation Endpoints
 
-- **Discount Types**:
-  - `Percentage`: Applies percentage discount (e.g. 20%). Optional `maxDiscountAmount` caps maximum discount value.
-  - `Fixed`: Applies fixed rupee discount (e.g. ₹200).
-- **Validation Checks**:
-  1. Active status check (`isActive === true`).
-  2. Date validity (`startDate <= now <= expiryDate`).
-  3. Minimum order subtotal check (`itemsSubtotal >= minOrderAmount`).
-  4. Global usage limit check (`usedCount < usageLimit`).
-  5. Per-user redemption limit check (`userCount < usageLimitPerUser`).
-- **Post-Payment Increment**: Coupon `usedCount` and `userUsage` arrays are incremented only upon confirmed order creation.
+| Method | Endpoint | Access | Required Header | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `GET` | `/api/reviews/admin/all` | Admin | `Authorization: Bearer <admin_token>` | Fetch all reviews across platform (`search`, `rating`, `productId`, `page`, `limit`) |
+| `DELETE` | `/api/reviews/admin/:id` | Admin | `Authorization: Bearer <admin_token>` | Delete any review violating platform guidelines and update product rating stats |
+
+---
+
+## 🔒 Verified Purchase & Rating Calculation Rules
+
+- **Verified Purchase Enforcement**: The backend verifies `Order.findOne({ user: userId, 'items.product': productId, isPaid: true })`. Non-purchasers or unconfirmed orders receive `403 Forbidden` (`Verified Purchase required. You can only review products from your delivered or completed orders.`).
+- **One Review Per Product**: Database-level compound unique index `reviewSchema.index({ product: 1, user: 1 }, { unique: true })` prevents duplicate reviews.
+- **Real-Time Aggregation Engine**: `updateProductRatingStats(productId)` recalculates `$avg: '$rating'` and `$sum: 1` (`numReviews`) on the Product document whenever a review is created, updated, or deleted.
 
 ---
 
 ## 🧪 Testing Guide (Thunder Client / Postman)
 
-### 1. Admin Create Coupon (`POST /api/coupons/admin`)
-- **URL**: `http://localhost:5000/api/coupons/admin`
+### 1. Submit Product Review (`POST /api/reviews`)
+- **URL**: `http://localhost:5000/api/reviews`
 - **Method**: `POST`
 - **Headers**:
   - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer <admin_jwt_token>`
+  - `Authorization`: `Bearer <customer_jwt_token>`
 - **Request Body**:
 ```json
 {
-  "code": "PARTY2026",
-  "name": "Grand Party 20% Discount",
-  "description": "Get 20% off on orders above ₹500 (Max discount ₹300)",
-  "discountType": "Percentage",
-  "discountValue": 20,
-  "minOrderAmount": 500,
-  "maxDiscountAmount": 300,
-  "expiryDate": "2026-12-31T23:59:59.000Z",
-  "usageLimitPerUser": 1
+  "productId": "66a7c987654321fedcba0987",
+  "rating": 5,
+  "title": "Stunning Balloons & High Quality!",
+  "comment": "The golden metallic balloons were fantastic for my daughter's birthday party. Highly recommended!"
 }
 ```
 - **Success Response (`201 Created`)**:
 ```json
 {
   "success": true,
-  "message": "Promotional coupon created successfully",
+  "message": "Product review submitted successfully",
   "data": {
-    "code": "PARTY2026",
-    "discountType": "Percentage",
-    "discountValue": 20,
-    "minOrderAmount": 500,
-    "maxDiscountAmount": 300,
-    "isActive": true
+    "_id": "66a7d1112223334445556667",
+    "rating": 5,
+    "title": "Stunning Balloons & High Quality!",
+    "comment": "The golden metallic balloons were fantastic for my daughter's birthday party. Highly recommended!",
+    "isVerifiedPurchase": true
   }
 }
 ```
 
 ---
 
-### 2. Customer Validate Coupon (`POST /api/coupons/validate`)
-- **URL**: `http://localhost:5000/api/coupons/validate`
-- **Method**: `POST`
-- **Headers**:
-  - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer <customer_jwt_token>`
-- **Request Body**:
-```json
-{
-  "couponCode": "PARTY2026",
-  "subtotal": 1200
-}
-```
+### 2. Fetch Product Reviews & Rating Breakdown (`GET /api/reviews/product/:productId`)
+- **URL**: `http://localhost:5000/api/reviews/product/66a7c987654321fedcba0987`
+- **Method**: `GET`
 - **Success Response (`200 OK`)**:
 ```json
 {
   "success": true,
-  "message": "Coupon 'PARTY2026' applied successfully",
-  "data": {
-    "couponCode": "PARTY2026",
-    "couponName": "Grand Party 20% Discount",
-    "discountType": "Percentage",
-    "discountValue": 20,
-    "discountAmount": 240
-  }
-}
-```
-
----
-
-### 3. Apply Coupon in Checkout (`POST /api/checkout/summary`)
-- **URL**: `http://localhost:5000/api/checkout/summary`
-- **Method**: `POST`
-- **Headers**:
-  - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer <customer_jwt_token>`
-- **Request Body**:
-```json
-{
-  "couponCode": "PARTY2026"
-}
-```
-- **Success Response (`200 OK`)**:
-```json
-{
-  "success": true,
-  "message": "Checkout summary generated successfully",
-  "data": {
-    "itemsSubtotal": 1200,
-    "shippingFee": 0,
-    "discount": 240,
-    "couponCode": "PARTY2026",
-    "grandTotal": 960
-  }
+  "count": 5,
+  "totalReviews": 5,
+  "totalPages": 1,
+  "currentPage": 1,
+  "averageRating": 4.8,
+  "numReviews": 5,
+  "ratingBreakdown": {
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 1,
+    "5": 4
+  },
+  "data": [...]
 }
 ```
