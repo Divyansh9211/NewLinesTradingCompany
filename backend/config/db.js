@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 /**
- * Establishes an asynchronous connection to MongoDB Atlas database.
+ * Establishes connection to MongoDB Atlas database.
  * Reads connection string from MONGODB_URI environment variable.
  */
 const connectDB = async () => {
@@ -9,7 +9,7 @@ const connectDB = async () => {
     const mongoURI = process.env.MONGODB_URI;
 
     if (!mongoURI) {
-      console.error('CRITICAL ERROR: MONGODB_URI is not defined in environment variables.');
+      console.error('[Database Error] MONGODB_URI is not defined in environment variables.');
       process.exit(1);
     }
 

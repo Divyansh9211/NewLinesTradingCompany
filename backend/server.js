@@ -138,9 +138,10 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`Express server running on port ${PORT}`);
       logger.info(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+      console.log(`[Server] Interactive API Docs available at http://localhost:${PORT}/api-docs`);
     });
   } catch (error) {
-    console.error(`Failed to start server due to database connection error: ${error.message}`);
+    console.error(`[Server Error] Failed to start server: ${error.message}`);
     process.exit(1);
   }
 };
@@ -150,7 +151,6 @@ startServer();
 // Handle Unhandled Promise Rejections
 process.on('unhandledRejection', (err) => {
   logger.error(`[Unhandled Rejection] Error: ${err.message}`, { stack: err.stack });
-  process.exit(1);
 });
 
 module.exports = app;
