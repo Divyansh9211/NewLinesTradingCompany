@@ -1,6 +1,28 @@
 const Product = require('../models/productModel');
+const Category = require('../models/categoryModel');
 const mongoose = require('mongoose');
 const { uploadBufferToCloudinary, deleteFromCloudinary } = require('../config/cloudinary');
+
+/**
+ * Helper function to resolve category ID from ObjectId, slug, or name
+ */
+const resolveCategoryId = async (categoryInput) => {
+  if (!categoryInput) return null;
+
+  if (mongoose.Types.ObjectId.isValid(categoryInput)) {
+    const cat = await Category.findById(categoryInput);
+    if (cat) return cat._id;
+  }
+
+  const catObj = await Category.findOne({
+    $or: [
+      { slug: String(categoryInput).toLowerCase() },
+      { name: { $regex: new RegExp(`^${categoryInput}$`, 'i') } },
+    ],
+  });
+
+  return catObj ? catObj._id : null;
+};
 
 /**
  * @desc    Fetch all products with search, filter, sort, and pagination
@@ -37,12 +59,14 @@ const getProducts = async (req, res, next) => {
         { name: { $regex: keyword, $options: 'i' } },
         { shortDescription: { $regex: keyword, $options: 'i' } },
         { description: { $regex: keyword, $options: 'i' } },
-        { category: { $regex: keyword, $options: 'i' } },
       ];
     }
 
     if (category) {
-      query.category = { $regex: new RegExp(`^${category}$`, 'i') };
+      const catId = await resolveCategoryId(category);
+      if (catId) {
+        query.category = catId;
+      }
     }
 
     if (subcategory) {
@@ -90,7 +114,11 @@ const getProducts = async (req, res, next) => {
     const skip = (pageNum - 1) * limitNum;
 
     const total = await Product.countDocuments(query);
-    const products = await Product.find(query).sort(sortOptions).skip(skip).limit(limitNum);
+    const products = await Product.find(query)
+      .populate('category', 'name slug image isActive')
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(limitNum);
 
     const pages = Math.ceil(total / limitNum) || 1;
 
@@ -118,9 +146,12 @@ const getProductById = async (req, res, next) => {
     let product;
 
     if (mongoose.Types.ObjectId.isValid(id)) {
-      product = await Product.findById(id);
+      product = await Product.findById(id).populate('category', 'name slug image isActive');
     } else {
-      product = await Product.findOne({ slug: id.toLowerCase() });
+      product = await Product.findOne({ slug: id.toLowerCase() }).populate(
+        'category',
+        'name slug image isActive'
+      );
     }
 
     if (!product) {
@@ -179,9 +210,15 @@ const createProduct = async (req, res, next) => {
       );
     }
 
+    const categoryId = await resolveCategoryId(category);
+    if (!categoryId) {
+      res.status(400);
+      return next(new Error(`Invalid category provided: '${category}'. Category does not exist.`));
+    }
+
     const product = await Product.create({
       name,
-      category,
+      category: categoryId,
       subcategory: subcategory || '',
       brand: brand || '',
       shortDescription,
@@ -197,10 +234,15 @@ const createProduct = async (req, res, next) => {
       images: Array.isArray(images) ? images : [],
     });
 
+    const populatedProduct = await Product.findById(product._id).populate(
+      'category',
+      'name slug image isActive'
+    );
+
     return res.status(201).json({
       success: true,
       message: 'Product created successfully',
-      data: product,
+      data: populatedProduct,
     });
   } catch (error) {
     next(error);
@@ -228,9 +270,19 @@ const updateProduct = async (req, res, next) => {
       return next(new Error('Product not found'));
     }
 
+    if (req.body.category !== undefined) {
+      const categoryId = await resolveCategoryId(req.body.category);
+      if (!categoryId) {
+        res.status(400);
+        return next(
+          new Error(`Invalid category provided: '${req.body.category}'. Category does not exist.`)
+        );
+      }
+      product.category = categoryId;
+    }
+
     const fieldsToUpdate = [
       'name',
-      'category',
       'subcategory',
       'brand',
       'shortDescription',
@@ -263,7 +315,11 @@ const updateProduct = async (req, res, next) => {
       }
     });
 
-    const updatedProduct = await product.save();
+    await product.save();
+    const updatedProduct = await Product.findById(product._id).populate(
+      'category',
+      'name slug image isActive'
+    );
 
     return res.status(200).json({
       success: true,
@@ -296,7 +352,6 @@ const deleteProduct = async (req, res, next) => {
       return next(new Error('Product not found'));
     }
 
-    // Delete all associated Cloudinary images to prevent orphaned files
     if (product.images && product.images.length > 0) {
       for (const img of product.images) {
         if (img.public_id) {
@@ -343,19 +398,22 @@ const uploadProductImages = async (req, res, next) => {
       return next(new Error('Please select at least one image file to upload'));
     }
 
-    // Upload each buffer to Cloudinary concurrently
     const uploadPromises = files.map((file) => uploadBufferToCloudinary(file.buffer));
     const uploadedResults = await Promise.all(uploadPromises);
 
-    // Append new image objects to existing product images array
     product.images.push(...uploadedResults);
     await product.save();
+
+    const populatedProduct = await Product.findById(product._id).populate(
+      'category',
+      'name slug image isActive'
+    );
 
     return res.status(200).json({
       success: true,
       message: `${uploadedResults.length} image(s) uploaded successfully to Cloudinary`,
       uploadedImages: uploadedResults,
-      data: product,
+      data: populatedProduct,
     });
   } catch (error) {
     next(error);
@@ -389,7 +447,6 @@ const replaceProductImages = async (req, res, next) => {
       return next(new Error('Please select replacement image files to upload'));
     }
 
-    // Delete existing Cloudinary images
     if (product.images && product.images.length > 0) {
       for (const img of product.images) {
         if (img.public_id) {
@@ -398,18 +455,21 @@ const replaceProductImages = async (req, res, next) => {
       }
     }
 
-    // Upload new files to Cloudinary
     const uploadPromises = files.map((file) => uploadBufferToCloudinary(file.buffer));
     const uploadedResults = await Promise.all(uploadPromises);
 
-    // Replace product images
     product.images = uploadedResults;
     await product.save();
+
+    const populatedProduct = await Product.findById(product._id).populate(
+      'category',
+      'name slug image isActive'
+    );
 
     return res.status(200).json({
       success: true,
       message: 'Product images replaced successfully',
-      data: product,
+      data: populatedProduct,
     });
   } catch (error) {
     next(error);
@@ -442,7 +502,6 @@ const deleteProductImage = async (req, res, next) => {
       return next(new Error('Product not found'));
     }
 
-    // Find target image in product.images array
     const imageIndex = product.images.findIndex((img) => img.public_id === public_id);
 
     if (imageIndex === -1) {
@@ -450,17 +509,19 @@ const deleteProductImage = async (req, res, next) => {
       return next(new Error('Image with specified public_id not found on this product'));
     }
 
-    // Destroy image on Cloudinary
     await deleteFromCloudinary(public_id);
-
-    // Remove image from Mongoose array
     product.images.splice(imageIndex, 1);
     await product.save();
+
+    const populatedProduct = await Product.findById(product._id).populate(
+      'category',
+      'name slug image isActive'
+    );
 
     return res.status(200).json({
       success: true,
       message: 'Product image deleted from Cloudinary and database successfully',
-      data: product,
+      data: populatedProduct,
     });
   } catch (error) {
     next(error);
@@ -497,10 +558,15 @@ const deleteAllProductImages = async (req, res, next) => {
       await product.save();
     }
 
+    const populatedProduct = await Product.findById(product._id).populate(
+      'category',
+      'name slug image isActive'
+    );
+
     return res.status(200).json({
       success: true,
       message: 'All product images deleted successfully',
-      data: product,
+      data: populatedProduct,
     });
   } catch (error) {
     next(error);

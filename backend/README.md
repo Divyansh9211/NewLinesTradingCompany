@@ -1,6 +1,6 @@
-# Party Decoration E-Commerce Backend - Product Management & Foundation (Phase 1, 2, & 3)
+# Party Decoration E-Commerce Backend - Category & Product Architecture (Phase 1 to 5)
 
-This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, and slugify.
+This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, and slugify.
 
 ---
 
@@ -9,28 +9,32 @@ This directory contains the production-ready backend for the **Party Decoration 
 ```
 backend/
 ├── config/
-│   └── db.js                 # MongoDB Atlas asynchronous connection logic
+│   ├── db.js                 # MongoDB Atlas connection module
+│   └── cloudinary.js         # Cloudinary configuration & helpers
 ├── controllers/
 │   ├── authController.js     # User Authentication (register, login, profile)
-│   └── productController.js  # Product Management CRUD, search, filter, sort, pagination [NEW]
+│   ├── categoryController.js # Category Management CRUD, search, products lookup [NEW]
+│   └── productController.js  # Product Management CRUD, category populator & image controllers
 ├── middleware/
-│   ├── authMiddleware.js     # JWT Protect & Admin Authorization middlewares
-│   ├── errorMiddleware.js    # Global centralized error handler
-│   └── notFoundMiddleware.js # 404 Route Not Found handler
+│   ├── authMiddleware.js     # JWT protect & admin authorization middlewares
+│   ├── errorMiddleware.js    # Global error handler
+│   ├── notFoundMiddleware.js # 404 handler
+│   └── uploadMiddleware.js   # Multer file format & size validation
 ├── models/
-│   ├── userModel.js          # Mongoose User Schema with password hashing
-│   └── productModel.js       # Mongoose Product Schema with auto slugify hook [NEW]
+│   ├── userModel.js          # User schema
+│   ├── categoryModel.js      # Category schema with auto slugify hook [NEW]
+│   └── productModel.js       # Product schema (with Category ObjectId ref & images array)
 ├── routes/
-│   ├── authRoutes.js         # Authentication API routes (/api/auth)
-│   └── productRoutes.js      # Product Management API routes (/api/products) [NEW]
+│   ├── authRoutes.js         # Auth endpoints (/api/auth)
+│   ├── categoryRoutes.js     # Category endpoints (/api/categories) [NEW]
+│   └── productRoutes.js      # Product & Image Management endpoints (/api/products)
 ├── utils/
 │   └── generateToken.js      # JWT signing helper
-├── public/                   # Static assets directory
-├── uploads/                  # Media upload storage directory
+├── public/                   # Static directory
+├── uploads/                  # Uploads directory
 ├── .env                      # Environment variables (ignored in Git)
-├── .env.example              # Environment variables template
-├── .gitignore                # Git exclusion rules
-├── package.json              # Project metadata & dependencies
+├── .env.example              # Environment template
+├── package.json              # Project dependencies
 ├── README.md                 # Technical documentation & testing guide
 └── server.js                 # Express application entry point
 ```
@@ -39,7 +43,7 @@ backend/
 
 ## ⚙️ Environment Variables
 
-Ensure your `.env` file contains the following variables:
+Ensure your `.env` file contains the following configuration:
 
 ```env
 PORT=5000
@@ -47,123 +51,81 @@ NODE_ENV=development
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/party_decoration?retryWrites=true&w=majority
 JWT_SECRET=supersecretjwtkey_party_decoration_2026_production_ready
 JWT_EXPIRES_IN=30d
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
 
 ---
 
-## 🛠️ Installation & Execution
-
-```bash
-cd Party-Decoration-Website/backend
-
-# Install dependencies
-npm install
-
-# Start Development Server (with Nodemon auto-reload)
-npm run dev
-
-# Start Production Server
-npm start
-```
-
----
-
-## 📡 Product Management API Endpoints (`/api/products`)
+## 📡 Category Management API Endpoints (`/api/categories`)
 
 | Method | Endpoint | Access | Required Header | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/products` | Public | None | Retrieve all products (supports search, filter, sort, pagination) |
-| `GET` | `/api/products/:id` | Public | None | Retrieve a single product by MongoDB ID or URL Slug |
-| `POST` | `/api/products` | Private (Admin) | `Authorization: Bearer <admin_token>` | Create a new product |
-| `PUT` | `/api/products/:id` | Private (Admin) | `Authorization: Bearer <admin_token>` | Update an existing product |
-| `DELETE` | `/api/products/:id` | Private (Admin) | `Authorization: Bearer <admin_token>` | Delete a product |
+| `GET` | `/api/categories` | Public | None | Retrieve all active categories (supports search, sort, pagination) |
+| `GET` | `/api/categories/:id` | Public | None | Retrieve single category by MongoDB ID or URL slug |
+| `GET` | `/api/categories/:id/products` | Public | None | Retrieve all products belonging to a specific category |
+| `POST` | `/api/categories` | Admin Only | `Authorization: Bearer <admin_token>` | Create a new category (supports optional image upload) |
+| `PUT` | `/api/categories/:id` | Admin Only | `Authorization: Bearer <admin_token>` | Update an existing category & image |
+| `DELETE` | `/api/categories/:id` | Admin Only | `Authorization: Bearer <admin_token>` | Delete an empty category (safe deletion check) |
 
 ---
 
-## 🔍 Query Parameters for `GET /api/products`
+## 🔒 Safe Deletion Protection
 
-| Parameter | Type | Example | Description |
-| :--- | :--- | :--- | :--- |
-| `keyword` | String | `?keyword=balloon` | Search term matching product name, category, or description |
-| `category` | String | `?category=Balloons` | Filter products by exact category |
-| `subcategory`| String | `?subcategory=Foil` | Filter products by subcategory |
-| `brand` | String | `?brand=PartyPro` | Filter products by brand |
-| `minPrice` | Number | `?minPrice=100` | Minimum price threshold |
-| `maxPrice` | Number | `?maxPrice=500` | Maximum price threshold |
-| `isFeatured` | Boolean | `?isFeatured=true` | Filter featured products |
-| `isTrending` | Boolean | `?isTrending=true` | Filter trending products |
-| `isBestSeller`| Boolean | `?isBestSeller=true`| Filter best seller products |
-| `sortBy` | String | `?sortBy=price-asc` | Sorting mode (`price-asc`, `price-desc`, `name-asc`, `popular`, `newest`) |
-| `page` | Number | `?page=1` | Page number for pagination (default: `1`) |
-| `limit` | Number | `?limit=10` | Products per page (default: `10`, max: `100`) |
+To prevent database inconsistency and orphaned references, attempting to delete a category that currently has active linked products will return a `400 Bad Request` response:
+
+```json
+{
+  "success": false,
+  "message": "Cannot delete category 'Balloons'. It is currently assigned to 5 product(s). Please reassign or delete those products first."
+}
+```
 
 ---
 
 ## 🧪 Testing Guide (Thunder Client / Postman)
 
-### 1. Create a Product (`POST /api/products`) - Admin Only
-- **URL**: `http://localhost:5000/api/products`
+### 1. Create a Category (`POST /api/categories`) - Admin Only
+- **URL**: `http://localhost:5000/api/categories`
 - **Method**: `POST`
 - **Headers**:
-  - `Content-Type`: `application/json`
+  - `Content-Type`: `application/json` (or `multipart/form-data` if uploading category image)
   - `Authorization`: `Bearer <admin_jwt_token>`
 - **Request Body**:
 ```json
 {
-  "name": "Golden Metallic Balloons (Pack of 50)",
-  "category": "Balloons",
-  "subcategory": "Metallic",
-  "brand": "PartyMagic",
-  "shortDescription": "Premium shiny golden balloons for birthday and anniversary decor",
-  "description": "High quality 12-inch metallic latex balloons. Durable, helium-compatible, and perfect for creating festive balloon arches.",
-  "originalPrice": 499,
-  "price": 299,
-  "stock": 150,
-  "sku": "BAL-GLD-50",
-  "isFeatured": true,
-  "isBestSeller": true,
-  "images": [
-    "https://example.com/images/golden-balloon-1.png",
-    "https://example.com/images/golden-balloon-2.png"
-  ]
+  "name": "Balloons & Foil Combos",
+  "description": "Metallic, pastel, helium, and foil balloon decorations",
+  "displayOrder": 1
 }
 ```
 - **Success Response (`201 Created`)**:
 ```json
 {
   "success": true,
-  "message": "Product created successfully",
+  "message": "Category created successfully",
   "data": {
-    "_id": "66a7c987654321fedcba0987",
-    "name": "Golden Metallic Balloons (Pack of 50)",
-    "slug": "golden-metallic-balloons-pack-of-50",
-    "category": "Balloons",
-    "subcategory": "Metallic",
-    "brand": "PartyMagic",
-    "shortDescription": "Premium shiny golden balloons for birthday and anniversary decor",
-    "description": "High quality 12-inch metallic latex balloons. Durable, helium-compatible, and perfect for creating festive balloon arches.",
-    "originalPrice": 499,
-    "price": 299,
-    "stock": 150,
-    "sku": "BAL-GLD-50",
+    "_id": "66a7d123456789abcdef0987",
+    "name": "Balloons & Foil Combos",
+    "slug": "balloons-and-foil-combos",
+    "description": "Metallic, pastel, helium, and foil balloon decorations",
+    "displayOrder": 1,
     "isActive": true,
-    "isFeatured": true,
-    "isTrending": false,
-    "isBestSeller": true,
-    "images": [
-      "https://example.com/images/golden-balloon-1.png",
-      "https://example.com/images/golden-balloon-2.png"
-    ],
-    "createdAt": "2026-07-29T13:00:00.000Z",
-    "updatedAt": "2026-07-29T13:00:00.000Z"
+    "image": {
+      "url": "",
+      "public_id": ""
+    },
+    "createdAt": "2026-07-29T13:45:00.000Z",
+    "updatedAt": "2026-07-29T13:45:00.000Z"
   }
 }
 ```
 
 ---
 
-### 2. Retrieve All Products with Search & Filters (`GET /api/products`)
-- **URL**: `http://localhost:5000/api/products?category=Balloons&minPrice=100&sortBy=price-asc&page=1&limit=10`
+### 2. Retrieve All Categories (`GET /api/categories`)
+- **URL**: `http://localhost:5000/api/categories?sortBy=displayOrder`
 - **Method**: `GET`
 - **Success Response (`200 OK`)**:
 ```json
@@ -175,13 +137,11 @@ npm start
   "pages": 1,
   "data": [
     {
-      "_id": "66a7c987654321fedcba0987",
-      "name": "Golden Metallic Balloons (Pack of 50)",
-      "slug": "golden-metallic-balloons-pack-of-50",
-      "category": "Balloons",
-      "price": 299,
-      "stock": 150,
-      "images": ["https://example.com/images/golden-balloon-1.png"]
+      "_id": "66a7d123456789abcdef0987",
+      "name": "Balloons & Foil Combos",
+      "slug": "balloons-and-foil-combos",
+      "displayOrder": 1,
+      "isActive": true
     }
   ]
 }
@@ -189,59 +149,41 @@ npm start
 
 ---
 
-### 3. Retrieve Product by ID or Slug (`GET /api/products/:id`)
-- **URL**: `http://localhost:5000/api/products/golden-metallic-balloons-pack-of-50`
+### 3. Retrieve Products by Category (`GET /api/categories/:id/products`)
+- **URL**: `http://localhost:5000/api/categories/balloons-and-foil-combos/products`
 - **Method**: `GET`
 - **Success Response (`200 OK`)**:
 ```json
 {
   "success": true,
-  "message": "Product retrieved successfully",
-  "data": {
-    "_id": "66a7c987654321fedcba0987",
-    "name": "Golden Metallic Balloons (Pack of 50)",
-    "slug": "golden-metallic-balloons-pack-of-50",
-    "category": "Balloons",
-    "price": 299,
-    "stock": 150
-  }
+  "category": {
+    "_id": "66a7d123456789abcdef0987",
+    "name": "Balloons & Foil Combos",
+    "slug": "balloons-and-foil-combos"
+  },
+  "count": 1,
+  "total": 1,
+  "page": 1,
+  "pages": 1,
+  "data": [
+    {
+      "_id": "66a7c987654321fedcba0987",
+      "name": "Golden Metallic Balloons (Pack of 50)",
+      "price": 299,
+      "category": {
+        "_id": "66a7d123456789abcdef0987",
+        "name": "Balloons & Foil Combos",
+        "slug": "balloons-and-foil-combos"
+      }
+    }
+  ]
 }
 ```
 
 ---
 
-### 4. Update Product (`PUT /api/products/:id`) - Admin Only
-- **URL**: `http://localhost:5000/api/products/66a7c987654321fedcba0987`
-- **Method**: `PUT`
-- **Headers**:
-  - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer <admin_jwt_token>`
-- **Request Body**:
-```json
-{
-  "price": 249,
-  "stock": 200,
-  "isTrending": true
-}
-```
-- **Success Response (`200 OK`)**:
-```json
-{
-  "success": true,
-  "message": "Product updated successfully",
-  "data": {
-    "_id": "66a7c987654321fedcba0987",
-    "price": 249,
-    "stock": 200,
-    "isTrending": true
-  }
-}
-```
-
----
-
-### 5. Delete Product (`DELETE /api/products/:id`) - Admin Only
-- **URL**: `http://localhost:5000/api/products/66a7c987654321fedcba0987`
+### 4. Delete a Category (`DELETE /api/categories/:id`) - Admin Only
+- **URL**: `http://localhost:5000/api/categories/66a7d123456789abcdef0987`
 - **Method**: `DELETE`
 - **Headers**:
   - `Authorization`: `Bearer <admin_jwt_token>`
@@ -249,6 +191,6 @@ npm start
 ```json
 {
   "success": true,
-  "message": "Product deleted successfully"
+  "message": "Category deleted successfully"
 }
 ```

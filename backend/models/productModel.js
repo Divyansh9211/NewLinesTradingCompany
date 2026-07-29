@@ -17,9 +17,9 @@ const productSchema = new mongoose.Schema(
       index: true,
     },
     category: {
-      type: String,
-      required: [true, 'Product category is required'],
-      trim: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      required: [true, 'Product category reference is required'],
     },
     subcategory: {
       type: String,

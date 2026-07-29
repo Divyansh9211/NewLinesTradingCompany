@@ -10,6 +10,7 @@ const errorHandler = require('./middleware/errorMiddleware');
 
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 // Load Environment Variables
 dotenv.config();
@@ -51,6 +52,9 @@ app.use('/api/auth', authRoutes);
 
 // Product Management API Routes
 app.use('/api/products', productRoutes);
+
+// Category Management API Routes
+app.use('/api/categories', categoryRoutes);
 
 // 404 Handler for Undefined Routes
 app.use(notFound);
