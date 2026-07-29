@@ -1,6 +1,6 @@
-# Party Decoration E-Commerce Backend - Authentication & Foundation (Phase 1 & Phase 2)
+# Party Decoration E-Commerce Backend - Product Management & Foundation (Phase 1, 2, & 3)
 
-This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, and JSON Web Tokens (JWT).
+This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, and slugify.
 
 ---
 
@@ -11,42 +11,40 @@ backend/
 ├── config/
 │   └── db.js                 # MongoDB Atlas asynchronous connection logic
 ├── controllers/
-│   └── authController.js     # User authentication handlers (register, login, get profile)
+│   ├── authController.js     # User Authentication (register, login, profile)
+│   └── productController.js  # Product Management CRUD, search, filter, sort, pagination [NEW]
 ├── middleware/
-│   ├── authMiddleware.js     # JWT token protection (protect) & Admin role authorization (admin)
+│   ├── authMiddleware.js     # JWT Protect & Admin Authorization middlewares
 │   ├── errorMiddleware.js    # Global centralized error handler
 │   └── notFoundMiddleware.js # 404 Route Not Found handler
 ├── models/
-│   └── userModel.js          # Mongoose User Schema with password hashing & validation
+│   ├── userModel.js          # Mongoose User Schema with password hashing
+│   └── productModel.js       # Mongoose Product Schema with auto slugify hook [NEW]
 ├── routes/
-│   └── authRoutes.js         # Authentication API routes (/api/auth)
+│   ├── authRoutes.js         # Authentication API routes (/api/auth)
+│   └── productRoutes.js      # Product Management API routes (/api/products) [NEW]
 ├── utils/
-│   └── generateToken.js      # JWT token signing utility
+│   └── generateToken.js      # JWT signing helper
 ├── public/                   # Static assets directory
 ├── uploads/                  # Media upload storage directory
 ├── .env                      # Environment variables (ignored in Git)
 ├── .env.example              # Environment variables template
-├── .gitignore                # Git exclusion specifications
-├── package.json              # Project metadata & dependency manager
+├── .gitignore                # Git exclusion rules
+├── package.json              # Project metadata & dependencies
 ├── README.md                 # Technical documentation & testing guide
 └── server.js                 # Express application entry point
 ```
 
 ---
 
-## ⚙️ Prerequisites & Environment Variables
+## ⚙️ Environment Variables
 
-Make sure your `.env` file contains the following configuration:
+Ensure your `.env` file contains the following variables:
 
 ```env
-# Server Configuration
 PORT=5000
 NODE_ENV=development
-
-# MongoDB Atlas Connection String
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/party_decoration?retryWrites=true&w=majority
-
-# JWT Authentication Secrets
 JWT_SECRET=supersecretjwtkey_party_decoration_2026_production_ready
 JWT_EXPIRES_IN=30d
 ```
@@ -55,141 +53,202 @@ JWT_EXPIRES_IN=30d
 
 ## 🛠️ Installation & Execution
 
-1. **Navigate to Backend Directory**:
-   ```bash
-   cd Party-Decoration-Website/backend
-   ```
+```bash
+cd Party-Decoration-Website/backend
 
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. **Start Development Server**:
-   ```bash
-   npm run dev
-   ```
+# Start Development Server (with Nodemon auto-reload)
+npm run dev
 
-4. **Start Production Server**:
-   ```bash
-   npm start
-   ```
+# Start Production Server
+npm start
+```
 
 ---
 
-## 📡 API Endpoints Documentation
+## 📡 Product Management API Endpoints (`/api/products`)
 
-### Base & Health Check Routes
-
-| Method | Endpoint | Access | Description |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/` | Public | System Health Check |
-
-### Authentication & Authorization Routes (`/api/auth`)
-
-| Method | Endpoint | Access | Header Required | Description |
+| Method | Endpoint | Access | Required Header | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/api/auth/register` | Public | None | Register a new user |
-| `POST` | `/api/auth/login` | Public | None | Log in existing user & obtain JWT token |
-| `GET` | `/api/auth/profile` | Protected | `Authorization: Bearer <token>` | Fetch logged-in user's profile details |
+| `GET` | `/api/products` | Public | None | Retrieve all products (supports search, filter, sort, pagination) |
+| `GET` | `/api/products/:id` | Public | None | Retrieve a single product by MongoDB ID or URL Slug |
+| `POST` | `/api/products` | Private (Admin) | `Authorization: Bearer <admin_token>` | Create a new product |
+| `PUT` | `/api/products/:id` | Private (Admin) | `Authorization: Bearer <admin_token>` | Update an existing product |
+| `DELETE` | `/api/products/:id` | Private (Admin) | `Authorization: Bearer <admin_token>` | Delete a product |
+
+---
+
+## 🔍 Query Parameters for `GET /api/products`
+
+| Parameter | Type | Example | Description |
+| :--- | :--- | :--- | :--- |
+| `keyword` | String | `?keyword=balloon` | Search term matching product name, category, or description |
+| `category` | String | `?category=Balloons` | Filter products by exact category |
+| `subcategory`| String | `?subcategory=Foil` | Filter products by subcategory |
+| `brand` | String | `?brand=PartyPro` | Filter products by brand |
+| `minPrice` | Number | `?minPrice=100` | Minimum price threshold |
+| `maxPrice` | Number | `?maxPrice=500` | Maximum price threshold |
+| `isFeatured` | Boolean | `?isFeatured=true` | Filter featured products |
+| `isTrending` | Boolean | `?isTrending=true` | Filter trending products |
+| `isBestSeller`| Boolean | `?isBestSeller=true`| Filter best seller products |
+| `sortBy` | String | `?sortBy=price-asc` | Sorting mode (`price-asc`, `price-desc`, `name-asc`, `popular`, `newest`) |
+| `page` | Number | `?page=1` | Page number for pagination (default: `1`) |
+| `limit` | Number | `?limit=10` | Products per page (default: `10`, max: `100`) |
 
 ---
 
 ## 🧪 Testing Guide (Thunder Client / Postman)
 
-### 1. User Registration (`POST /api/auth/register`)
-- **URL**: `http://localhost:5000/api/auth/register`
+### 1. Create a Product (`POST /api/products`) - Admin Only
+- **URL**: `http://localhost:5000/api/products`
 - **Method**: `POST`
-- **Headers**: `Content-Type: application/json`
+- **Headers**:
+  - `Content-Type`: `application/json`
+  - `Authorization`: `Bearer <admin_jwt_token>`
 - **Request Body**:
 ```json
 {
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "password": "password123",
-  "phone": "+19876543210"
+  "name": "Golden Metallic Balloons (Pack of 50)",
+  "category": "Balloons",
+  "subcategory": "Metallic",
+  "brand": "PartyMagic",
+  "shortDescription": "Premium shiny golden balloons for birthday and anniversary decor",
+  "description": "High quality 12-inch metallic latex balloons. Durable, helium-compatible, and perfect for creating festive balloon arches.",
+  "originalPrice": 499,
+  "price": 299,
+  "stock": 150,
+  "sku": "BAL-GLD-50",
+  "isFeatured": true,
+  "isBestSeller": true,
+  "images": [
+    "https://example.com/images/golden-balloon-1.png",
+    "https://example.com/images/golden-balloon-2.png"
+  ]
 }
 ```
 - **Success Response (`201 Created`)**:
 ```json
 {
   "success": true,
-  "message": "User registered successfully",
+  "message": "Product created successfully",
   "data": {
-    "_id": "66a7b123456789abcdef0123",
-    "name": "Jane Doe",
-    "email": "jane@example.com",
-    "phone": "+19876543210",
-    "role": "user",
-    "profileImage": "",
-    "createdAt": "2026-07-29T12:00:00.000Z",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    "_id": "66a7c987654321fedcba0987",
+    "name": "Golden Metallic Balloons (Pack of 50)",
+    "slug": "golden-metallic-balloons-pack-of-50",
+    "category": "Balloons",
+    "subcategory": "Metallic",
+    "brand": "PartyMagic",
+    "shortDescription": "Premium shiny golden balloons for birthday and anniversary decor",
+    "description": "High quality 12-inch metallic latex balloons. Durable, helium-compatible, and perfect for creating festive balloon arches.",
+    "originalPrice": 499,
+    "price": 299,
+    "stock": 150,
+    "sku": "BAL-GLD-50",
+    "isActive": true,
+    "isFeatured": true,
+    "isTrending": false,
+    "isBestSeller": true,
+    "images": [
+      "https://example.com/images/golden-balloon-1.png",
+      "https://example.com/images/golden-balloon-2.png"
+    ],
+    "createdAt": "2026-07-29T13:00:00.000Z",
+    "updatedAt": "2026-07-29T13:00:00.000Z"
   }
 }
 ```
 
 ---
 
-### 2. User Login (`POST /api/auth/login`)
-- **URL**: `http://localhost:5000/api/auth/login`
-- **Method**: `POST`
-- **Headers**: `Content-Type: application/json`
+### 2. Retrieve All Products with Search & Filters (`GET /api/products`)
+- **URL**: `http://localhost:5000/api/products?category=Balloons&minPrice=100&sortBy=price-asc&page=1&limit=10`
+- **Method**: `GET`
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "count": 1,
+  "total": 1,
+  "page": 1,
+  "pages": 1,
+  "data": [
+    {
+      "_id": "66a7c987654321fedcba0987",
+      "name": "Golden Metallic Balloons (Pack of 50)",
+      "slug": "golden-metallic-balloons-pack-of-50",
+      "category": "Balloons",
+      "price": 299,
+      "stock": 150,
+      "images": ["https://example.com/images/golden-balloon-1.png"]
+    }
+  ]
+}
+```
+
+---
+
+### 3. Retrieve Product by ID or Slug (`GET /api/products/:id`)
+- **URL**: `http://localhost:5000/api/products/golden-metallic-balloons-pack-of-50`
+- **Method**: `GET`
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "message": "Product retrieved successfully",
+  "data": {
+    "_id": "66a7c987654321fedcba0987",
+    "name": "Golden Metallic Balloons (Pack of 50)",
+    "slug": "golden-metallic-balloons-pack-of-50",
+    "category": "Balloons",
+    "price": 299,
+    "stock": 150
+  }
+}
+```
+
+---
+
+### 4. Update Product (`PUT /api/products/:id`) - Admin Only
+- **URL**: `http://localhost:5000/api/products/66a7c987654321fedcba0987`
+- **Method**: `PUT`
+- **Headers**:
+  - `Content-Type`: `application/json`
+  - `Authorization`: `Bearer <admin_jwt_token>`
 - **Request Body**:
 ```json
 {
-  "email": "jane@example.com",
-  "password": "password123"
+  "price": 249,
+  "stock": 200,
+  "isTrending": true
 }
 ```
 - **Success Response (`200 OK`)**:
 ```json
 {
   "success": true,
-  "message": "User authenticated successfully",
+  "message": "Product updated successfully",
   "data": {
-    "_id": "66a7b123456789abcdef0123",
-    "name": "Jane Doe",
-    "email": "jane@example.com",
-    "phone": "+19876543210",
-    "role": "user",
-    "profileImage": "",
-    "createdAt": "2026-07-29T12:00:00.000Z",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    "_id": "66a7c987654321fedcba0987",
+    "price": 249,
+    "stock": 200,
+    "isTrending": true
   }
 }
 ```
 
 ---
 
-### 3. Fetch User Profile (`GET /api/auth/profile`)
-- **URL**: `http://localhost:5000/api/auth/profile`
-- **Method**: `GET`
-- **Headers**: 
-  - `Authorization`: `Bearer <token_received_from_login_or_registration>`
+### 5. Delete Product (`DELETE /api/products/:id`) - Admin Only
+- **URL**: `http://localhost:5000/api/products/66a7c987654321fedcba0987`
+- **Method**: `DELETE`
+- **Headers**:
+  - `Authorization`: `Bearer <admin_jwt_token>`
 - **Success Response (`200 OK`)**:
 ```json
 {
   "success": true,
-  "message": "User profile retrieved successfully",
-  "data": {
-    "_id": "66a7b123456789abcdef0123",
-    "name": "Jane Doe",
-    "email": "jane@example.com",
-    "phone": "+19876543210",
-    "role": "user",
-    "profileImage": "",
-    "createdAt": "2026-07-29T12:00:00.000Z",
-    "updatedAt": "2026-07-29T12:00:00.000Z"
-  }
+  "message": "Product deleted successfully"
 }
 ```
-
----
-
-## 🔒 Security Features Implemented
-
-- **Password Hashing**: Passwords are automatically hashed prior to database persistence using `bcryptjs` with salt factor 10.
-- **JWT Protection**: Protected routes require a valid signed token passed via HTTP Bearer scheme.
-- **Data Exclusion**: User passwords are explicitly configured with `select: false` to ensure passwords are never returned in queries or API responses.
-- **Duplicate Prevention**: Email addresses are sanitized, lowercased, and enforced with MongoDB unique indexing.
-- **Validation**: Full validation for required fields, email format, password strength, and token expiration.
