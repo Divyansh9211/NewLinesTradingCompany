@@ -11,6 +11,7 @@ const errorHandler = require('./middleware/errorMiddleware');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const wishlistRoutes = require('./routes/wishlistRoutes');
 
 // Load Environment Variables
 dotenv.config();
@@ -55,6 +56,9 @@ app.use('/api/products', productRoutes);
 
 // Category Management API Routes
 app.use('/api/categories', categoryRoutes);
+
+// Wishlist Management API Routes
+app.use('/api/wishlist', wishlistRoutes);
 
 // 404 Handler for Undefined Routes
 app.use(notFound);
