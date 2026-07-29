@@ -20,9 +20,10 @@ const calculateShippingFee = (itemsSubtotal) => {
 /**
  * Calculates complete order summary financials
  * @param {Array} items - List of validated order items containing price and quantity
+ * @param {number} appliedDiscount - Optional coupon discount amount
  * @returns {object} Summary object with itemized calculations
  */
-const calculateCheckoutSummary = (items) => {
+const calculateCheckoutSummary = (items, appliedDiscount = 0) => {
   let itemsSubtotal = 0;
   let totalQuantity = 0;
 
@@ -45,8 +46,8 @@ const calculateCheckoutSummary = (items) => {
   itemsSubtotal = Number(itemsSubtotal.toFixed(2));
   const shippingFee = calculateShippingFee(itemsSubtotal);
   const tax = Number((itemsSubtotal * TAX_RATE).toFixed(2));
-  const discount = 0; // Placeholder for future promo coupon system
-  const grandTotal = Number((itemsSubtotal + shippingFee + tax - discount).toFixed(2));
+  const discount = Number((Math.max(0, appliedDiscount) || 0).toFixed(2));
+  const grandTotal = Number((Math.max(0, itemsSubtotal + shippingFee + tax - discount)).toFixed(2));
 
   return {
     itemizedList,

@@ -85,8 +85,27 @@ const getCheckoutSummary = async (req, res, next) => {
       );
     }
 
-    // 4. Centralized Financial Calculations
-    const checkoutFinancials = calculateCheckoutSummary(cart.items);
+    // 4. Validate and Apply Optional Coupon Code
+    const couponCode = req.body.couponCode || req.body.coupon || req.query.couponCode || req.query.coupon;
+    let appliedCoupon = null;
+    let discountAmount = 0;
+
+    // Calculate preliminary subtotal for coupon validation
+    let rawSubtotal = 0;
+    cart.items.forEach((item) => {
+      const price = item.price || (item.product ? item.product.price : 0);
+      rawSubtotal += price * item.quantity;
+    });
+
+    if (couponCode && String(couponCode).trim()) {
+      const { validateAndCalculateCoupon } = require('../utils/couponValidator');
+      const couponResult = await validateAndCalculateCoupon(couponCode, rawSubtotal, req.user._id);
+      appliedCoupon = couponResult.coupon;
+      discountAmount = couponResult.discountAmount;
+    }
+
+    // 5. Centralized Financial Calculations
+    const checkoutFinancials = calculateCheckoutSummary(cart.items, discountAmount);
 
     return res.status(200).json({
       success: true,
@@ -101,6 +120,8 @@ const getCheckoutSummary = async (req, res, next) => {
         isFreeShippingEligible: checkoutFinancials.isFreeShippingEligible,
         tax: checkoutFinancials.tax,
         discount: checkoutFinancials.discount,
+        couponCode: appliedCoupon ? appliedCoupon.code : null,
+        couponName: appliedCoupon ? appliedCoupon.name : null,
         grandTotal: checkoutFinancials.grandTotal,
       },
     });

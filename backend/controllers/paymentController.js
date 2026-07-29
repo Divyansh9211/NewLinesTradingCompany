@@ -198,8 +198,25 @@ const verifyPaymentAndCreateOrder = async (req, res, next) => {
       return next(new Error('Delivery address not found for order placement'));
     }
 
-    // 5. Calculate financial summary
-    const checkoutFinancials = calculateCheckoutSummary(cart.items);
+    // 5. Calculate financial summary and validate coupon if provided
+    const couponCode = req.body.couponCode || req.body.coupon;
+    let appliedCoupon = null;
+    let discountAmount = 0;
+
+    if (couponCode && String(couponCode).trim()) {
+      const { validateAndCalculateCoupon } = require('../utils/couponValidator');
+      let rawSubtotal = 0;
+      cart.items.forEach((item) => {
+        const price = item.price || (item.product ? item.product.price : 0);
+        rawSubtotal += price * item.quantity;
+      });
+
+      const couponResult = await validateAndCalculateCoupon(couponCode, rawSubtotal, req.user._id);
+      appliedCoupon = couponResult.coupon;
+      discountAmount = couponResult.discountAmount;
+    }
+
+    const checkoutFinancials = calculateCheckoutSummary(cart.items, discountAmount);
 
     // 6. Build product snapshots array
     const productSnapshots = cart.items.map((item) => {
@@ -249,14 +266,28 @@ const verifyPaymentAndCreateOrder = async (req, res, next) => {
       paidAt: new Date(),
     });
 
-    // 8. Safely decrement stock quantities for purchased products
+    // 8. Track and increment Coupon usage in MongoDB if a coupon was redeemed
+    if (appliedCoupon) {
+      appliedCoupon.usedCount += 1;
+      const userIdx = appliedCoupon.userUsage.findIndex(
+        (u) => u.user.toString() === req.user._id.toString()
+      );
+      if (userIdx > -1) {
+        appliedCoupon.userUsage[userIdx].count += 1;
+      } else {
+        appliedCoupon.userUsage.push({ user: req.user._id, count: 1 });
+      }
+      await appliedCoupon.save();
+    }
+
+    // 9. Safely decrement stock quantities for purchased products
     for (const item of cart.items) {
       await Product.findByIdAndUpdate(item.product._id, {
         $inc: { stock: -item.quantity },
       });
     }
 
-    // 9. Clear user's shopping cart after successful order creation
+    // 10. Clear user's shopping cart after successful order creation
     cart.items = [];
     cart.totalItems = 0;
     cart.cartTotal = 0;

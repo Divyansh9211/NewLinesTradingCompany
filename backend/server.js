@@ -18,6 +18,7 @@ const checkoutRoutes = require('./routes/checkoutRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const couponRoutes = require('./routes/couponRoutes');
 
 // Load Environment Variables
 dotenv.config();
@@ -83,6 +84,9 @@ app.use('/api/orders', orderRoutes);
 
 // Admin Dashboard & Business Analytics API Routes
 app.use('/api/admin', adminRoutes);
+
+// Coupons & Discount Management API Routes
+app.use('/api/coupons', couponRoutes);
 
 // 404 Handler for Undefined Routes
 app.use(notFound);
