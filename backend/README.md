@@ -1,6 +1,6 @@
-# Party Decoration E-Commerce Backend - Checkout, Address & Core Architecture (Phase 1 to 8)
+# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 9)
 
-This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, and slugify.
+This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, Razorpay SDK, and slugify.
 
 ---
 
@@ -10,13 +10,16 @@ This directory contains the production-ready backend for the **Party Decoration 
 backend/
 ├── config/
 │   ├── db.js                 # MongoDB Atlas connection module
-│   └── cloudinary.js         # Cloudinary configuration & helpers
+│   ├── cloudinary.js         # Cloudinary configuration & helpers
+│   └── razorpay.js           # Razorpay SDK initialization & HMAC signature verifier [NEW]
 ├── controllers/
-│   ├── addressController.js  # Address Management CRUD & default address handling [NEW]
+│   ├── addressController.js  # Address Management CRUD
 │   ├── authController.js     # User Authentication (register, login, profile)
 │   ├── cartController.js     # Shopping Cart Management
 │   ├── categoryController.js # Category Management CRUD
-│   ├── checkoutController.js # Checkout summary generation & inventory validation [NEW]
+│   ├── checkoutController.js # Checkout summary generation & inventory validation
+│   ├── orderController.js    # Order Management & history lookup [NEW]
+│   ├── paymentController.js  # Razorpay Order creation & payment verification [NEW]
 │   ├── productController.js  # Product Management CRUD & Image Management
 │   └── wishlistController.js # Wishlist Management
 ├── middleware/
@@ -25,37 +28,40 @@ backend/
 │   ├── notFoundMiddleware.js # 404 handler
 │   └── uploadMiddleware.js   # Multer file validation
 ├── models/
-│   ├── addressModel.js       # Address schema with phone & pincode validation [NEW]
+│   ├── addressModel.js       # Address schema
 │   ├── cartModel.js          # Shopping Cart schema
 │   ├── categoryModel.js      # Category schema with auto slugify hook
+│   ├── orderModel.js         # Order schema with product & address snapshots [NEW]
 │   ├── productModel.js       # Product schema (Category ObjectId ref & images array)
 │   ├── userModel.js          # User schema
 │   └── wishlistModel.js      # Wishlist schema
 ├── routes/
-│   ├── addressRoutes.js      # Address endpoints (/api/addresses) [NEW]
+│   ├── addressRoutes.js      # Address endpoints (/api/addresses)
 │   ├── authRoutes.js         # Auth endpoints (/api/auth)
 │   ├── cartRoutes.js         # Shopping Cart endpoints (/api/cart)
 │   ├── categoryRoutes.js     # Category endpoints (/api/categories)
-│   ├── checkoutRoutes.js     # Checkout endpoints (/api/checkout) [NEW]
+│   ├── checkoutRoutes.js     # Checkout endpoints (/api/checkout)
+│   ├── orderRoutes.js        # Order endpoints (/api/orders) [NEW]
+│   ├── paymentRoutes.js      # Payment endpoints (/api/payment) [NEW]
 │   ├── productRoutes.js      # Product endpoints (/api/products)
 │   └── wishlistRoutes.js     # Wishlist endpoints (/api/wishlist)
 ├── utils/
-│   ├── checkoutCalculator.js # Shipping fee & checkout financial calculation helper [NEW]
+│   ├── checkoutCalculator.js # Configurable shipping fee & checkout totals helper
 │   └── generateToken.js      # JWT signing helper
 ├── public/                   # Static directory
 ├── uploads/                  # Uploads directory
 ├── .env                      # Environment variables (ignored in Git)
 ├── .env.example              # Environment template
-├── package.json              # Project dependencies
+├── package.json              # Project dependencies (includes razorpay)
 ├── README.md                 # Technical documentation & testing guide
 └── server.js                 # Express application entry point
 ```
 
 ---
 
-## ⚙️ Environment Variables
+## ⚙️ Environment Variables Setup
 
-Ensure your `.env` file contains the following configuration:
+Ensure your `.env` file contains valid credentials:
 
 ```env
 PORT=5000
@@ -66,91 +72,61 @@ JWT_EXPIRES_IN=30d
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+
+# Razorpay API Credentials (Obtain from https://dashboard.razorpay.com/app/keys)
+RAZORPAY_KEY_ID=rzp_test_yourKeyIdHere
+RAZORPAY_KEY_SECRET=yourSecretKeyHere
 ```
 
 ---
 
-## 🏠 Address Management API Endpoints (`/api/addresses`)
+## 💳 Payment & Order Processing API Endpoints
 
-All Address endpoints require JWT Authentication via `Authorization: Bearer <token>` header. Addresses are isolated and strictly user-bound.
+All Payment and Order endpoints require JWT Authentication via `Authorization: Bearer <token>` header.
 
-| Method | Endpoint | Access | Required Header | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/addresses` | Private | `Authorization: Bearer <token>` | Retrieve all delivery addresses for logged-in user |
-| `GET` | `/api/addresses/:id` | Private | `Authorization: Bearer <token>` | Retrieve single delivery address by ID |
-| `POST` | `/api/addresses` | Private | `Authorization: Bearer <token>` | Create a new delivery address |
-| `PUT` | `/api/addresses/:id` | Private | `Authorization: Bearer <token>` | Update an existing delivery address |
-| `PUT` | `/api/addresses/:id/default` | Private | `Authorization: Bearer <token>` | Set target address as default delivery address |
-| `DELETE` | `/api/addresses/:id` | Private | `Authorization: Bearer <token>` | Delete a delivery address |
-
----
-
-## 💳 Checkout API Endpoints (`/api/checkout`)
+### 1. Payment API Endpoints (`/api/payment`)
 
 | Method | Endpoint | Access | Required Header | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/api/checkout/summary` | Private | `Authorization: Bearer <token>` | Validate inventory, verify address & generate order financial summary |
-| `GET` | `/api/checkout/summary` | Private | `Authorization: Bearer <token>` | Retrieve current order checkout summary |
+| `POST` | `/api/payment/create-order` | Private | `Authorization: Bearer <token>` | Validates cart/stock & creates a Razorpay Order ID |
+| `POST` | `/api/payment/verify` | Private | `Authorization: Bearer <token>` | Verifies HMAC signature, creates Order in DB, decrements stock & clears cart |
+
+### 2. Order Management API Endpoints (`/api/orders`)
+
+| Method | Endpoint | Access | Required Header | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `GET` | `/api/orders` | Private | `Authorization: Bearer <token>` | Retrieve logged-in user's order history |
+| `GET` | `/api/orders/:id` | Private | `Authorization: Bearer <token>` | Retrieve single order details by Order ID or Order Number |
 
 ---
 
-## ⚡ Configurable Shipping & Checkout Rules
+## 🔐 Razorpay Payment Verification Workflow
 
-- **Free Shipping Threshold**: Free shipping is automatically applied when `itemsSubtotal >= ₹999`.
-- **Standard Shipping Fee**: Fixed ₹50 shipping fee is applied when `itemsSubtotal < ₹999`.
-- **Inventory Validation**: Checkout verifies every product in the user's cart:
-  - Product must exist and be active (`product.isActive === true`).
-  - Product stock must be sufficient (`product.stock >= cartItem.quantity`).
-  - Rejects checkout with a `400 Bad Request` if any item is out of stock or unavailable.
-- **Address Resolution**: Checkout automatically uses the user's specified `addressId`, default address, or most recent address. Rejects checkout if no address is found (`400 Bad Request`).
+1. **Step 1: Create Razorpay Order (`POST /api/payment/create-order`)**
+   - Backend calculates exact grandTotal in paise (`amount * 100`) from cart and checkout calculator.
+   - Calls Razorpay SDK `razorpayInstance.orders.create({ amount, currency: 'INR' })`.
+   - Returns `razorpayOrderId`, `amount`, and `keyId` to client.
+
+2. **Step 2: Frontend Checkout Execution**
+   - Frontend opens Razorpay modal using returned `keyId`, `razorpayOrderId`, and `amount`.
+   - User completes payment via UPI, Credit/Debit Card, or Netbanking.
+   - Razorpay returns `razorpay_payment_id`, `razorpay_order_id`, and `razorpay_signature`.
+
+3. **Step 3: Signature Verification & Order Creation (`POST /api/payment/verify`)**
+   - Cryptographic verification via HMAC SHA256:
+     `crypto.createHmac('sha256', RAZORPAY_KEY_SECRET).update(razorpayOrderId + "|" + razorpayPaymentId).digest('hex')`
+   - If signature matches:
+     - Creates immutable Order document in MongoDB Atlas with product and address snapshots.
+     - Safely decrements product inventory (`stock -= quantity`).
+     - Empties user's shopping cart (`cart.items = []`).
+     - Returns `201 Created` with full order summary.
 
 ---
 
 ## 🧪 Testing Guide (Thunder Client / Postman)
 
-### 1. Create Delivery Address (`POST /api/addresses`)
-- **URL**: `http://localhost:5000/api/addresses`
-- **Method**: `POST`
-- **Headers**:
-  - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer <user_jwt_token>`
-- **Request Body**:
-```json
-{
-  "fullName": "Jane Doe",
-  "phone": "9876543210",
-  "street": "Flat 402, Sunshine Apartments, Green Park",
-  "landmark": "Near Metro Station",
-  "city": "New Delhi",
-  "state": "Delhi",
-  "pincode": "110016",
-  "addressType": "Home",
-  "isDefault": true
-}
-```
-- **Success Response (`201 Created`)**:
-```json
-{
-  "success": true,
-  "message": "Delivery address created successfully",
-  "data": {
-    "_id": "66a7e5554444333322221111",
-    "fullName": "Jane Doe",
-    "phone": "9876543210",
-    "street": "Flat 402, Sunshine Apartments, Green Park",
-    "city": "New Delhi",
-    "state": "Delhi",
-    "pincode": "110016",
-    "addressType": "Home",
-    "isDefault": true
-  }
-}
-```
-
----
-
-### 2. Generate Checkout Summary (`POST /api/checkout/summary`)
-- **URL**: `http://localhost:5000/api/checkout/summary`
+### 1. Create Razorpay Payment Order (`POST /api/payment/create-order`)
+- **URL**: `http://localhost:5000/api/payment/create-order`
 - **Method**: `POST`
 - **Headers**:
   - `Content-Type`: `application/json`
@@ -165,33 +141,78 @@ All Address endpoints require JWT Authentication via `Authorization: Bearer <tok
 ```json
 {
   "success": true,
-  "message": "Checkout summary generated successfully",
+  "message": "Razorpay order created successfully",
+  "keyId": "rzp_test_demoKeyId123",
+  "razorpayOrderId": "order_mock_1722241234_567",
+  "amount": 119600,
+  "currency": "INR",
+  "checkoutSummary": {
+    "grandTotal": 1196,
+    "totalItems": 4
+  }
+}
+```
+
+---
+
+### 2. Verify Payment & Create Order (`POST /api/payment/verify`)
+- **URL**: `http://localhost:5000/api/payment/verify`
+- **Method**: `POST`
+- **Headers**:
+  - `Content-Type`: `application/json`
+  - `Authorization`: `Bearer <user_jwt_token>`
+- **Request Body**:
+```json
+{
+  "razorpayOrderId": "order_mock_1722241234_567",
+  "razorpayPaymentId": "pay_mock_987654321",
+  "razorpaySignature": "mock_signature_for_test",
+  "addressId": "66a7e5554444333322221111"
+}
+```
+- **Success Response (`201 Created`)**:
+```json
+{
+  "success": true,
+  "message": "Payment verified and order placed successfully",
   "data": {
-    "deliveryAddress": {
-      "_id": "66a7e5554444333322221111",
-      "fullName": "Jane Doe",
-      "phone": "9876543210",
-      "city": "New Delhi"
-    },
+    "_id": "66a7f0001111222233334444",
+    "orderNumber": "ORD-20260729-4821",
+    "grandTotal": 1196,
+    "isPaid": true,
+    "paidAt": "2026-07-29T13:58:00.000Z",
+    "orderStatus": "Processing",
     "items": [
       {
-        "product": {
-          "_id": "66a7c987654321fedcba0987",
-          "name": "Golden Metallic Balloons (Pack of 50)",
-          "price": 299,
-          "stock": 150
-        },
+        "name": "Golden Metallic Balloons (Pack of 50)",
+        "price": 299,
         "quantity": 4,
         "itemSubtotal": 1196
       }
-    ],
-    "totalItems": 4,
-    "itemsSubtotal": 1196,
-    "shippingFee": 0,
-    "isFreeShippingEligible": true,
-    "tax": 0,
-    "discount": 0,
-    "grandTotal": 1196
+    ]
   }
+}
+```
+
+---
+
+### 3. Retrieve User Order History (`GET /api/orders`)
+- **URL**: `http://localhost:5000/api/orders`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization`: `Bearer <user_jwt_token>`
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "count": 1,
+  "data": [
+    {
+      "orderNumber": "ORD-20260729-4821",
+      "grandTotal": 1196,
+      "orderStatus": "Processing",
+      "createdAt": "2026-07-29T13:58:00.000Z"
+    }
+  ]
 }
 ```

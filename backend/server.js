@@ -15,6 +15,8 @@ const wishlistRoutes = require('./routes/wishlistRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const addressRoutes = require('./routes/addressRoutes');
 const checkoutRoutes = require('./routes/checkoutRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 // Load Environment Variables
 dotenv.config();
@@ -71,6 +73,12 @@ app.use('/api/addresses', addressRoutes);
 
 // Checkout API Routes
 app.use('/api/checkout', checkoutRoutes);
+
+// Payment API Routes
+app.use('/api/payment', paymentRoutes);
+
+// Order Management API Routes
+app.use('/api/orders', orderRoutes);
 
 // 404 Handler for Undefined Routes
 app.use(notFound);
