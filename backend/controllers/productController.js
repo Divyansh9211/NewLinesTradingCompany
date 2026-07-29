@@ -1,5 +1,6 @@
 const Product = require('../models/productModel');
 const mongoose = require('mongoose');
+const { uploadBufferToCloudinary, deleteFromCloudinary } = require('../config/cloudinary');
 
 /**
  * @desc    Fetch all products with search, filter, sort, and pagination
@@ -23,17 +24,14 @@ const getProducts = async (req, res, next) => {
       limit,
     } = req.query;
 
-    // Build Mongoose query filter object
     const query = {};
 
-    // By default, fetch active products unless explicitly filtered
     if (req.query.isActive !== undefined) {
       query.isActive = req.query.isActive === 'true';
     } else {
       query.isActive = true;
     }
 
-    // Keyword Search across Name, Short Description, and Category
     if (keyword) {
       query.$or = [
         { name: { $regex: keyword, $options: 'i' } },
@@ -43,22 +41,18 @@ const getProducts = async (req, res, next) => {
       ];
     }
 
-    // Category Filter
     if (category) {
       query.category = { $regex: new RegExp(`^${category}$`, 'i') };
     }
 
-    // Subcategory Filter
     if (subcategory) {
       query.subcategory = { $regex: new RegExp(`^${subcategory}$`, 'i') };
     }
 
-    // Brand Filter
     if (brand) {
       query.brand = { $regex: new RegExp(`^${brand}$`, 'i') };
     }
 
-    // Feature Flags Filter
     if (isFeatured !== undefined) {
       query.isFeatured = isFeatured === 'true';
     }
@@ -69,7 +63,6 @@ const getProducts = async (req, res, next) => {
       query.isBestSeller = isBestSeller === 'true';
     }
 
-    // Price Range Filter
     if (minPrice !== undefined || maxPrice !== undefined) {
       query.price = {};
       if (minPrice !== undefined && !isNaN(Number(minPrice))) {
@@ -80,8 +73,7 @@ const getProducts = async (req, res, next) => {
       }
     }
 
-    // Sorting Configuration
-    let sortOptions = { createdAt: -1 }; // default: newest first
+    let sortOptions = { createdAt: -1 };
 
     if (sortBy === 'price-asc') {
       sortOptions = { price: 1 };
@@ -93,12 +85,10 @@ const getProducts = async (req, res, next) => {
       sortOptions = { isBestSeller: -1, isTrending: -1, createdAt: -1 };
     }
 
-    // Pagination Configuration
     const pageNum = Math.max(1, parseInt(page, 10) || 1);
     const limitNum = Math.max(1, Math.min(100, parseInt(limit, 10) || 10));
     const skip = (pageNum - 1) * limitNum;
 
-    // Execute Database Queries
     const total = await Product.countDocuments(query);
     const products = await Product.find(query).sort(sortOptions).skip(skip).limit(limitNum);
 
@@ -127,7 +117,6 @@ const getProductById = async (req, res, next) => {
     const { id } = req.params;
     let product;
 
-    // Check if parameter is a valid Mongoose ObjectId, otherwise search by Slug
     if (mongoose.Types.ObjectId.isValid(id)) {
       product = await Product.findById(id);
     } else {
@@ -174,7 +163,6 @@ const createProduct = async (req, res, next) => {
       images,
     } = req.body;
 
-    // Validate required fields
     if (
       !name ||
       !category ||
@@ -191,7 +179,6 @@ const createProduct = async (req, res, next) => {
       );
     }
 
-    // Create product
     const product = await Product.create({
       name,
       category,
@@ -241,7 +228,6 @@ const updateProduct = async (req, res, next) => {
       return next(new Error('Product not found'));
     }
 
-    // Update fields if provided
     const fieldsToUpdate = [
       'name',
       'category',
@@ -290,7 +276,7 @@ const updateProduct = async (req, res, next) => {
 };
 
 /**
- * @desc    Delete a product
+ * @desc    Delete a product (also removes associated Cloudinary images)
  * @route   DELETE /api/products/:id
  * @access  Private/Admin
  */
@@ -310,11 +296,211 @@ const deleteProduct = async (req, res, next) => {
       return next(new Error('Product not found'));
     }
 
+    // Delete all associated Cloudinary images to prevent orphaned files
+    if (product.images && product.images.length > 0) {
+      for (const img of product.images) {
+        if (img.public_id) {
+          await deleteFromCloudinary(img.public_id);
+        }
+      }
+    }
+
     await product.deleteOne();
 
     return res.status(200).json({
       success: true,
-      message: 'Product deleted successfully',
+      message: 'Product and associated Cloudinary images deleted successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Upload image(s) to a product
+ * @route   POST /api/products/:id/images
+ * @access  Private/Admin
+ */
+const uploadProductImages = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400);
+      return next(new Error('Invalid Product ID format'));
+    }
+
+    const product = await Product.findById(id);
+    if (!product) {
+      res.status(404);
+      return next(new Error('Product not found'));
+    }
+
+    const files = req.files || (req.file ? [req.file] : []);
+
+    if (files.length === 0) {
+      res.status(400);
+      return next(new Error('Please select at least one image file to upload'));
+    }
+
+    // Upload each buffer to Cloudinary concurrently
+    const uploadPromises = files.map((file) => uploadBufferToCloudinary(file.buffer));
+    const uploadedResults = await Promise.all(uploadPromises);
+
+    // Append new image objects to existing product images array
+    product.images.push(...uploadedResults);
+    await product.save();
+
+    return res.status(200).json({
+      success: true,
+      message: `${uploadedResults.length} image(s) uploaded successfully to Cloudinary`,
+      uploadedImages: uploadedResults,
+      data: product,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Replace all images for a product with new uploads
+ * @route   PUT /api/products/:id/images
+ * @access  Private/Admin
+ */
+const replaceProductImages = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400);
+      return next(new Error('Invalid Product ID format'));
+    }
+
+    const product = await Product.findById(id);
+    if (!product) {
+      res.status(404);
+      return next(new Error('Product not found'));
+    }
+
+    const files = req.files || (req.file ? [req.file] : []);
+
+    if (files.length === 0) {
+      res.status(400);
+      return next(new Error('Please select replacement image files to upload'));
+    }
+
+    // Delete existing Cloudinary images
+    if (product.images && product.images.length > 0) {
+      for (const img of product.images) {
+        if (img.public_id) {
+          await deleteFromCloudinary(img.public_id);
+        }
+      }
+    }
+
+    // Upload new files to Cloudinary
+    const uploadPromises = files.map((file) => uploadBufferToCloudinary(file.buffer));
+    const uploadedResults = await Promise.all(uploadPromises);
+
+    // Replace product images
+    product.images = uploadedResults;
+    await product.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Product images replaced successfully',
+      data: product,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Delete a single image from a product by public_id
+ * @route   DELETE /api/products/:id/images
+ * @access  Private/Admin
+ */
+const deleteProductImage = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const public_id = req.body.public_id || req.query.public_id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400);
+      return next(new Error('Invalid Product ID format'));
+    }
+
+    if (!public_id) {
+      res.status(400);
+      return next(new Error('Please provide the public_id of the image to delete'));
+    }
+
+    const product = await Product.findById(id);
+    if (!product) {
+      res.status(404);
+      return next(new Error('Product not found'));
+    }
+
+    // Find target image in product.images array
+    const imageIndex = product.images.findIndex((img) => img.public_id === public_id);
+
+    if (imageIndex === -1) {
+      res.status(404);
+      return next(new Error('Image with specified public_id not found on this product'));
+    }
+
+    // Destroy image on Cloudinary
+    await deleteFromCloudinary(public_id);
+
+    // Remove image from Mongoose array
+    product.images.splice(imageIndex, 1);
+    await product.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Product image deleted from Cloudinary and database successfully',
+      data: product,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Delete all images from a product
+ * @route   DELETE /api/products/:id/images/all
+ * @access  Private/Admin
+ */
+const deleteAllProductImages = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400);
+      return next(new Error('Invalid Product ID format'));
+    }
+
+    const product = await Product.findById(id);
+    if (!product) {
+      res.status(404);
+      return next(new Error('Product not found'));
+    }
+
+    if (product.images && product.images.length > 0) {
+      for (const img of product.images) {
+        if (img.public_id) {
+          await deleteFromCloudinary(img.public_id);
+        }
+      }
+      product.images = [];
+      await product.save();
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'All product images deleted successfully',
+      data: product,
     });
   } catch (error) {
     next(error);
@@ -327,4 +513,8 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  uploadProductImages,
+  replaceProductImages,
+  deleteProductImage,
+  deleteAllProductImages,
 };
