@@ -8,6 +8,8 @@ const connectDB = require('./config/db');
 const notFound = require('./middleware/notFoundMiddleware');
 const errorHandler = require('./middleware/errorMiddleware');
 
+const authRoutes = require('./routes/authRoutes');
+
 // Load Environment Variables
 dotenv.config();
 
@@ -42,6 +44,9 @@ app.get('/', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Authentication API Routes
+app.use('/api/auth', authRoutes);
 
 // 404 Handler for Undefined Routes
 app.use(notFound);

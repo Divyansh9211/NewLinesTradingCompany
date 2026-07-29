@@ -1,6 +1,6 @@
-# Party Decoration E-Commerce Backend - Phase 1 (Foundation)
+# Party Decoration E-Commerce Backend - Authentication & Foundation (Phase 1 & Phase 2)
 
-This directory contains the production-ready backend foundation for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, and Mongoose.
+This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, and JSON Web Tokens (JWT).
 
 ---
 
@@ -10,97 +10,186 @@ This directory contains the production-ready backend foundation for the **Party 
 backend/
 ├── config/
 │   └── db.js                 # MongoDB Atlas asynchronous connection logic
-├── controllers/              # Business logic controllers (Phase 2+)
+├── controllers/
+│   └── authController.js     # User authentication handlers (register, login, get profile)
 ├── middleware/
+│   ├── authMiddleware.js     # JWT token protection (protect) & Admin role authorization (admin)
 │   ├── errorMiddleware.js    # Global centralized error handler
 │   └── notFoundMiddleware.js # 404 Route Not Found handler
-├── models/                   # Mongoose data schemas (Phase 2+)
-├── routes/                   # Express API endpoints (Phase 2+)
-├── utils/                    # Utility functions & helpers (Phase 2+)
+├── models/
+│   └── userModel.js          # Mongoose User Schema with password hashing & validation
+├── routes/
+│   └── authRoutes.js         # Authentication API routes (/api/auth)
+├── utils/
+│   └── generateToken.js      # JWT token signing utility
 ├── public/                   # Static assets directory
 ├── uploads/                  # Media upload storage directory
 ├── .env                      # Environment variables (ignored in Git)
 ├── .env.example              # Environment variables template
 ├── .gitignore                # Git exclusion specifications
 ├── package.json              # Project metadata & dependency manager
-├── README.md                 # Complete technical documentation
+├── README.md                 # Technical documentation & testing guide
 └── server.js                 # Express application entry point
 ```
 
 ---
 
-## ⚙️ Prerequisites
+## ⚙️ Prerequisites & Environment Variables
 
-- **Node.js** (v16.x or higher)
-- **npm** (v8.x or higher)
-- **MongoDB Atlas Account** with a valid connection string URI.
+Make sure your `.env` file contains the following configuration:
+
+```env
+# Server Configuration
+PORT=5000
+NODE_ENV=development
+
+# MongoDB Atlas Connection String
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/party_decoration?retryWrites=true&w=majority
+
+# JWT Authentication Secrets
+JWT_SECRET=supersecretjwtkey_party_decoration_2026_production_ready
+JWT_EXPIRES_IN=30d
+```
 
 ---
 
-## 🛠️ Installation & Setup
+## 🛠️ Installation & Execution
 
-1. **Navigate to the Backend Directory**:
+1. **Navigate to Backend Directory**:
    ```bash
-   cd backend
+   cd Party-Decoration-Website/backend
    ```
 
-2. **Install Required NPM Dependencies**:
+2. **Install Dependencies**:
    ```bash
    npm install
    ```
 
-3. **Configure Environment Variables**:
-   Copy `.env.example` to create `.env`:
+3. **Start Development Server**:
    ```bash
-   cp .env.example .env
+   npm run dev
    ```
-   Update `.env` with your MongoDB Atlas credentials:
-   ```env
-   PORT=5000
-   NODE_ENV=development
-   MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/party_decoration?retryWrites=true&w=majority
+
+4. **Start Production Server**:
+   ```bash
+   npm start
    ```
 
 ---
 
-## 🚀 Running the Server
+## 📡 API Endpoints Documentation
 
-- **Development Mode (with Nodemon auto-reload)**:
-  ```bash
-  npm run dev
-  ```
+### Base & Health Check Routes
 
-- **Production Mode**:
-  ```bash
-  npm start
-  ```
-
----
-
-## 📡 Base API Endpoints
-
-| Method | Endpoint | Description | Expected Response |
+| Method | Endpoint | Access | Description |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/` | Health Check | `{ "success": true, "message": "Party Decoration Backend API is running successfully", ... }` |
-| `GET` | `/*` | Invalid Route | `{ "success": false, "message": "Route Not Found - [GET] /..." }` (Status 404) |
+| `GET` | `/` | Public | System Health Check |
+
+### Authentication & Authorization Routes (`/api/auth`)
+
+| Method | Endpoint | Access | Header Required | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Public | None | Register a new user |
+| `POST` | `/api/auth/login` | Public | None | Log in existing user & obtain JWT token |
+| `GET` | `/api/auth/profile` | Protected | `Authorization: Bearer <token>` | Fetch logged-in user's profile details |
 
 ---
 
-## 📦 Installed Packages
+## 🧪 Testing Guide (Thunder Client / Postman)
 
-- **`express`**: Fast, unopinionated Web Framework for Node.js.
-- **`mongoose`**: Elegant MongoDB object modeling for Node.js.
-- **`dotenv`**: Zero-dependency module that loads environment variables from `.env`.
-- **`cors`**: Express middleware for enabling Cross-Origin Resource Sharing.
-- **`morgan`**: HTTP request logger middleware for Node.js.
-- **`nodemon`**: Development tool that automatically restarts the server on file changes.
+### 1. User Registration (`POST /api/auth/register`)
+- **URL**: `http://localhost:5000/api/auth/register`
+- **Method**: `POST`
+- **Headers**: `Content-Type: application/json`
+- **Request Body**:
+```json
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "password": "password123",
+  "phone": "+19876543210"
+}
+```
+- **Success Response (`201 Created`)**:
+```json
+{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "_id": "66a7b123456789abcdef0123",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "phone": "+19876543210",
+    "role": "user",
+    "profileImage": "",
+    "createdAt": "2026-07-29T12:00:00.000Z",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
 
 ---
 
-## 🎯 Phase 2 Readiness
+### 2. User Login (`POST /api/auth/login`)
+- **URL**: `http://localhost:5000/api/auth/login`
+- **Method**: `POST`
+- **Headers**: `Content-Type: application/json`
+- **Request Body**:
+```json
+{
+  "email": "jane@example.com",
+  "password": "password123"
+}
+```
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "message": "User authenticated successfully",
+  "data": {
+    "_id": "66a7b123456789abcdef0123",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "phone": "+19876543210",
+    "role": "user",
+    "profileImage": "",
+    "createdAt": "2026-07-29T12:00:00.000Z",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
 
-This foundational architecture provides:
-- Modular, decoupled directory layout.
-- Centralized error response pipeline.
-- Production-hardened MongoDB Atlas database connection logic.
-- Standardized CORS & JSON body parsing middleware.
+---
+
+### 3. Fetch User Profile (`GET /api/auth/profile`)
+- **URL**: `http://localhost:5000/api/auth/profile`
+- **Method**: `GET`
+- **Headers**: 
+  - `Authorization`: `Bearer <token_received_from_login_or_registration>`
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "message": "User profile retrieved successfully",
+  "data": {
+    "_id": "66a7b123456789abcdef0123",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "phone": "+19876543210",
+    "role": "user",
+    "profileImage": "",
+    "createdAt": "2026-07-29T12:00:00.000Z",
+    "updatedAt": "2026-07-29T12:00:00.000Z"
+  }
+}
+```
+
+---
+
+## 🔒 Security Features Implemented
+
+- **Password Hashing**: Passwords are automatically hashed prior to database persistence using `bcryptjs` with salt factor 10.
+- **JWT Protection**: Protected routes require a valid signed token passed via HTTP Bearer scheme.
+- **Data Exclusion**: User passwords are explicitly configured with `select: false` to ensure passwords are never returned in queries or API responses.
+- **Duplicate Prevention**: Email addresses are sanitized, lowercased, and enforced with MongoDB unique indexing.
+- **Validation**: Full validation for required fields, email format, password strength, and token expiration.
