@@ -1,29 +1,33 @@
-# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 14)
+# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 15)
 
-This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, Razorpay SDK, and slugify.
+This directory contains the production-ready, enterprise-grade backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, Razorpay SDK, Nodemailer, Winston, Helmet, Rate Limiter, Mongo Sanitize, and Swagger/OpenAPI.
 
 ---
 
-## 📁 Directory & File Structure
+## 📁 Complete Production Directory & File Structure
 
 ```
 backend/
 ├── config/
 │   ├── db.js                 # MongoDB Atlas connection module
 │   ├── cloudinary.js         # Cloudinary configuration & helpers
-│   └── razorpay.js           # Razorpay SDK initialization & HMAC signature verifier
+│   ├── envCheck.js           # Startup environment variables validation module [NEW]
+│   ├── logger.js             # Winston logger with error/combined log streams [NEW]
+│   ├── mailer.js             # Nodemailer transporter configuration [NEW]
+│   ├── razorpay.js           # Razorpay SDK initialization & HMAC signature verifier
+│   └── swagger.js            # OpenAPI / Swagger specification configuration [NEW]
 ├── controllers/
 │   ├── addressController.js  # Address Management CRUD
 │   ├── adminDashboardController.js # Admin Dashboard KPI Stats & Analytics
-│   ├── authController.js     # User Authentication (register, login, profile)
+│   ├── authController.js     # User Authentication & Welcome Email trigger [UPDATED]
 │   ├── cartController.js     # Shopping Cart Management
 │   ├── categoryController.js # Category Management CRUD
 │   ├── checkoutController.js # Checkout summary generation & inventory validation
 │   ├── couponController.js   # Customer Coupon Validation & Admin Coupon CRUD
 │   ├── orderController.js    # Customer & Admin Order Management
-│   ├── paymentController.js  # Razorpay Order creation & payment verification
+│   ├── paymentController.js  # Razorpay Order creation, payment verification & Order Confirmation Email [UPDATED]
 │   ├── productController.js  # Product Management, Search, Filters & Image Uploads
-│   ├── reviewController.js   # Customer & Admin Product Reviews & Ratings [NEW]
+│   ├── reviewController.js   # Customer & Admin Product Reviews & Ratings
 │   └── wishlistController.js # Wishlist Management
 ├── middleware/
 │   ├── authMiddleware.js     # JWT protect (with isBlocked check) & admin authorization
@@ -36,8 +40,8 @@ backend/
 │   ├── categoryModel.js      # Category schema with auto slugify hook
 │   ├── couponModel.js        # Coupon schema with usage limits & discount rules
 │   ├── orderModel.js         # Order schema with snapshots & statusHistory
-│   ├── productModel.js       # Product schema (with averageRating & numReviews fields) [UPDATED]
-│   ├── reviewModel.js        # Review schema (compound unique index for 1 review per product) [NEW]
+│   ├── productModel.js       # Product schema (text index, compound index, rating fields)
+│   ├── reviewModel.js        # Review schema (compound unique index for 1 review per product)
 │   ├── userModel.js          # User schema
 │   └── wishlistModel.js      # Wishlist schema
 ├── routes/
@@ -51,109 +55,115 @@ backend/
 │   ├── orderRoutes.js        # Customer & Admin Order endpoints (/api/orders)
 │   ├── paymentRoutes.js      # Payment endpoints (/api/payment)
 │   ├── productRoutes.js      # Product endpoints (/api/products & /api/products/search)
-│   ├── reviewRoutes.js       # Review & Rating endpoints (/api/reviews) [NEW]
+│   ├── reviewRoutes.js       # Review & Rating endpoints (/api/reviews)
 │   └── wishlistRoutes.js     # Wishlist endpoints (/api/wishlist)
 ├── utils/
 │   ├── checkoutCalculator.js # Configurable shipping fee & checkout totals helper
 │   ├── couponValidator.js    # Validation engine for dates, limits, and subtotals
+│   ├── emailService.js       # HTML email notification templates & dispatchers [NEW]
 │   ├── generateToken.js      # JWT signing helper
-│   └── ratingCalculator.js   # MongoDB aggregation engine for real-time rating stats [NEW]
+│   └── ratingCalculator.js   # MongoDB aggregation engine for real-time rating stats
+├── logs/                     # Winston structured application log files [NEW]
+│   ├── error.log
+│   └── combined.log
 ├── public/                   # Static directory
-├── uploads/                  # Uploads directory
+├── uploads/                  # Uploads storage directory
 ├── .env                      # Environment variables (ignored in Git)
 ├── .env.example              # Environment template
-├── package.json              # Project dependencies
+├── package.json              # Production project dependencies
 ├── README.md                 # Technical documentation & testing guide
-└── server.js                 # Express application entry point (mounted /api/reviews)
+└── server.js                 # Production Express application entry point [UPDATED]
 ```
 
 ---
 
-## ⭐ Reviews & Ratings API Endpoints (`/api/reviews`)
+## 🔒 Security & Production Hardening Features
 
-### 1. Public & Customer Review Endpoints
-
-| Method | Endpoint | Access | Required Header | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/reviews/product/:productId` | Public | None | Fetch paginated reviews for a product with 1-to-5 star rating breakdown metrics |
-| `POST` | `/api/reviews` | Private | `Authorization: Bearer <token>` | Submit product review (requires Verified Purchase from delivered/completed order) |
-| `GET` | `/api/reviews/my-reviews` | Private | `Authorization: Bearer <token>` | Fetch reviews submitted by the authenticated customer |
-| `PUT` | `/api/reviews/:id` | Private | `Authorization: Bearer <token>` | Update customer's own product review (recalculates product rating stats) |
-| `DELETE` | `/api/reviews/:id` | Private | `Authorization: Bearer <token>` | Delete customer's own product review (recalculates product rating stats) |
+1. **Helmet HTTP Security Headers**: Sets secure HTTP response headers (`X-Frame-Options`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `Strict-Transport-Security`).
+2. **API Rate Limiting**:
+   - `generalLimiter`: 200 requests per 15 minutes across all `/api/` endpoints.
+   - `authLimiter`: 30 requests per 15 minutes on `/api/auth` login/register routes to prevent brute-force attacks.
+3. **NoSQL Query Injection Protection**: `express-mongo-sanitize` strips `$` and `.` operators from incoming request payloads.
+4. **Environment Variable Checklist**: Startup validator `validateEnv()` checks required keys (`PORT`, `MONGO_URI`, `JWT_SECRET`) and logs status.
+5. **Centralized Logging**: `winston` outputs JSON logs to `logs/error.log` and `logs/combined.log`.
 
 ---
 
-### 2. Administrator Review Moderation Endpoints
+## 📧 Email Notification System
 
-| Method | Endpoint | Access | Required Header | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/reviews/admin/all` | Admin | `Authorization: Bearer <admin_token>` | Fetch all reviews across platform (`search`, `rating`, `productId`, `page`, `limit`) |
-| `DELETE` | `/api/reviews/admin/:id` | Admin | `Authorization: Bearer <admin_token>` | Delete any review violating platform guidelines and update product rating stats |
+Configured using Nodemailer with automatic SMTP integration or fallback test transporter:
 
----
-
-## 🔒 Verified Purchase & Rating Calculation Rules
-
-- **Verified Purchase Enforcement**: The backend verifies `Order.findOne({ user: userId, 'items.product': productId, isPaid: true })`. Non-purchasers or unconfirmed orders receive `403 Forbidden` (`Verified Purchase required. You can only review products from your delivered or completed orders.`).
-- **One Review Per Product**: Database-level compound unique index `reviewSchema.index({ product: 1, user: 1 }, { unique: true })` prevents duplicate reviews.
-- **Real-Time Aggregation Engine**: `updateProductRatingStats(productId)` recalculates `$avg: '$rating'` and `$sum: 1` (`numReviews`) on the Product document whenever a review is created, updated, or deleted.
+- `sendWelcomeEmail(user)`: Dispatched asynchronously upon new customer registration.
+- `sendPasswordResetEmail(user, resetToken)`: Dispatched for password recovery requests.
+- `sendOrderConfirmationEmail(user, order)`: Dispatched with itemized receipt table upon successful order payment.
+- `sendOrderStatusUpdateEmail(user, order, newStatus)`: Dispatched when admin updates order status.
 
 ---
 
-## 🧪 Testing Guide (Thunder Client / Postman)
+## 📖 Interactive Swagger / OpenAPI API Documentation
 
-### 1. Submit Product Review (`POST /api/reviews`)
-- **URL**: `http://localhost:5000/api/reviews`
-- **Method**: `POST`
-- **Headers**:
-  - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer <customer_jwt_token>`
-- **Request Body**:
-```json
-{
-  "productId": "66a7c987654321fedcba0987",
-  "rating": 5,
-  "title": "Stunning Balloons & High Quality!",
-  "comment": "The golden metallic balloons were fantastic for my daughter's birthday party. Highly recommended!"
-}
-```
-- **Success Response (`201 Created`)**:
-```json
-{
-  "success": true,
-  "message": "Product review submitted successfully",
-  "data": {
-    "_id": "66a7d1112223334445556667",
-    "rating": 5,
-    "title": "Stunning Balloons & High Quality!",
-    "comment": "The golden metallic balloons were fantastic for my daughter's birthday party. Highly recommended!",
-    "isVerifiedPurchase": true
-  }
-}
-```
+Interactive API documentation is generated dynamically via `swagger-jsdoc` and served using `swagger-ui-express`.
+
+- **Access URL**: `http://localhost:5000/api-docs`
 
 ---
 
-### 2. Fetch Product Reviews & Rating Breakdown (`GET /api/reviews/product/:productId`)
-- **URL**: `http://localhost:5000/api/reviews/product/66a7c987654321fedcba0987`
+## 🌐 Health & Monitoring Endpoint
+
+- **URL**: `http://localhost:5000/health` or `http://localhost:5000/`
 - **Method**: `GET`
-- **Success Response (`200 OK`)**:
+- **Response (`200 OK`)**:
 ```json
 {
   "success": true,
-  "count": 5,
-  "totalReviews": 5,
-  "totalPages": 1,
-  "currentPage": 1,
-  "averageRating": 4.8,
-  "numReviews": 5,
-  "ratingBreakdown": {
-    "1": 0,
-    "2": 0,
-    "3": 0,
-    "4": 1,
-    "5": 4
-  },
-  "data": [...]
+  "message": "Party Decoration Backend API is running successfully",
+  "environment": "development",
+  "uptime": 12.45,
+  "documentation": "http://localhost:5000/api-docs",
+  "timestamp": "2026-07-29T14:25:00.000Z"
 }
+```
+
+---
+
+## ⚙️ Environment Variables Setup (`.env`)
+
+Create a `.env` file in the `backend/` directory:
+
+```env
+NODE_ENV=development
+PORT=5000
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/party_decoration?retryWrites=true&w=majority
+JWT_SECRET=your_super_secret_jwt_key_12345
+JWT_EXPIRES_IN=30d
+
+# Cloudinary Storage
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_key
+CLOUDINARY_API_SECRET=your_cloudinary_secret
+
+# Razorpay Payments
+RAZORPAY_KEY_ID=rzp_test_your_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_secret
+
+# SMTP Email Notifications (Optional for Production)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_password
+EMAIL_FROM="Party Decoration Store" <noreply@partydecorations.com>
+```
+
+---
+
+## 🚀 Starting the Server
+
+### Development Mode:
+```bash
+npm run dev
+```
+
+### Production Mode:
+```bash
+npm start
 ```

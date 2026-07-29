@@ -52,6 +52,10 @@ const registerUser = async (req, res, next) => {
     if (user) {
       const token = generateToken(user._id);
 
+      // Trigger Welcome Email asynchronously in background (non-blocking)
+      const { sendWelcomeEmail } = require('../utils/emailService');
+      sendWelcomeEmail(user).catch((e) => console.error('[Background Email Error]', e.message));
+
       return res.status(201).json({
         success: true,
         message: 'User registered successfully',

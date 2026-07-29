@@ -293,6 +293,12 @@ const verifyPaymentAndCreateOrder = async (req, res, next) => {
     cart.cartTotal = 0;
     await cart.save();
 
+    // 11. Trigger Order Confirmation Email in background (non-blocking)
+    const { sendOrderConfirmationEmail } = require('../utils/emailService');
+    sendOrderConfirmationEmail(req.user, newOrder).catch((e) =>
+      console.error('[Background Email Error]', e.message)
+    );
+
     return res.status(201).json({
       success: true,
       message: 'Payment verified and order placed successfully',
