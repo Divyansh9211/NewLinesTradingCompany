@@ -12,6 +12,7 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const wishlistRoutes = require('./routes/wishlistRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 
 // Load Environment Variables
 dotenv.config();
@@ -59,6 +60,9 @@ app.use('/api/categories', categoryRoutes);
 
 // Wishlist Management API Routes
 app.use('/api/wishlist', wishlistRoutes);
+
+// Shopping Cart Management API Routes
+app.use('/api/cart', cartRoutes);
 
 // 404 Handler for Undefined Routes
 app.use(notFound);

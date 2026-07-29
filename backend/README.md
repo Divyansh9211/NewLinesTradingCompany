@@ -1,4 +1,4 @@
-# Party Decoration E-Commerce Backend - Wishlist & Core Modules (Phase 1 to 6)
+# Party Decoration E-Commerce Backend - Shopping Cart & Core Architecture (Phase 1 to 7)
 
 This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, and slugify.
 
@@ -15,7 +15,8 @@ backend/
 │   ├── authController.js     # User Authentication (register, login, profile)
 │   ├── categoryController.js # Category Management CRUD
 │   ├── productController.js  # Product Management CRUD & Image Management
-│   └── wishlistController.js # Wishlist Management (get, add, remove, check, clear) [NEW]
+│   ├── wishlistController.js # Wishlist Management
+│   └── cartController.js     # Shopping Cart Management (get, add, update, remove, clear) [NEW]
 ├── middleware/
 │   ├── authMiddleware.js     # JWT protect & admin authorization middlewares
 │   ├── errorMiddleware.js    # Global error handler
@@ -25,12 +26,14 @@ backend/
 │   ├── userModel.js          # User schema
 │   ├── categoryModel.js      # Category schema with auto slugify hook
 │   ├── productModel.js       # Product schema (with Category ObjectId ref & images array)
-│   └── wishlistModel.js      # Wishlist schema (User 1-to-1 ref & Product ObjectId array) [NEW]
+│   ├── wishlistModel.js      # Wishlist schema
+│   └── cartModel.js          # Shopping Cart schema (with item subtotals & cart total calculation) [NEW]
 ├── routes/
 │   ├── authRoutes.js         # Auth endpoints (/api/auth)
 │   ├── categoryRoutes.js     # Category endpoints (/api/categories)
 │   ├── productRoutes.js      # Product endpoints (/api/products)
-│   └── wishlistRoutes.js     # Wishlist endpoints (/api/wishlist) [NEW]
+│   ├── wishlistRoutes.js     # Wishlist endpoints (/api/wishlist)
+│   └── cartRoutes.js         # Shopping Cart endpoints (/api/cart) [NEW]
 ├── utils/
 │   └── generateToken.js      # JWT signing helper
 ├── public/                   # Static directory
@@ -39,7 +42,7 @@ backend/
 ├── .env.example              # Environment template
 ├── package.json              # Project dependencies
 ├── README.md                 # Technical documentation & testing guide
-└── server.js                 # Express application entry point (mounted /api/wishlist)
+└── server.js                 # Express application entry point (mounted /api/cart)
 ```
 
 ---
@@ -61,24 +64,32 @@ CLOUDINARY_API_SECRET=your_api_secret
 
 ---
 
-## 📡 Wishlist Management API Endpoints (`/api/wishlist`)
+## 🛒 Shopping Cart Management API Endpoints (`/api/cart`)
 
-All Wishlist API endpoints require JWT Authentication via `Authorization: Bearer <token>` header. Wishlists are isolated and strictly user-bound.
+All Shopping Cart endpoints require JWT Authentication via `Authorization: Bearer <token>` header. Carts are isolated and strictly user-bound.
 
 | Method | Endpoint | Access | Required Header | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/wishlist` | Private | `Authorization: Bearer <token>` | Retrieve logged-in user's wishlist (populated product & category details) |
-| `POST` | `/api/wishlist` | Private | `Authorization: Bearer <token>` | Add a product to logged-in user's wishlist |
-| `GET` | `/api/wishlist/check/:productId` | Private | `Authorization: Bearer <token>` | Check if a specific product is in logged-in user's wishlist |
-| `DELETE` | `/api/wishlist/:productId` | Private | `Authorization: Bearer <token>` | Remove a product from logged-in user's wishlist |
-| `DELETE` | `/api/wishlist/clear` | Private | `Authorization: Bearer <token>` | Clear all items from logged-in user's wishlist |
+| `GET` | `/api/cart` | Private | `Authorization: Bearer <token>` | Retrieve logged-in user's cart (populated products, subtotals, cartTotal) |
+| `POST` | `/api/cart` | Private | `Authorization: Bearer <token>` | Add product to cart (or increment quantity if already present) |
+| `PUT` | `/api/cart/item` | Private | `Authorization: Bearer <token>` | Update quantity of a product in user's cart |
+| `DELETE` | `/api/cart/:productId` | Private | `Authorization: Bearer <token>` | Remove a product from user's cart |
+| `DELETE` | `/api/cart/clear` | Private | `Authorization: Bearer <token>` | Clear all items from logged-in user's cart |
+
+---
+
+## ⚡ Inventory & Stock Validation Rules
+
+- **Stock Checking**: When adding a product or updating quantity, the system checks `product.stock`. If `quantity > product.stock`, a `400 Bad Request` validation error is returned.
+- **Auto Increment**: If the same product is added multiple times, the cart automatically increments the quantity instead of creating duplicate items.
+- **Price Snapshots**: Each cart item stores the unit price snapshot and auto-calculates `itemSubtotal = quantity * price`. The cart document automatically calculates `totalItems` and `cartTotal`.
 
 ---
 
 ## 🧪 Testing Guide (Thunder Client / Postman)
 
-### 1. Add Product to Wishlist (`POST /api/wishlist`)
-- **URL**: `http://localhost:5000/api/wishlist`
+### 1. Add Product to Shopping Cart (`POST /api/cart`)
+- **URL**: `http://localhost:5000/api/cart`
 - **Method**: `POST`
 - **Headers**:
   - `Content-Type`: `application/json`
@@ -86,83 +97,103 @@ All Wishlist API endpoints require JWT Authentication via `Authorization: Bearer
 - **Request Body**:
 ```json
 {
-  "productId": "66a7c987654321fedcba0987"
-}
-```
-- **Success Response (`200 OK`)**:
-```json
-{
-  "success": true,
-  "message": "Product added to wishlist successfully",
-  "count": 1,
-  "data": [
-    {
-      "_id": "66a7c987654321fedcba0987",
-      "name": "Golden Metallic Balloons (Pack of 50)",
-      "slug": "golden-metallic-balloons-pack-of-50",
-      "price": 299,
-      "stock": 150,
-      "category": {
-        "_id": "66a7d123456789abcdef0987",
-        "name": "Balloons & Foil Combos",
-        "slug": "balloons-and-foil-combos"
-      },
-      "images": [
-        {
-          "url": "https://res.cloudinary.com/demo/image/upload/v12345/balloon.jpg",
-          "public_id": "party_decoration_products/balloon_123"
-        }
-      ]
-    }
-  ]
-}
-```
-
----
-
-### 2. Retrieve User Wishlist (`GET /api/wishlist`)
-- **URL**: `http://localhost:5000/api/wishlist`
-- **Method**: `GET`
-- **Headers**:
-  - `Authorization`: `Bearer <user_jwt_token>`
-- **Success Response (`200 OK`)**:
-```json
-{
-  "success": true,
-  "count": 1,
-  "data": [
-    {
-      "_id": "66a7c987654321fedcba0987",
-      "name": "Golden Metallic Balloons (Pack of 50)",
-      "price": 299,
-      "category": {
-        "name": "Balloons & Foil Combos"
-      }
-    }
-  ]
-}
-```
-
----
-
-### 3. Check Product Wishlist Status (`GET /api/wishlist/check/:productId`)
-- **URL**: `http://localhost:5000/api/wishlist/check/66a7c987654321fedcba0987`
-- **Method**: `GET`
-- **Headers**:
-  - `Authorization`: `Bearer <user_jwt_token>`
-- **Success Response (`200 OK`)**:
-```json
-{
-  "success": true,
   "productId": "66a7c987654321fedcba0987",
-  "inWishlist": true
+  "quantity": 2
+}
+```
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "message": "Product added to cart successfully",
+  "count": 1,
+  "totalItems": 2,
+  "cartTotal": 598,
+  "data": {
+    "_id": "66a7e0001111222233334444",
+    "user": "66a7b123456789abcdef0123",
+    "totalItems": 2,
+    "cartTotal": 598,
+    "items": [
+      {
+        "product": {
+          "_id": "66a7c987654321fedcba0987",
+          "name": "Golden Metallic Balloons (Pack of 50)",
+          "slug": "golden-metallic-balloons-pack-of-50",
+          "price": 299,
+          "stock": 150,
+          "category": {
+            "name": "Balloons & Foil Combos"
+          }
+        },
+        "quantity": 2,
+        "price": 299,
+        "itemSubtotal": 598
+      }
+    ]
+  }
 }
 ```
 
 ---
 
-### 4. Remove Product from Wishlist (`DELETE /api/wishlist/:productId`)
-- **URL**: `http://localhost:5000/api/wishlist/66a7c987654321fedcba0987`
+### 2. Retrieve User Shopping Cart (`GET /api/cart`)
+- **URL**: `http://localhost:5000/api/cart`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization`: `Bearer <user_jwt_token>`
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "count": 1,
+  "totalItems": 2,
+  "cartTotal": 598,
+  "data": {
+    "items": [
+      {
+        "product": {
+          "name": "Golden Metallic Balloons (Pack of 50)",
+          "price": 299
+        },
+        "quantity": 2,
+        "price": 299,
+        "itemSubtotal": 598
+      }
+    ]
+  }
+}
+```
+
+---
+
+### 3. Update Cart Item Quantity (`PUT /api/cart/item`)
+- **URL**: `http://localhost:5000/api/cart/item`
+- **Method**: `PUT`
+- **Headers**:
+  - `Content-Type`: `application/json`
+  - `Authorization`: `Bearer <user_jwt_token>`
+- **Request Body**:
+```json
+{
+  "productId": "66a7c987654321fedcba0987",
+  "quantity": 5
+}
+```
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "message": "Cart item quantity updated successfully",
+  "totalItems": 5,
+  "cartTotal": 1495
+}
+```
+
+---
+
+### 4. Remove Product from Cart (`DELETE /api/cart/:productId`)
+- **URL**: `http://localhost:5000/api/cart/66a7c987654321fedcba0987`
 - **Method**: `DELETE`
 - **Headers**:
   - `Authorization`: `Bearer <user_jwt_token>`
@@ -170,8 +201,8 @@ All Wishlist API endpoints require JWT Authentication via `Authorization: Bearer
 ```json
 {
   "success": true,
-  "message": "Product removed from wishlist successfully",
-  "count": 0,
-  "data": []
+  "message": "Product removed from cart successfully",
+  "totalItems": 0,
+  "cartTotal": 0
 }
 ```
