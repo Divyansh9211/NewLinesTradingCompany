@@ -17,6 +17,7 @@ const addressRoutes = require('./routes/addressRoutes');
 const checkoutRoutes = require('./routes/checkoutRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 // Load Environment Variables
 dotenv.config();
@@ -79,6 +80,9 @@ app.use('/api/payment', paymentRoutes);
 
 // Order Management API Routes
 app.use('/api/orders', orderRoutes);
+
+// Admin Dashboard & Business Analytics API Routes
+app.use('/api/admin', adminRoutes);
 
 // 404 Handler for Undefined Routes
 app.use(notFound);

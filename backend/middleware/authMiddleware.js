@@ -27,6 +27,13 @@ const protect = async (req, res, next) => {
         return next(new Error('Not authorized. User no longer exists.'));
       }
 
+      if (user.isBlocked) {
+        res.status(403);
+        return next(
+          new Error('Your account has been blocked by an administrator. Please contact support.')
+        );
+      }
+
       req.user = user;
       return next();
     } catch (error) {

@@ -1,4 +1,4 @@
-# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 10)
+# Party Decoration E-Commerce Backend - Complete Production Architecture (Phase 1 to 11)
 
 This directory contains the production-ready backend for the **Party Decoration E-commerce Website**, built with Node.js, Express.js, MongoDB Atlas, Mongoose, bcryptjs, JWT authentication, Multer, Cloudinary, Razorpay SDK, and slugify.
 
@@ -14,16 +14,17 @@ backend/
 │   └── razorpay.js           # Razorpay SDK initialization & HMAC signature verifier
 ├── controllers/
 │   ├── addressController.js  # Address Management CRUD
+│   ├── adminDashboardController.js # Admin Dashboard KPI Stats, Analytics & User Block/Role [NEW]
 │   ├── authController.js     # User Authentication (register, login, profile)
 │   ├── cartController.js     # Shopping Cart Management
 │   ├── categoryController.js # Category Management CRUD
 │   ├── checkoutController.js # Checkout summary generation & inventory validation
-│   ├── orderController.js    # Customer & Admin Order Management [UPDATED]
+│   ├── orderController.js    # Customer & Admin Order Management
 │   ├── paymentController.js  # Razorpay Order creation & payment verification
 │   ├── productController.js  # Product Management CRUD & Image Management
 │   └── wishlistController.js # Wishlist Management
 ├── middleware/
-│   ├── authMiddleware.js     # JWT protect & admin authorization middlewares
+│   ├── authMiddleware.js     # JWT protect (with isBlocked check) & admin authorization [UPDATED]
 │   ├── errorMiddleware.js    # Global error handler
 │   ├── notFoundMiddleware.js # 404 handler
 │   └── uploadMiddleware.js   # Multer file validation
@@ -31,17 +32,18 @@ backend/
 │   ├── addressModel.js       # Address schema
 │   ├── cartModel.js          # Shopping Cart schema
 │   ├── categoryModel.js      # Category schema with auto slugify hook
-│   ├── orderModel.js         # Order schema (cancellation, statusHistory, snapshots) [UPDATED]
-│   ├── productModel.js       # Product schema (Category ObjectId ref & images array)
-│   ├── userModel.js          # User schema
+│   ├── orderModel.js         # Order schema with snapshots & statusHistory
+│   ├── productModel.js       # Product schema
+│   ├── userModel.js          # User schema (includes isBlocked field) [UPDATED]
 │   └── wishlistModel.js      # Wishlist schema
 ├── routes/
 │   ├── addressRoutes.js      # Address endpoints (/api/addresses)
+│   ├── adminRoutes.js        # Admin Dashboard & Business Analytics (/api/admin) [NEW]
 │   ├── authRoutes.js         # Auth endpoints (/api/auth)
 │   ├── cartRoutes.js         # Shopping Cart endpoints (/api/cart)
 │   ├── categoryRoutes.js     # Category endpoints (/api/categories)
 │   ├── checkoutRoutes.js     # Checkout endpoints (/api/checkout)
-│   ├── orderRoutes.js        # Customer & Admin Order endpoints (/api/orders) [UPDATED]
+│   ├── orderRoutes.js        # Customer & Admin Order endpoints (/api/orders)
 │   ├── paymentRoutes.js      # Payment endpoints (/api/payment)
 │   ├── productRoutes.js      # Product endpoints (/api/products)
 │   └── wishlistRoutes.js     # Wishlist endpoints (/api/wishlist)
@@ -54,110 +56,41 @@ backend/
 ├── .env.example              # Environment template
 ├── package.json              # Project dependencies
 ├── README.md                 # Technical documentation & testing guide
-└── server.js                 # Express application entry point
+└── server.js                 # Express application entry point (mounted /api/admin)
 ```
 
 ---
 
-## ⚙️ Environment Variables Setup
+## 📊 Admin Dashboard & Analytics API Endpoints (`/api/admin`)
 
-Ensure your `.env` file contains valid credentials:
+All Admin Dashboard and Business Analytics endpoints require JWT Authentication and Admin Role (`Authorization: Bearer <admin_token>`).
 
-```env
-PORT=5000
-NODE_ENV=development
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/party_decoration?retryWrites=true&w=majority
-JWT_SECRET=supersecretjwtkey_party_decoration_2026_production_ready
-JWT_EXPIRES_IN=30d
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-RAZORPAY_KEY_ID=rzp_test_yourKeyIdHere
-RAZORPAY_KEY_SECRET=yourSecretKeyHere
-```
-
----
-
-## 📦 Order Management API Endpoints (`/api/orders`)
-
-### 1. Customer Order Endpoints
+### 1. Dashboard KPI Metrics & Analytics Endpoints
 
 | Method | Endpoint | Access | Required Header | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/orders` | Private | `Authorization: Bearer <token>` | Fetch logged-in customer's order history (supports `status`, `page`, `limit`) |
-| `GET` | `/api/orders/my-orders` | Private | `Authorization: Bearer <token>` | Alias endpoint for customer order history |
-| `GET` | `/api/orders/:id` | Private | `Authorization: Bearer <token>` | Fetch single order details by Order ID or Order Number |
-| `PUT` | `/api/orders/:id/cancel` | Private | `Authorization: Bearer <token>` | Cancel an order (allowed for `Pending`, `Processing`, `Confirmed` states; restores stock) |
+| `GET` | `/api/admin/dashboard/stats` | Admin | `Authorization: Bearer <admin_token>` | Fetch real-time dashboard KPI metrics (Users, Products, Orders, Revenue, Inventory, Carts/Wishlists) |
+| `GET` | `/api/admin/analytics/revenue` | Admin | `Authorization: Bearer <admin_token>` | Fetch revenue analytics (Today, Weekly, Monthly, Yearly, Lifetime & 12-month trend) |
+| `GET` | `/api/admin/analytics/top-products` | Admin | `Authorization: Bearer <admin_token>` | Fetch top 10 best-selling products by quantity sold & total revenue |
+| `GET` | `/api/admin/analytics/categories` | Admin | `Authorization: Bearer <admin_token>` | Fetch category sales performance and revenue distribution |
+| `GET` | `/api/admin/analytics/recent-activity` | Admin | `Authorization: Bearer <admin_token>` | Fetch recent activity feed (5 recent orders & 5 recent user registrations) |
 
 ---
 
-### 2. Administrator Order Endpoints
+### 2. User Management Endpoints
 
 | Method | Endpoint | Access | Required Header | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/orders/admin/all` | Admin | `Authorization: Bearer <admin_token>` | Fetch all platform orders (supports `search`, `status`, `page`, `limit`, `sort`) |
-| `GET` | `/api/orders/admin/stats` | Admin | `Authorization: Bearer <admin_token>` | Fetch high-level order metrics summary (order counts by status, total revenue) |
-| `PUT` | `/api/orders/admin/:id/status` | Admin | `Authorization: Bearer <admin_token>` | Update order status with lifecycle transition validation |
-
----
-
-## 🔄 Order Lifecycle & Status Transition Rules
-
-Admins can update order statuses following valid transition paths:
-
-```
-Pending -------------> Confirmed -------> Packed -------> Shipped -------> Out for Delivery -------> Delivered
-   |                     |                   |
-   v                     v                   v
-Cancelled             Cancelled           Cancelled (Admin)               Delivered -------------> Returned -------------> Refunded
-```
-
-- **Allowed Transitions**:
-  - `Pending`: `Confirmed`, `Cancelled`
-  - `Processing`: `Confirmed`, `Packed`, `Cancelled`
-  - `Confirmed`: `Packed`, `Cancelled`
-  - `Packed`: `Shipped`, `Cancelled`
-  - `Shipped`: `Out for Delivery`, `Delivered`
-  - `Out for Delivery`: `Delivered`, `Returned`
-  - `Delivered`: `Returned`
-  - `Returned`: `Refunded`
-- **Invalid Transitions**: Direct skips like `Pending` -> `Delivered` or backwards updates like `Delivered` -> `Packed` return `400 Bad Request`.
-- **Stock Restoration**: Cancelling an order (or marking as Returned) automatically restores product inventory (`$inc: { stock: quantity }`) in MongoDB Atlas.
+| `GET` | `/api/admin/users` | Admin | `Authorization: Bearer <admin_token>` | Fetch registered users (supports `search`, `role`, `isBlocked`, `page`, `limit`) |
+| `PUT` | `/api/admin/users/:id/block` | Admin | `Authorization: Bearer <admin_token>` | Block or unblock a user account |
+| `PUT` | `/api/admin/users/:id/role` | Admin | `Authorization: Bearer <admin_token>` | Update a user's role (`user` / `admin`) |
 
 ---
 
 ## 🧪 Testing Guide (Thunder Client / Postman)
 
-### 1. Customer Cancel Order (`PUT /api/orders/:id/cancel`)
-- **URL**: `http://localhost:5000/api/orders/ORD-20260729-4821/cancel`
-- **Method**: `PUT`
-- **Headers**:
-  - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer <customer_jwt_token>`
-- **Request Body**:
-```json
-{
-  "reason": "Change of event date"
-}
-```
-- **Success Response (`200 OK`)**:
-```json
-{
-  "success": true,
-  "message": "Order cancelled successfully and product stock restored",
-  "data": {
-    "orderNumber": "ORD-20260729-4821",
-    "orderStatus": "Cancelled",
-    "cancellationReason": "Change of event date",
-    "isStockRestored": true
-  }
-}
-```
-
----
-
-### 2. Admin Get All Orders (`GET /api/orders/admin/all`)
-- **URL**: `http://localhost:5000/api/orders/admin/all?search=Jane&status=Processing&page=1&limit=10`
+### 1. Fetch Real-time Dashboard KPI Stats (`GET /api/admin/dashboard/stats`)
+- **URL**: `http://localhost:5000/api/admin/dashboard/stats`
 - **Method**: `GET`
 - **Headers**:
   - `Authorization`: `Bearer <admin_jwt_token>`
@@ -165,28 +98,63 @@ Cancelled             Cancelled           Cancelled (Admin)               Delive
 ```json
 {
   "success": true,
-  "count": 1,
-  "totalOrders": 1,
-  "totalPages": 1,
-  "currentPage": 1,
-  "data": [
-    {
-      "orderNumber": "ORD-20260729-4821",
-      "orderStatus": "Processing",
-      "grandTotal": 1196,
-      "user": {
-        "name": "Jane Doe",
-        "email": "jane@example.com"
+  "data": {
+    "users": {
+      "totalUsers": 25,
+      "totalAdmins": 2,
+      "blockedUsers": 1
+    },
+    "catalog": {
+      "totalProducts": 50,
+      "totalCategories": 8,
+      "lowStockProducts": 3,
+      "outOfStockProducts": 1
+    },
+    "orders": {
+      "totalOrders": 12,
+      "orderStatusCounts": {
+        "Processing": 2,
+        "Confirmed": 3,
+        "Delivered": 6,
+        "Cancelled": 1
       }
+    },
+    "financials": {
+      "totalRevenue": 14350.5
     }
-  ]
+  }
 }
 ```
 
 ---
 
-### 3. Admin Update Order Status (`PUT /api/orders/admin/:id/status`)
-- **URL**: `http://localhost:5000/api/orders/admin/ORD-20260729-4821/status`
+### 2. Fetch Revenue & Sales Trend Analytics (`GET /api/admin/analytics/revenue`)
+- **URL**: `http://localhost:5000/api/admin/analytics/revenue`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization`: `Bearer <admin_jwt_token>`
+- **Success Response (`200 OK`)**:
+```json
+{
+  "success": true,
+  "data": {
+    "summary": {
+      "today": { "revenue": 1196, "orderCount": 1 },
+      "weekly": { "revenue": 4500, "orderCount": 4 },
+      "monthly": { "revenue": 14350.5, "orderCount": 12 },
+      "lifetime": { "revenue": 14350.5, "orderCount": 12 }
+    },
+    "monthlyTrends": [
+      { "period": "2026-07", "revenue": 14350.5, "ordersCount": 12 }
+    ]
+  }
+}
+```
+
+---
+
+### 3. Block / Unblock User Account (`PUT /api/admin/users/:id/block`)
+- **URL**: `http://localhost:5000/api/admin/users/66a7b123456789abcdef0123/block`
 - **Method**: `PUT`
 - **Headers**:
   - `Content-Type`: `application/json`
@@ -194,25 +162,19 @@ Cancelled             Cancelled           Cancelled (Admin)               Delive
 - **Request Body**:
 ```json
 {
-  "status": "Packed",
-  "note": "Package sealed and labeled for dispatch"
+  "isBlocked": true
 }
 ```
 - **Success Response (`200 OK`)**:
 ```json
 {
   "success": true,
-  "message": "Order status updated to 'Packed' successfully",
+  "message": "User account 'John Doe' has been blocked successfully",
   "data": {
-    "orderNumber": "ORD-20260729-4821",
-    "orderStatus": "Packed",
-    "statusHistory": [
-      {
-        "status": "Packed",
-        "note": "Package sealed and labeled for dispatch",
-        "updatedBy": "Admin User"
-      }
-    ]
+    "_id": "66a7b123456789abcdef0123",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "isBlocked": true
   }
 }
 ```

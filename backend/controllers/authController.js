@@ -97,6 +97,13 @@ const loginUser = async (req, res, next) => {
 
     // Verify user presence and password match
     if (user && (await user.matchPassword(password))) {
+      if (user.isBlocked) {
+        res.status(403);
+        return next(
+          new Error('Your account has been blocked by an administrator. Please contact support.')
+        );
+      }
+
       const token = generateToken(user._id);
 
       return res.status(200).json({
