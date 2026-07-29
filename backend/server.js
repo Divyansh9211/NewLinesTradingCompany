@@ -1,6 +1,7 @@
+require('dotenv').config();
+
 const path = require('path');
 const express = require('express');
-const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
@@ -28,14 +29,8 @@ const adminRoutes = require('./routes/adminRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 
-// Load Environment Variables
-dotenv.config();
-
 // Startup Environment Variables Checklist Validation
 validateEnv();
-
-// Connect to MongoDB Atlas
-connectDB();
 
 // Initialize Express Application
 const app = express();
@@ -61,8 +56,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // API Rate Limiting Configuration
 const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200, // Limit each IP to 200 requests per 15 minutes
+  windowMs: 15 * 60 * 1000,
+  max: 200,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -72,8 +67,8 @@ const generalLimiter = rateLimit({
 });
 
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 30, // Limit authentication endpoints to 30 requests per 15 minutes
+  windowMs: 15 * 60 * 1000,
+  max: 30,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -106,7 +101,7 @@ app.get(['/', '/health'], (req, res) => {
     message: 'Party Decoration Backend API is running successfully',
     environment: process.env.NODE_ENV || 'development',
     uptime: process.uptime(),
-    documentation: 'http://localhost:5000/api-docs',
+    documentation: `http://localhost:${process.env.PORT || 5000}/api-docs`,
     timestamp: new Date().toISOString(),
   });
 });
@@ -136,16 +131,26 @@ app.use(errorHandler);
 // Define Server Port
 const PORT = process.env.PORT || 5000;
 
-// Start Express HTTP Server
-const server = app.listen(PORT, () => {
-  logger.info(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on http://localhost:${PORT}`);
-  console.log(`[Server] Interactive API Docs available at http://localhost:${PORT}/api-docs`);
-});
+// Connect to MongoDB Atlas first, then start Express HTTP Server
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Express server running on port ${PORT}`);
+      logger.info(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error(`Failed to start server due to database connection error: ${error.message}`);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 // Handle Unhandled Promise Rejections
 process.on('unhandledRejection', (err) => {
   logger.error(`[Unhandled Rejection] Error: ${err.message}`, { stack: err.stack });
-  server.close(() => process.exit(1));
+  process.exit(1);
 });
 
 module.exports = app;

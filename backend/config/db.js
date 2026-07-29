@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 /**
  * Establishes an asynchronous connection to MongoDB Atlas database.
- * Reads connection string from environment variables.
- * Gracefully terminates the process on failure.
+ * Reads connection string from MONGODB_URI environment variable.
  */
 const connectDB = async () => {
   try {
@@ -16,7 +15,8 @@ const connectDB = async () => {
 
     const conn = await mongoose.connect(mongoURI);
 
-    console.log(`[Database] MongoDB Atlas Connected: ${conn.connection.host}`);
+    console.log('MongoDB Connected Successfully');
+    return conn;
   } catch (error) {
     console.error(`[Database Error] Failed to connect to MongoDB Atlas: ${error.message}`);
     process.exit(1);

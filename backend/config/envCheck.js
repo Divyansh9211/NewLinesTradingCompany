@@ -2,7 +2,7 @@
  * Startup Environment Variables Validation Module
  */
 const validateEnv = () => {
-  const requiredVars = ['PORT', 'MONGO_URI', 'JWT_SECRET'];
+  const requiredVars = ['PORT', 'MONGODB_URI', 'JWT_SECRET'];
   const missingVars = [];
 
   requiredVars.forEach((key) => {
