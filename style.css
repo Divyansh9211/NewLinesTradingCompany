@@ -1233,18 +1233,29 @@ hr{
   transform: scale(1.08) !important;
 }
 
+/* Ensure section card images (Occasion, Categories, Best Sellers) cover full container, center perfectly, and have zero white space */
+.occasion-card .card-img-container img,
+.category-card .card-img-container img,
+.bestseller-card .card-img-container img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: transparent !important;
+}
+
 /* Special Handling for Foil Balloon Letter Set Images (HAPPY BIRTHDAY / HAPPY ANNIVERSARY) */
 .product-img-container img[src*="hbd"],
 .product-img-container img[src*="ann"],
-.card-img-container img[src*="hbd"],
-.card-img-container img[src*="ann"],
 .mini-card-img-box img[src*="hbd"],
 .mini-card-img-box img[src*="ann"],
 .main-image-display-container img[src*="hbd"],
 .main-image-display-container img[src*="ann"],
 img.foil-banner-img,
-.product-img-container.is-foil-set img,
-.card-img-container.is-foil-set img {
+.product-img-container.is-foil-set img {
   object-fit: contain !important;
   padding: 6px !important;
   background-color: #fafafa !important;
