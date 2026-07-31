@@ -259,4 +259,28 @@ function goToProduct(idOrSlug, event) {
     }
     if (!idOrSlug) return;
     window.location.href = `product.html?id=${idOrSlug}`;
-}
+}
+
+// Global navbar Wishlist & Cart click navigation handlers
+document.addEventListener('DOMContentLoaded', function() {
+    const navWishlist = document.querySelector('header nav .wishlist, nav .wishlist');
+    if (navWishlist) {
+        navWishlist.style.cursor = 'pointer';
+        navWishlist.addEventListener('click', function(e) {
+            // Avoid double navigation if clicking on link
+            if (!e.target.closest('a')) {
+                window.location.href = 'wishlist.html';
+            }
+        });
+    }
+
+    const navCart = document.querySelector('header nav .cart, nav .cart');
+    if (navCart) {
+        navCart.style.cursor = 'pointer';
+        navCart.addEventListener('click', function(e) {
+            if (!e.target.closest('a')) {
+                window.location.href = 'cart.html';
+            }
+        });
+    }
+});
