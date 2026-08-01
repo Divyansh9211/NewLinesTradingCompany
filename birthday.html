@@ -21,12 +21,15 @@
 
 <body>
 
-    <!-- Header/Navbar (Exactly Reused from index.html) -->
+    <!-- Header / Navbar (Unified – matches index.html) -->
     <header>
         <nav>
             <div class="nav-left">
-                <a href="index.html"> <img src="NLTClogo.png" alt="NLTC Logo" srcset=""></a>
-                <ul class="nav-menu">
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <a href="index.html"><img src="NLTClogo.png" alt="NLTC Logo"></a>
+                <ul class="nav-menu" id="nav-menu">
                     <li>Balloons</li>
                     <li>Party Poppers</li>
                     <li>Candles</li>
@@ -34,32 +37,50 @@
                     <li>Sashes</li>
                     <li class="love">Banners<span>New</span></li>
                 </ul>
-                <i class="fa-solid fa-bars"></i>
             </div>
-
             <div class="nav-right">
-                <div class="search-bar">
+                <div class="search-bar" id="main-search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" placeholder="Search for Party Decoration Items...">
                 </div>
-
+                <button class="search-icon-btn" id="search-icon-btn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
                 <div class="login">
                     <a href="login.html" class="loginbtn"><i class="fa-regular fa-user"></i></a>
-                    <a href="login.html"><p>Login / Sign up </p></a>
+                    <a href="login.html"><p>Login / Sign up</p></a>
                 </div>
-
                 <div class="wishlist">
-                    <i class="fa-regular fa-heart"></i>
-                    <p>Wishlist</p>
+                    <a href="wishlist.html" style="text-decoration:none;color:inherit;">
+                        <i class="fa-regular fa-heart"></i>
+                        <p>Wishlist</p>
+                    </a>
                 </div>
-
                 <div class="cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <p>Cart</p>
+                    <a href="cart.html" style="text-decoration:none;color:inherit;">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <p>Cart</p>
+                    </a>
                 </div>
-
             </div>
         </nav>
+        <!-- Tablet search overlay -->
+        <div class="tablet-search-overlay" id="tablet-search-overlay" role="search" aria-label="Search overlay">
+            <div class="tablet-search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="tablet-search-input" placeholder="Search for Party Decoration Items..." autocomplete="off" />
+            </div>
+            <button class="tablet-search-close-btn" id="tablet-search-close-btn" aria-label="Close search">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <!-- Mobile search row -->
+        <div class="mobile-search-row" id="mobile-search-row">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search for Party Decoration Items...">
+            </div>
+        </div>
     </header>
 
     <!-- Main Occasion Content Page Container -->

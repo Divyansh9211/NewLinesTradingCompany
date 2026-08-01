@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | New Lines Trading Company</title>
     <link rel="stylesheet" href="./about.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="bestlogo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,22 +20,66 @@
 </head>
 <body>
 
+    <!-- Header / Navbar (Unified - matches index.html) -->
     <header>
         <nav>
-            <div class="nav-bar">
-                <a href="index.html">
-                    <img class="logo" src="NLTClogo.png" alt="NLTC Logo">
-                </a>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="features.html">Features</a></li>
-                    <li><a href="contact.html">Contacts</a></li>
+            <div class="nav-left">
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <a href="index.html"><img src="NLTClogo.png" alt="NLTC Logo"></a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li>Balloons</li>
+                    <li>Party Poppers</li>
+                    <li>Candles</li>
+                    <li>Birthday Caps</li>
+                    <li>Sashes</li>
+                    <li class="love">Banners<span>New</span></li>
                 </ul>
-                <button class="btn1">Shop Now</button>
+            </div>
+            <div class="nav-right">
+                <div class="search-bar" id="main-search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search for Party Decoration Items...">
+                </div>
+                <button class="search-icon-btn" id="search-icon-btn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div class="login">
+                    <a href="login.html" class="loginbtn"><i class="fa-regular fa-user"></i></a>
+                    <a href="login.html"><p>Login / Sign up</p></a>
+                </div>
+                <div class="wishlist">
+                    <a href="wishlist.html" style="text-decoration:none;color:inherit;">
+                        <i class="fa-regular fa-heart"></i>
+                        <p>Wishlist</p>
+                    </a>
+                </div>
+                <div class="cart">
+                    <a href="cart.html" style="text-decoration:none;color:inherit;">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <p>Cart</p>
+                    </a>
+                </div>
             </div>
         </nav>
+        <!-- Tablet search overlay -->
+        <div class="tablet-search-overlay" id="tablet-search-overlay" role="search" aria-label="Search overlay">
+            <div class="tablet-search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="tablet-search-input" placeholder="Search for Party Decoration Items..." autocomplete="off" />
+            </div>
+            <button class="tablet-search-close-btn" id="tablet-search-close-btn" aria-label="Close search">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <!-- Mobile search row -->
+        <div class="mobile-search-row" id="mobile-search-row">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search for Party Decoration Items...">
+            </div>
+        </div>
     </header>
 
 <section class="about">
@@ -192,5 +237,6 @@
 
 
 
+    <script src="script.js"></script>
 </body>
 </html>

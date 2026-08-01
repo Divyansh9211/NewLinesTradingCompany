@@ -25,8 +25,12 @@
     <header>
         <nav>
             <div class="nav-left">
-                <a href="index.html"> <img src="NLTClogo.png" alt="" srcset=""></a>
-                <ul class="nav-menu">
+                <!-- Hamburger: shown only on mobile -->
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <a href="index.html"><img src="NLTClogo.png" alt="NLTC Logo"></a>
+                <ul class="nav-menu" id="nav-menu">
                     <li>Balloons</li>
                     <li>Party Poppers</li>
                     <li>Candles</li>
@@ -34,14 +38,19 @@
                     <li>Sashes</li>
                     <li class="love">Banners<span>New</span></li>
                 </ul>
-                <i class="fa-solid fa-bars"></i>
             </div>
 
             <div class="nav-right">
-                <div class="search-bar">
+                <!-- Full search bar: desktop & laptop -->
+                <div class="search-bar" id="main-search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" placeholder="Search for Party Decoration Items...">
                 </div>
+
+                <!-- Search icon only: tablet portrait -->
+                <button class="search-icon-btn" id="search-icon-btn" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
 
                 <div class="login">
                     <a href="login.html" class="loginbtn"><i class="fa-regular fa-user"></i></a>
@@ -61,41 +70,56 @@
                         <p>Cart</p>
                     </a>
                 </div>
-
             </div>
         </nav>
+
+        <!-- Tablet search overlay: slides down when search icon is clicked (768–1023px) -->
+        <div class="tablet-search-overlay" id="tablet-search-overlay" role="search" aria-label="Search overlay">
+            <div class="tablet-search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="tablet-search-input" placeholder="Search for Party Decoration Items..." autocomplete="off" />
+            </div>
+            <button class="tablet-search-close-btn" id="tablet-search-close-btn" aria-label="Close search">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Mobile search row: visible only on mobile (≤767px) -->
+        <div class="mobile-search-row" id="mobile-search-row">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search for Party Decoration Items...">
+            </div>
+        </div>
     </header>
 
 
-    <div class="carousel">
+
+    <div class="carousel" id="hero-carousel">
         <div class="list">
             <div class="item" style="background-image: url('banner2.png');">
                 <div class="content">
                     <div class="title"></div>
                     <div class="name"></div>
-                    <div class="des">
-                    </div>
+                    <div class="des"></div>
                     <div class="btn">
-                        <button>Best Sellers</button>
-                        <button>Shop Now</button>
+                        <button class="btn-bestsellers" onclick="scrollToBestSellers(event)">Best Sellers</button>
+                        <button class="btn-shopnow" onclick="location.href='products.html'">Shop Now</button>
                     </div>
                 </div>
             </div>
-
 
             <div class="item" style="background-image: url('banner14.png');">
                 <div class="content">
                     <div class="title"></div>
                     <div class="name"></div>
-                    <div class="des">
-                    </div>
+                    <div class="des"></div>
                     <div class="btn">
-                        <button>Best Sellers</button>
-                        <button>Shop Now</button>
+                        <button class="btn-bestsellers" onclick="scrollToBestSellers(event)">Best Sellers</button>
+                        <button class="btn-shopnow" onclick="location.href='products.html'">Shop Now</button>
                     </div>
                 </div>
             </div>
-
 
             <div class="item" style="background-image: url('captainamerica.png');">
                 <div class="content">
@@ -103,12 +127,11 @@
                     <div class="name"></div>
                     <div class="des"></div>
                     <div class="btn">
-                        <button>Best Sellers</button>
-                        <button>Shop Now</button>
+                        <button class="btn-bestsellers" onclick="scrollToBestSellers(event)">Best Sellers</button>
+                        <button class="btn-shopnow" onclick="location.href='products.html'">Shop Now</button>
                     </div>
                 </div>
             </div>
-
 
             <div class="item" style="background-image: url('banner5.png');">
                 <div class="content">
@@ -116,52 +139,47 @@
                     <div class="name"></div>
                     <div class="des"></div>
                     <div class="btn">
-                        <button>Best Sellers</button>
-                        <button>Shop Now</button>
+                        <button class="btn-bestsellers" onclick="scrollToBestSellers(event)">Best Sellers</button>
+                        <button class="btn-shopnow" onclick="location.href='products.html'">Shop Now</button>
                     </div>
                 </div>
             </div>
-
 
             <div class="item" style="background-image: url('banner6.png');">
                 <div class="content">
                     <div class="title"></div>
                     <div class="name"></div>
-                    <div class="des" style="color:white; stroke:black;">
-                    </div>
+                    <div class="des" style="color:white; stroke:black;"></div>
                     <div class="btn">
-                        <button>Best Sellers</button>
-                        <button>Shop Now</button>
-                    </div>
-                </div>
-            </div>
-            <div class="item" style="background-image: url('banner7.png');">
-                <div class="content">
-                    <div class="title"></div>
-                    <div class="name"></div>
-                    <div class="des">
-                    </div>
-                    <div class="btn">
-                        <button>Best Sellers</button>
-                        <button>Shop Now</button>
+                        <button class="btn-bestsellers" onclick="scrollToBestSellers(event)">Best Sellers</button>
+                        <button class="btn-shopnow" onclick="location.href='products.html'">Shop Now</button>
                     </div>
                 </div>
             </div>
 
+            <div class="item" style="background-image: url('banner7.png');">
+                <div class="content">
+                    <div class="title"></div>
+                    <div class="name"></div>
+                    <div class="des"></div>
+                    <div class="btn">
+                        <button class="btn-bestsellers" onclick="scrollToBestSellers(event)">Best Sellers</button>
+                        <button class="btn-shopnow" onclick="location.href='products.html'">Shop Now</button>
+                    </div>
+                </div>
+            </div>
 
             <div class="item" style="background-image: url('banner11.png');">
                 <div class="content">
                     <div class="title"></div>
                     <div class="name"></div>
-                    <div class="des">
-                    </div>
+                    <div class="des"></div>
                     <div class="btn">
-                        <button>Best Sellers</button>
-                        <button>Shop Now</button>
+                        <button class="btn-bestsellers" onclick="scrollToBestSellers(event)">Best Sellers</button>
+                        <button class="btn-shopnow" onclick="location.href='products.html'">Shop Now</button>
                     </div>
                 </div>
             </div>
-
 
             <div class="item" style="background-image: url('banner12.png');">
                 <div class="content">
@@ -169,25 +187,27 @@
                     <div class="name"></div>
                     <div class="des"></div>
                     <div class="btn">
-                        <button>Best Sellers</button>
-                        <button>Shop Now </button>
+                        <button class="btn-bestsellers" onclick="scrollToBestSellers(event)">Best Sellers</button>
+                        <button class="btn-shopnow" onclick="location.href='products.html'">Shop Now</button>
                     </div>
                 </div>
             </div>
 
-
+            <!-- time running (inside rounded banner to prevent overflow) -->
+            <div class="timerunning"></div>
         </div>
 
-        <!--next prev button -->
+        <!-- next prev button -->
         <div class="arrows">
-            <button class="prev">
-                < </button>
-                    <button class="next ">></button>
+            <button class="prev">&lt;</button>
+            <button class="next">&gt;</button>
         </div>
 
-        <!-- time running -->
-        <div class="timerunning"></div>
+        <!-- Pagination Dots -->
+        <div class="carousel-dots"></div>
 
+        <!-- Horizontal Preview Thumbnails Row -->
+        <div class="carousel-thumbnails-mobile"></div>
     </div>
 
 

@@ -1,61 +1,284 @@
+// Smooth Scroll helper to existing Best Sellers section
+function scrollToBestSellers(e) {
+    if (e) {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+    }
+    const target = document.querySelector('.shop-by-bestseller-section') || document.getElementById('bestsellers-section');
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// ── Hamburger / Mobile Menu Toggle ──
+(function () {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (!hamburgerBtn || !navMenu) return;
+
+    hamburgerBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = navMenu.classList.toggle('active');
+        // Switch icon: bars ↔ X
+        const icon = hamburgerBtn.querySelector('i');
+        if (icon) {
+            icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+        }
+    });
+
+    // Close menu on outside click
+    document.addEventListener('click', function (e) {
+        if (!hamburgerBtn.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('active');
+            const icon = hamburgerBtn.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars';
+        }
+    });
+
+    // Close menu when a nav item is clicked
+    navMenu.querySelectorAll('li').forEach(function (li) {
+        li.addEventListener('click', function () {
+            navMenu.classList.remove('active');
+            const icon = hamburgerBtn.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars';
+        });
+    });
+})();
+
+
+// ── Tablet Search Icon Overlay Toggle ──
+(function () {
+    var searchIconBtn   = document.getElementById('search-icon-btn');
+    var tabletOverlay   = document.getElementById('tablet-search-overlay');
+    var tabletInput     = document.getElementById('tablet-search-input');
+    var tabletCloseBtn  = document.getElementById('tablet-search-close-btn');
+
+    if (!searchIconBtn || !tabletOverlay || !tabletInput) return;
+
+    function openTabletSearch() {
+        tabletOverlay.classList.add('open');
+        searchIconBtn.classList.add('active');
+        // Auto-focus with a tiny delay to let the animation start first
+        setTimeout(function () { tabletInput.focus(); }, 80);
+    }
+
+    function closeTabletSearch() {
+        tabletOverlay.classList.remove('open');
+        searchIconBtn.classList.remove('active');
+        tabletInput.value = '';
+    }
+
+    // Toggle on search icon click
+    searchIconBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (tabletOverlay.classList.contains('open')) {
+            closeTabletSearch();
+        } else {
+            openTabletSearch();
+        }
+    });
+
+    // Close on ✕ button click
+    if (tabletCloseBtn) {
+        tabletCloseBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            closeTabletSearch();
+        });
+    }
+
+    // Close on outside click
+    document.addEventListener('click', function (e) {
+        if (
+            tabletOverlay.classList.contains('open') &&
+            !tabletOverlay.contains(e.target) &&
+            !searchIconBtn.contains(e.target)
+        ) {
+            closeTabletSearch();
+        }
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && tabletOverlay.classList.contains('open')) {
+            closeTabletSearch();
+        }
+    });
+
+    // Trigger search on Enter key
+    tabletInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            performSearch(tabletInput.value);
+        }
+    });
+
+    // Trigger search on icon click inside overlay
+    var tabletSearchIcon = tabletOverlay.querySelector('.tablet-search-bar i');
+    if (tabletSearchIcon) {
+        tabletSearchIcon.style.cursor = 'pointer';
+        tabletSearchIcon.addEventListener('click', function () {
+            performSearch(tabletInput.value);
+        });
+    }
+})();
+
+
 var nextBtn = document.querySelector('.next'),
     prevBtn = document.querySelector('.prev'),
     carousel = document.querySelector('.carousel'),
     list = document.querySelector('.list'), 
     item = document.querySelectorAll('.item'),
-    runningTime = document.querySelector('.carousel .timerunning') 
+    runningTime = document.querySelector('.carousel .timerunning');
 
-let timeRunning = 3000 
-let timeAutoNext = 7000
-let runTimeOut 
-let runNextAuto 
+let timeRunning = 3000;
+let timeAutoNext = 7000;
+let runTimeOut;
+let runNextAuto;
 
 if (carousel && nextBtn && prevBtn && list && runningTime) {
-    nextBtn.onclick = function(){
-        showSlider('next')
+    const originalItems = Array.from(list.querySelectorAll('.item'));
+    const totalSlides = originalItems.length;
+    let activeIndex = 0;
+
+    const dotsContainer = document.querySelector('.carousel-dots');
+    const mobileThumbnailsContainer = document.querySelector('.carousel-thumbnails-mobile');
+
+    function initMobileCarouselUI() {
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = `dot ${i === activeIndex ? 'active' : ''}`;
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        if (mobileThumbnailsContainer) {
+            mobileThumbnailsContainer.innerHTML = '';
+            originalItems.forEach((slideItem, idx) => {
+                const bgImg = slideItem.style.backgroundImage;
+                const thumb = document.createElement('div');
+                thumb.className = `mobile-thumb-card ${idx === activeIndex ? 'active' : ''}`;
+                thumb.style.backgroundImage = bgImg;
+                thumb.addEventListener('click', () => goToSlide(idx));
+                mobileThumbnailsContainer.appendChild(thumb);
+            });
+        }
     }
+
+    function updateMobileCarouselUI() {
+        const currentItems = list.querySelectorAll('.item');
+        if (currentItems.length > 0) {
+            // Main visible item on display
+            const activeItem = currentItems[0];
+            const currentOriginalIdx = originalItems.indexOf(activeItem);
+            if (currentOriginalIdx !== -1) {
+                activeIndex = currentOriginalIdx;
+            }
+        }
+
+        if (dotsContainer) {
+            const dots = dotsContainer.querySelectorAll('.dot');
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === activeIndex);
+            });
+        }
+
+        if (mobileThumbnailsContainer) {
+            const thumbs = mobileThumbnailsContainer.querySelectorAll('.mobile-thumb-card');
+            thumbs.forEach((thumb, idx) => {
+                thumb.classList.toggle('active', idx === activeIndex);
+            });
+            const activeThumb = mobileThumbnailsContainer.querySelector('.mobile-thumb-card.active');
+            if (activeThumb) {
+                activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }
+    }
+
+    function goToSlide(targetIdx) {
+        const currentItems = list.querySelectorAll('.item');
+        if (currentItems.length === 0) return;
+        const currentFirstItem = currentItems[0];
+        const currentOriginalIdx = originalItems.indexOf(currentFirstItem);
+        if (currentOriginalIdx === targetIdx) return;
+
+        let steps = (targetIdx - currentOriginalIdx + totalSlides) % totalSlides;
+        for (let i = 0; i < steps; i++) {
+            showSlider('next');
+        }
+    }
+
+    nextBtn.onclick = function(){
+        showSlider('next');
+    };
 
     prevBtn.onclick = function(){
-        showSlider('prev')
-    }
+        showSlider('prev');
+    };
 
     runNextAuto = setTimeout(() => {
-        nextBtn.click()
-    }, timeAutoNext)
+        nextBtn.click();
+    }, timeAutoNext);
 
     function resetTimeAnimation() {
-        runningTime.style.animation = 'none'
-        runningTime.offsetHeight /* trigger reflow */
-        runningTime.style.animation = null 
-        runningTime.style.animation = 'runningTime 7s linear 1 forwards'
+        runningTime.style.animation = 'none';
+        runningTime.offsetHeight; /* trigger reflow */
+        runningTime.style.animation = null;
+        runningTime.style.animation = 'runningTime 7s linear 1 forwards';
     }
 
     function showSlider(type) {
-        let sliderItemsDom = list.querySelectorAll('.carousel .list .item')
-        if(type === 'next'){
-            list.appendChild(sliderItemsDom[0])
-            carousel.classList.add('next')
-        } else{
-            list.prepend(sliderItemsDom[sliderItemsDom.length - 1])
-            carousel.classList.add('prev')
+        let sliderItemsDom = list.querySelectorAll('.carousel .list .item');
+        if (type === 'next'){
+            list.appendChild(sliderItemsDom[0]);
+            carousel.classList.add('next');
+        } else {
+            list.prepend(sliderItemsDom[sliderItemsDom.length - 1]);
+            carousel.classList.add('prev');
         }
 
-        clearTimeout(runTimeOut)
+        clearTimeout(runTimeOut);
         runTimeOut = setTimeout(()=>{
-            carousel.classList.remove('next')
-            carousel.classList.remove('prev')
-        }, timeAutoNext)
+            carousel.classList.remove('next');
+            carousel.classList.remove('prev');
+        }, timeAutoNext);
 
-        clearTimeout(runNextAuto)
+        clearTimeout(runNextAuto);
         runNextAuto = setTimeout(()=>{
-            nextBtn.click()
-        }, timeAutoNext)
+            nextBtn.click();
+        }, timeAutoNext);
 
-        resetTimeAnimation() //reset the running time animation
+        resetTimeAnimation();
+        updateMobileCarouselUI();
     }
 
-    //Start the initial animation
-    resetTimeAnimation()
+    // Touch Swipe Gestures for Mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const swipeThreshold = 40;
+        if (touchEndX < touchStartX - swipeThreshold) {
+            showSlider('next');
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+            showSlider('prev');
+        }
+    }
+
+    // Initialize UI
+    initMobileCarouselUI();
+    resetTimeAnimation();
 }
 
 // Mobile dropdown menu toggle
