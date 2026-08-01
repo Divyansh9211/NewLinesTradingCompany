@@ -316,7 +316,10 @@ let runNextAuto;
 if (carousel && nextBtn && prevBtn && list && runningTime) {
     const originalItems = Array.from(list.querySelectorAll('.item'));
     const totalSlides = originalItems.length;
-    let activeIndex = 0;
+    // The CSS shows BOTH nth-child(1) and nth-child(2) at opacity:1 with the same z-index.
+    // Since they're position:absolute at the same coordinates, nth-child(2) (later in DOM)
+    // paints on top — so the visually active slide is always list.children[1] = originalItems[1].
+    let activeIndex = 1;
 
     const dotsContainer = document.querySelector('.carousel-dots');
     const mobileThumbnailsContainer = document.querySelector('.carousel-thumbnails-mobile');
@@ -345,17 +348,8 @@ if (carousel && nextBtn && prevBtn && list && runningTime) {
         }
     }
 
+    // activeIndex is the single source of truth – always set explicitly before calling this
     function updateMobileCarouselUI() {
-        const currentItems = list.querySelectorAll('.item');
-        if (currentItems.length > 0) {
-            // Main visible item on display
-            const activeItem = currentItems[0];
-            const currentOriginalIdx = originalItems.indexOf(activeItem);
-            if (currentOriginalIdx !== -1) {
-                activeIndex = currentOriginalIdx;
-            }
-        }
-
         if (dotsContainer) {
             const dots = dotsContainer.querySelectorAll('.dot');
             dots.forEach((dot, idx) => {
@@ -376,16 +370,40 @@ if (carousel && nextBtn && prevBtn && list && runningTime) {
     }
 
     function goToSlide(targetIdx) {
+        if (targetIdx === activeIndex) return;
         const currentItems = list.querySelectorAll('.item');
         if (currentItems.length === 0) return;
-        const currentFirstItem = currentItems[0];
-        const currentOriginalIdx = originalItems.indexOf(currentFirstItem);
-        if (currentOriginalIdx === targetIdx) return;
 
-        let steps = (targetIdx - currentOriginalIdx + totalSlides) % totalSlides;
+        // Calculate the minimum 'next' steps needed to reach targetIdx from activeIndex
+        let steps = (targetIdx - activeIndex + totalSlides) % totalSlides;
+
+        // Rotate the DOM silently (no CSS class, no per-step side effects)
         for (let i = 0; i < steps; i++) {
-            showSlider('next');
+            const sliderItemsDom = list.querySelectorAll('.carousel .list .item');
+            list.appendChild(sliderItemsDom[0]);
         }
+
+        // Set activeIndex directly to the chosen target before any UI update
+        activeIndex = targetIdx;
+
+        // Apply a single visual transition for the jump
+        carousel.classList.remove('next');
+        carousel.classList.remove('prev');
+        carousel.classList.add('next');
+
+        clearTimeout(runTimeOut);
+        runTimeOut = setTimeout(() => {
+            carousel.classList.remove('next');
+            carousel.classList.remove('prev');
+        }, timeRunning);
+
+        clearTimeout(runNextAuto);
+        runNextAuto = setTimeout(() => {
+            nextBtn.click();
+        }, timeAutoNext);
+
+        resetTimeAnimation();
+        updateMobileCarouselUI();
     }
 
     nextBtn.onclick = function(){
@@ -411,9 +429,13 @@ if (carousel && nextBtn && prevBtn && list && runningTime) {
         let sliderItemsDom = list.querySelectorAll('.carousel .list .item');
         if (type === 'next'){
             list.appendChild(sliderItemsDom[0]);
+            // Advance activeIndex forward, keeping it in sync with the DOM rotation
+            activeIndex = (activeIndex + 1) % totalSlides;
             carousel.classList.add('next');
         } else {
             list.prepend(sliderItemsDom[sliderItemsDom.length - 1]);
+            // Move activeIndex backward, keeping it in sync with the DOM rotation
+            activeIndex = (activeIndex - 1 + totalSlides) % totalSlides;
             carousel.classList.add('prev');
         }
 
@@ -421,7 +443,7 @@ if (carousel && nextBtn && prevBtn && list && runningTime) {
         runTimeOut = setTimeout(()=>{
             carousel.classList.remove('next');
             carousel.classList.remove('prev');
-        }, timeAutoNext);
+        }, timeRunning);
 
         clearTimeout(runNextAuto);
         runNextAuto = setTimeout(()=>{
