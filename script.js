@@ -10,41 +10,219 @@ function scrollToBestSellers(e) {
     }
 }
 
-// ── Hamburger / Mobile Menu Toggle ──
+// ── Responsive Mobile Navigation Drawer & Category Side Menu ──
 (function () {
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const navMenu = document.getElementById('nav-menu');
+    const categoriesList = [
+        { name: "Balloons", url: "products.html?category=balloons", icon: "fa-solid fa-parachute-box" },
+        { name: "Metallic Balloons", url: "metallic-balloons.html", icon: "fa-solid fa-circle-dot", badge: "Hot", badgeClass: "drawer-badge-hot" },
+        { name: "Cake Candles", url: "products.html?category=candles", icon: "fa-solid fa-cake-candles" },
+        { name: "Sparkling Candles", url: "sparkling-candles.html", icon: "fa-solid fa-wand-magic-sparkles" },
+        { name: "Party Poppers", url: "party-poppers.html", icon: "fa-solid fa-burst" },
+        { name: "Paper Banners", url: "products.html?category=banners", icon: "fa-solid fa-flag", badge: "New", badgeClass: "drawer-badge-new" },
+        { name: "Birthday Caps", url: "birthday-caps.html", icon: "fa-solid fa-hat-wizard" },
+        { name: "Foil Curtains", url: "products.html?category=manymore", icon: "fa-solid fa-border-all" },
+        { name: "Snow Spray", url: "snow-spray.html", icon: "fa-solid fa-snowflake" },
+        { name: "Cake Toppers", url: "theme-cake-toppers.html", icon: "fa-solid fa-star" },
+        { name: "Birthday Crowns", url: "products.html?category=crowns", icon: "fa-solid fa-crown" },
+        { name: "Tiaras", url: "products.html?category=tiara", icon: "fa-solid fa-gem" },
+        { name: "Sashes", url: "products.html?category=sashes", icon: "fa-solid fa-ribbon" },
+        { name: "Cake Cutting Knives", url: "products.html?category=cake-knives", icon: "fa-solid fa-utensils" },
+        { name: "Decor Combos", url: "products.html?category=combos", icon: "fa-solid fa-box-open" },
+        { name: "Balloon Pump", url: "balloon-pump.html", icon: "fa-solid fa-wind" },
+        { name: "Crazy Ribbon", url: "crazy-ribbon.html", icon: "fa-solid fa-ribbon" },
+        { name: "3D Butterfly Decor", url: "3d-butterfly.html", icon: "fa-solid fa-bug" },
+        { name: "Cake Dolls", url: "cake-dolls.html", icon: "fa-solid fa-person-dress" },
+        { name: "Golden Number Candles", url: "golden-no-candles.html", icon: "fa-solid fa-hashtag" },
+        { name: "View All Categories", url: "many-more.html", icon: "fa-solid fa-boxes-stacked" }
+    ];
 
-    if (!hamburgerBtn || !navMenu) return;
+    const quickPagesList = [
+        { name: "Home", url: "index.html", icon: "fa-solid fa-house" },
+        { name: "About Us", url: "about.html", icon: "fa-solid fa-circle-info" },
+        { name: "Services", url: "services.html", icon: "fa-solid fa-hand-holding-heart" },
+        { name: "Contact Us", url: "contact.html", icon: "fa-solid fa-envelope" },
+        { name: "Wishlist", url: "wishlist.html", icon: "fa-regular fa-heart" },
+        { name: "Cart", url: "cart.html", icon: "fa-solid fa-cart-shopping" }
+    ];
 
-    hamburgerBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        const isOpen = navMenu.classList.toggle('active');
-        // Switch icon: bars ↔ X
-        const icon = hamburgerBtn.querySelector('i');
-        if (icon) {
-            icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
-        }
-    });
+    function createDrawerDOM() {
+        if (document.getElementById('mobile-nav-drawer')) return;
 
-    // Close menu on outside click
-    document.addEventListener('click', function (e) {
-        if (!hamburgerBtn.contains(e.target) && !navMenu.contains(e.target)) {
-            navMenu.classList.remove('active');
-            const icon = hamburgerBtn.querySelector('i');
-            if (icon) icon.className = 'fa-solid fa-bars';
-        }
-    });
+        // Backdrop
+        const backdrop = document.createElement('div');
+        backdrop.id = 'mobile-drawer-backdrop';
+        backdrop.className = 'mobile-drawer-backdrop';
+        document.body.appendChild(backdrop);
 
-    // Close menu when a nav item is clicked
-    navMenu.querySelectorAll('li').forEach(function (li) {
-        li.addEventListener('click', function () {
-            navMenu.classList.remove('active');
-            const icon = hamburgerBtn.querySelector('i');
-            if (icon) icon.className = 'fa-solid fa-bars';
+        // Drawer Panel
+        const drawer = document.createElement('div');
+        drawer.id = 'mobile-nav-drawer';
+        drawer.className = 'mobile-nav-drawer';
+        drawer.setAttribute('role', 'dialog');
+        drawer.setAttribute('aria-label', 'Mobile Navigation Drawer');
+
+        // Header
+        const header = document.createElement('div');
+        header.className = 'mobile-drawer-header';
+        header.innerHTML = `
+            <a href="index.html" aria-label="Home">
+                <img src="NLTClogo.png" alt="NLTC Logo" class="mobile-drawer-logo">
+            </a>
+            <button class="mobile-drawer-close" id="mobile-drawer-close-btn" aria-label="Close menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+        drawer.appendChild(header);
+
+        // Body
+        const body = document.createElement('div');
+        body.className = 'mobile-drawer-body';
+
+        // Section 1: Categories
+        const catTitle = document.createElement('h4');
+        catTitle.className = 'mobile-drawer-section-title';
+        catTitle.textContent = 'Product Categories';
+        body.appendChild(catTitle);
+
+        const catUl = document.createElement('ul');
+        catUl.className = 'mobile-drawer-list';
+
+        categoriesList.forEach(item => {
+            const li = document.createElement('li');
+            const badgeHTML = item.badge ? `<span class="${item.badgeClass || 'drawer-badge-new'}">${item.badge}</span>` : '';
+            li.innerHTML = `
+                <a href="${item.url}" class="mobile-drawer-item">
+                    <span class="drawer-item-left">
+                        <span class="drawer-item-icon"><i class="${item.icon}"></i></span>
+                        <span class="drawer-item-title">${item.name}${badgeHTML}</span>
+                    </span>
+                    <i class="fa-solid fa-chevron-right drawer-item-arrow"></i>
+                </a>
+            `;
+            catUl.appendChild(li);
         });
-    });
+        body.appendChild(catUl);
+
+        // Section 2: Quick Links
+        const pagesTitle = document.createElement('h4');
+        pagesTitle.className = 'mobile-drawer-section-title';
+        pagesTitle.textContent = 'Navigation Links';
+        body.appendChild(pagesTitle);
+
+        const pagesUl = document.createElement('ul');
+        pagesUl.className = 'mobile-drawer-list';
+
+        quickPagesList.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <a href="${item.url}" class="mobile-drawer-item">
+                    <span class="drawer-item-left">
+                        <span class="drawer-item-icon"><i class="${item.icon}"></i></span>
+                        <span class="drawer-item-title">${item.name}</span>
+                    </span>
+                    <i class="fa-solid fa-chevron-right drawer-item-arrow"></i>
+                </a>
+            `;
+            pagesUl.appendChild(li);
+        });
+        body.appendChild(pagesUl);
+
+        drawer.appendChild(body);
+
+        // Footer
+        const footer = document.createElement('div');
+        footer.className = 'mobile-drawer-footer';
+        footer.innerHTML = `NLTC &copy; Premium Party Decorations`;
+        drawer.appendChild(footer);
+
+        document.body.appendChild(drawer);
+    }
+
+    function openDrawer() {
+        createDrawerDOM();
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+
+        if (backdrop) backdrop.classList.add('active');
+        if (drawer) drawer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        if (hamburgerBtn) {
+            const icon = hamburgerBtn.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-xmark';
+        }
+    }
+
+    function closeDrawer() {
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+
+        if (backdrop) backdrop.classList.remove('active');
+        if (drawer) drawer.classList.remove('active');
+        document.body.style.overflow = '';
+
+        if (hamburgerBtn) {
+            const icon = hamburgerBtn.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars';
+        }
+    }
+
+    function initEvents() {
+        createDrawerDOM();
+
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const closeBtn = document.getElementById('mobile-drawer-close-btn');
+        const drawer = document.getElementById('mobile-nav-drawer');
+
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                if (drawer && drawer.classList.contains('active')) {
+                    closeDrawer();
+                } else {
+                    openDrawer();
+                }
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                closeDrawer();
+            });
+        }
+
+        if (backdrop) {
+            backdrop.addEventListener('click', function () {
+                closeDrawer();
+            });
+        }
+
+        if (drawer) {
+            drawer.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function () {
+                    closeDrawer();
+                });
+            });
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeDrawer();
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initEvents);
+    } else {
+        initEvents();
+    }
 })();
+
 
 
 // ── Tablet Search Icon Overlay Toggle ──

@@ -72,17 +72,28 @@ nav {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   background: none;
   border: none;
   cursor: pointer;
   font-size: 20px;
   color: #333;
-  margin-right: 10px;
+  margin-right: 6px;
   padding: 0;
   line-height: 1;
   flex-shrink: 0;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Prevent the icon element from intercepting pointer/touch events,
+   so the entire button area is the click target */
+.nav-left .hamburger-btn i {
+  pointer-events: none;
+  display: block;
+  line-height: 1;
 }
 
 .nav-left .hamburger-btn:hover { color: #FF0000; }
@@ -382,13 +393,14 @@ a { text-decoration: none; }
   .nav-right .cart p { font-size: 11.5px; }
 }
 
-/* ── 2. Tablet Portrait (768px – 1023px): show icon-only search ── */
+/* ── 2. Tablet Portrait (768px – 1023px): show hamburger + icon-only search ── */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
   nav { padding: 0 14px; }
 
+  .nav-left { gap: 10px; }
+  .nav-left .hamburger-btn { display: flex; }
   .nav-left img { width: 110px; }
-  .nav-left ul.nav-menu { margin-left: 14px; gap: 12px; }
-  .nav-left ul.nav-menu li { font-size: 12.5px; }
+  .nav-left ul.nav-menu { display: none !important; }
 
   /* Hide full search bar, show icon-only button */
   .search-bar { display: none; }
@@ -471,7 +483,7 @@ a { text-decoration: none; }
     box-shadow: none;
   }
 
-  /* Mobile navigation drawer */
+  /* Mobile navigation drawer (legacy dropdown fallback & active state) */
   .nav-menu.active {
     display: flex !important;
     flex-direction: column;
@@ -521,6 +533,247 @@ a { text-decoration: none; }
     margin-left: 8px;
     top: unset;
     left: unset;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE SIDE NAVIGATION DRAWER & BACKDROP
+   ============================================================ */
+
+/* Dimmed backdrop overlay */
+.mobile-drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-drawer-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Side navigation drawer panel */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  max-width: 86vw;
+  height: 100vh;
+  height: 100dvh;
+  background: #ffffff;
+  z-index: 99999;
+  transform: translateX(-100%);
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 28px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.mobile-nav-drawer.active {
+  transform: translateX(0);
+}
+
+/* Drawer Header */
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.mobile-drawer-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.mobile-drawer-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #e5e5e5;
+  background: #f8f8f8;
+  color: #333333;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.mobile-drawer-close:hover,
+.mobile-drawer-close:active {
+  background: #fff0f0;
+  color: #FF0000;
+  border-color: #ffcccc;
+  transform: rotate(90deg);
+}
+
+/* Drawer Scrollable Body */
+.mobile-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 0 26px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Drawer Section Header */
+.mobile-drawer-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #888888;
+  padding: 14px 20px 6px 20px;
+  margin: 0;
+  border-left: 3px solid #FF0000;
+  margin-left: 14px;
+}
+
+/* Category Items Container */
+.mobile-drawer-list {
+  list-style: none;
+  margin: 0 0 16px 0;
+  padding: 0;
+}
+
+.mobile-drawer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #2c2c2c;
+  text-decoration: none;
+  border-bottom: 1px solid #f6f6f6;
+  transition: background 0.18s ease, color 0.18s ease, padding-left 0.18s ease;
+  cursor: pointer;
+}
+
+.mobile-drawer-item:last-child {
+  border-bottom: none;
+}
+
+.drawer-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.drawer-item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f5f5f7;
+  color: #FF0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13.5px;
+  flex-shrink: 0;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.drawer-item-title {
+  display: flex;
+  align-items: center;
+}
+
+.drawer-badge-new {
+  font-size: 9px;
+  font-weight: 700;
+  background: #FF0000;
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 8px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.drawer-badge-hot {
+  font-size: 9px;
+  font-weight: 700;
+  background: #ff9800;
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 8px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.drawer-item-arrow {
+  font-size: 13px;
+  color: #cccccc;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.mobile-drawer-item:hover,
+.mobile-drawer-item:active {
+  background: #fff5f5;
+  color: #FF0000;
+  padding-left: 24px;
+}
+
+.mobile-drawer-item:hover .drawer-item-icon,
+.mobile-drawer-item:active .drawer-item-icon {
+  background: #FF0000;
+  color: #ffffff;
+}
+
+.mobile-drawer-item:hover .drawer-item-arrow,
+.mobile-drawer-item:active .drawer-item-arrow {
+  color: #FF0000;
+  transform: translateX(3px);
+}
+
+/* Drawer Footer */
+.mobile-drawer-footer {
+  padding: 14px 20px;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+  font-size: 12px;
+  color: #777777;
+  text-align: center;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.mobile-drawer-footer a {
+  color: #FF0000;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Hide mobile drawer completely on desktop */
+@media only screen and (min-width: 1024px) {
+  .mobile-drawer-backdrop,
+  .mobile-nav-drawer {
+    display: none !important;
   }
 }
 
