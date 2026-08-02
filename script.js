@@ -362,10 +362,6 @@ if (carousel && nextBtn && prevBtn && list && runningTime) {
             thumbs.forEach((thumb, idx) => {
                 thumb.classList.toggle('active', idx === activeIndex);
             });
-            const activeThumb = mobileThumbnailsContainer.querySelector('.mobile-thumb-card.active');
-            if (activeThumb) {
-                activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
         }
     }
 
