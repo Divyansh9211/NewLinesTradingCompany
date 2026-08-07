@@ -496,48 +496,203 @@ a { text-decoration: none; }
    3. Mobile                    (≤ 767px)        : hamburger + full-width search row
    ============================================================ */
 
-/* ── 1. Laptop / Tablet Landscape (1024–1439px) ── */
+/* ── 1. Laptop / Tablet Landscape (1024–1439px): Desktop navbar fits perfectly ── */
 @media only screen and (min-width: 1024px) and (max-width: 1439px) {
-  nav { padding: 0 18px; gap: 0; }
+  nav {
+    padding: 0 16px;
+    gap: 0;
+    justify-content: space-between;
+  }
 
-  .nav-left img { width: 130px; }
-  .nav-left ul.nav-menu { margin-left: 22px; gap: 18px; }
-  .nav-left ul.nav-menu li { font-size: 13px; }
+  .nav-left {
+    gap: 0;
+    flex: 0 0 auto;
+  }
 
-  .search-bar { width: 220px; min-width: 130px; }
+  .nav-left img {
+    width: 124px;
+  }
 
-  .nav-right { gap: 16px; }
+  .nav-left ul.nav-menu {
+    margin-left: 8px;
+    gap: 0;
+  }
+
+  .nav-left ul.nav-menu li.nav-menu-item {
+    font-size: 13.5px;
+  }
+
+  .nav-vertical-divider {
+    margin: 0 8px;
+  }
+
+  .nav-vertical-divider.logo-divider {
+    margin: 0 12px;
+  }
+
+  .nav-vertical-divider.right-divider {
+    margin: 0 10px;
+  }
+
+  .nav-vertical-divider.icon-divider {
+    margin: 0 8px;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    margin-left: 16px;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .search-bar {
+    display: flex !important;
+    flex: 1 1 auto;
+    min-width: 120px;
+    max-width: 240px;
+    height: 40px;
+    padding: 0 12px;
+    margin-right: auto;
+  }
+
+  .search-bar input {
+    font-size: 12.5px;
+  }
+
   .nav-right .login,
   .nav-right .wishlist,
-  .nav-right .cart { min-width: 48px; }
+  .nav-right .cart {
+    min-width: 42px;
+    flex-shrink: 0;
+  }
+
   .nav-right .login p,
   .nav-right .wishlist p,
-  .nav-right .cart p { font-size: 11.5px; }
+  .nav-right .cart p {
+    font-size: 11px;
+  }
+
+  .nav-right .login i,
+  .nav-right .wishlist i,
+  .nav-right .cart i {
+    font-size: 16px;
+  }
 }
 
-/* ── 2. Tablet Portrait (768px – 1023px): show hamburger + icon-only search ── */
+/* ── 2. Tablet Portrait (768px – 1023px): Balanced Search positioning at 972px, 850px, 785px, 768px ── */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
-  nav { padding: 0 14px; }
+  nav {
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
 
-  .nav-left { gap: 10px; }
-  .nav-left .hamburger-btn { display: flex; }
-  .nav-left img { width: 110px; }
-  .nav-left ul.nav-menu { display: none !important; }
+  .nav-left {
+    gap: 8px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
 
-  /* Hide full search bar, show icon-only button */
-  .search-bar { display: none; }
-  .search-icon-btn { display: flex; }
+  .nav-left .hamburger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
 
-  .nav-right { gap: 14px; margin-left: auto; }
+  .nav-left img {
+    width: 105px;
+    height: auto;
+  }
+
+  .nav-left ul.nav-menu {
+    display: none !important;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    margin-left: 14px;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .search-bar {
+    display: flex !important;
+    flex: 1 1 auto;
+    min-width: 110px;
+    max-width: 240px;
+    height: 38px;
+    border-radius: 20px;
+    background: #ffffff;
+    border: 1.5px solid #d92328;
+    padding: 0 12px;
+    margin-right: auto;
+    box-sizing: border-box;
+    align-items: center;
+  }
+
+  .search-bar input {
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #333;
+    padding: 0;
+  }
+
+  .search-bar input::placeholder {
+    font-size: 11px;
+    color: #888;
+  }
+
+  .search-bar i {
+    font-size: 13.5px;
+    color: #d92328;
+    margin-right: 7px;
+    flex-shrink: 0;
+  }
+
+  .search-icon-btn {
+    display: none !important;
+  }
+
   .nav-right .login,
   .nav-right .wishlist,
-  .nav-right .cart { min-width: 44px; }
+  .nav-right .cart {
+    min-width: 40px;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
   .nav-right .login p,
   .nav-right .wishlist p,
-  .nav-right .cart p { font-size: 11px; }
+  .nav-right .cart p {
+    font-size: 10.5px;
+  }
+
+  .nav-right .login i,
+  .nav-right .wishlist i,
+  .nav-right .cart i {
+    font-size: 16px;
+  }
+
+  .nav-vertical-divider {
+    display: none !important;
+  }
 }
 
-/* ── 3. Mobile (≤ 767px): Hamburger + Logo + Compact Search + Right Icons ── */
+/* ── 3. Mobile & Small Screen (≤ 767px): Dynamically balanced search positioning at 657px down to 320px ── */
 @media only screen and (max-width: 767px) {
   header:not(.header) {
     height: 64px !important;
@@ -571,7 +726,6 @@ a { text-decoration: none; }
     min-width: 0 !important;
   }
 
-  /* Show hamburger on mobile */
   .nav-left .hamburger-btn {
     display: flex !important;
     align-items: center !important;
@@ -591,21 +745,31 @@ a { text-decoration: none; }
     display: block !important;
   }
 
-  /* Hide inline category links */
   .nav-left ul.nav-menu { display: none !important; }
 
-  /* Compact search bar next to logo in mobile top header */
+  .nav-right {
+    display: flex !important;
+    align-items: center !important;
+    flex: 1 1 auto !important;
+    margin-left: 6px !important;
+    gap: 4px !important;
+    justify-content: space-between !important;
+    min-width: 0 !important;
+  }
+
+  /* Dynamically flexed search bar sitting balanced between logo and action icons */
   .search-bar {
     display: flex !important;
     flex: 1 1 auto !important;
-    min-width: 85px !important;
-    max-width: 145px !important;
+    min-width: 80px !important;
+    max-width: 180px !important;
     height: 34px !important;
     border-radius: 18px !important;
     background: #ffffff !important;
     border: 1.5px solid #d92328 !important;
     padding: 0 8px !important;
-    margin: 0 2px !important;
+    margin: 0 !important;
+    margin-right: auto !important;
     box-sizing: border-box !important;
     align-items: center !important;
   }
@@ -635,19 +799,10 @@ a { text-decoration: none; }
 
   .search-icon-btn { display: none !important; }
 
-  /* Right icons remain compact but always visible */
-  .nav-right {
-    display: flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-    margin-left: auto !important;
-    flex: 0 0 auto !important;
-  }
-
   .nav-right .login,
   .nav-right .wishlist,
   .nav-right .cart {
-    min-width: 36px !important;
+    min-width: 34px !important;
     flex-shrink: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
