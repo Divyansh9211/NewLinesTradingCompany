@@ -3,7 +3,7 @@ import { bestsellerCards } from '../../utils/bestsellerData';
 
 function BestsellerSection() {
   return (
-    <section className="shop-by-bestseller-section">
+    <section className="shop-by-bestseller-section" id="best-sellers">
       <div className="bestseller-section-header">
         <div className="shop-by-title">
           <span className="line-left"></span>

@@ -3,7 +3,7 @@ import { categoryCards } from '../../utils/categoryData';
 
 function CategorySection() {
   return (
-    <section className="shop-by-category-section">
+    <section className="shop-by-category-section" id="categories">
       <div className="category-section-header">
         <div className="shop-by-title">
           <span className="line-left"></span>

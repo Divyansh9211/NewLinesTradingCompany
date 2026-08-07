@@ -3,7 +3,7 @@ import { occasionCards } from '../../utils/occasionData';
 
 function OccasionSection() {
   return (
-    <section className="shop-by-occasion-section">
+    <section className="shop-by-occasion-section" id="shop-by-occasion">
       <div className="occasion-section-header">
         <div className="shop-by-title">
           <span className="line-left"></span>

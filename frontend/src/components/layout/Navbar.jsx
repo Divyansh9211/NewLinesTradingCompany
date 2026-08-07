@@ -1,17 +1,18 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useAuth } from '../../context/AuthContext';
 
 /**
- * Navbar component — pixel-perfect migration from the unified header
- * that appears on every HTML page. All CSS classes preserved exactly.
- * Mobile drawer, tablet search overlay, and hamburger logic are implemented
- * as React hooks/state instead of the original DOM manipulation.
+ * Navbar component — Pixel-perfect reference matched navbar design
+ * implementing React Router navigation, active route state indicator,
+ * Products dropdown, search mapping, wishlist/cart badge overlays,
+ * and vertical divider lines.
  */
 function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
   const { user, isLoggedIn, logout } = useAuth();
@@ -24,7 +25,53 @@ function Navbar() {
   // Mobile drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Mobile drawer data (from script.js categoriesList + quickPagesList)
+  // Products Dropdown state
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
+
+  // Active link helper
+  const isActive = (path) => {
+    if (path === '/') return location.pathname === '/';
+    if (path === '/products') {
+      return (
+        location.pathname.startsWith('/products') ||
+        location.pathname.startsWith('/occasion') ||
+        location.pathname.startsWith('/bestseller')
+      );
+    }
+    return location.pathname === path;
+  };
+
+  // Products dropdown option click handler
+  const handleDropdownOptionClick = (type) => {
+    setProductsDropdownOpen(false);
+    if (type === 'occasion') {
+      if (location.pathname === '/') {
+        const el = document.getElementById('shop-by-occasion') || document.querySelector('.shop-by-occasion-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate('/');
+        setTimeout(() => {
+          const el = document.getElementById('shop-by-occasion') || document.querySelector('.shop-by-occasion-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      }
+    } else if (type === 'categories') {
+      navigate('/products');
+    } else if (type === 'bestsellers') {
+      if (location.pathname === '/') {
+        const el = document.getElementById('best-sellers') || document.querySelector('.shop-by-bestseller-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate('/');
+        setTimeout(() => {
+          const el = document.getElementById('best-sellers') || document.querySelector('.shop-by-bestseller-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      }
+    }
+  };
+
+  // Mobile drawer data
   const categoriesList = [
     { name: "Balloons", url: "/products?category=balloons", icon: "fa-solid fa-parachute-box" },
     { name: "Metallic Balloons", url: "/bestseller/metallic-balloons", icon: "fa-solid fa-circle-dot", badge: "Hot", badgeClass: "drawer-badge-hot" },
@@ -51,9 +98,13 @@ function Navbar() {
 
   const quickPagesList = [
     { name: "Home", url: "/", icon: "fa-solid fa-house" },
-    { name: "About Us", url: "/about", icon: "fa-solid fa-circle-info" },
     { name: "Services", url: "/services", icon: "fa-solid fa-hand-holding-heart" },
-    { name: "Contact Us", url: "/contact", icon: "fa-solid fa-envelope" },
+    { name: "Features", url: "/features", icon: "fa-solid fa-star" },
+    { name: "Products by Occasion", optionType: "occasion", icon: "fa-solid fa-calendar-day" },
+    { name: "Products by Categories", optionType: "categories", icon: "fa-solid fa-layer-group" },
+    { name: "Products by Best Sellers", optionType: "bestsellers", icon: "fa-solid fa-fire" },
+    { name: "About Us", url: "/about", icon: "fa-solid fa-circle-info" },
+    { name: "Contact", url: "/contact", icon: "fa-solid fa-envelope" },
     { name: `Wishlist${wishlistCount > 0 ? ` (${wishlistCount})` : ''}`, url: "/wishlist", icon: wishlistCount > 0 ? "fa-solid fa-heart" : "fa-regular fa-heart" },
     { name: `Cart${cartCount > 0 ? ` (${cartCount})` : ''}`, url: "/cart", icon: "fa-solid fa-cart-shopping" },
     ...(isLoggedIn
@@ -88,27 +139,31 @@ function Navbar() {
       if (e.key === 'Escape') {
         closeDrawer();
         closeTabletSearch();
+        setProductsDropdownOpen(false);
       }
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
   }, [closeTabletSearch]);
 
-  // Close tablet search on outside click
+  // Close tablet search / dropdown on outside click
   useEffect(() => {
-    if (!tabletSearchOpen) return;
     const handler = (e) => {
       const overlay = document.getElementById('tablet-search-overlay');
       const iconBtn = document.getElementById('search-icon-btn');
-      if (overlay && !overlay.contains(e.target) && iconBtn && !iconBtn.contains(e.target)) {
+      if (tabletSearchOpen && overlay && !overlay.contains(e.target) && iconBtn && !iconBtn.contains(e.target)) {
         closeTabletSearch();
+      }
+      const dropdown = document.querySelector('.dropdown-item');
+      if (dropdown && !dropdown.contains(e.target)) {
+        setProductsDropdownOpen(false);
       }
     };
     document.addEventListener('click', handler);
     return () => document.removeEventListener('click', handler);
   }, [tabletSearchOpen, closeTabletSearch]);
 
-  // Search navigation logic (from script.js performSearch)
+  // Search navigation logic
   const performSearch = (query) => {
     if (!query) return;
     const q = query.toLowerCase().trim();
@@ -136,7 +191,6 @@ function Navbar() {
     for (const { keywords, url } of routeMap) {
       if (keywords.some(k => q.includes(k))) { navigate(url); return; }
     }
-    // Category fallback
     let cat = 'balloons';
     if (q.includes('balloon')) cat = 'balloons';
     else if (q.includes('candle')) cat = 'candles';
@@ -150,21 +204,6 @@ function Navbar() {
     else if (q.includes('topper')) cat = 'toppers';
     else if (q.includes('combo') || q.includes('kit')) cat = 'combos';
     navigate(`/products?category=${cat}`);
-  };
-
-  // Nav item category click (from script.js navMenuItems handler)
-  const handleNavItemClick = (itemText) => {
-    const text = itemText.toLowerCase().trim();
-    const map = {
-      'balloons': 'balloons',
-      'party poppers': 'party-poppers',
-      'candles': 'candles',
-      'birthday caps': 'birthday-caps',
-      'sashes': 'sashes',
-      'banners': 'banners',
-    };
-    const slug = map[text] || 'balloons';
-    navigate(`/products?category=${slug}`);
   };
 
   return (
@@ -187,12 +226,88 @@ function Navbar() {
             </Link>
 
             <ul className="nav-menu" id="nav-menu">
-              <li onClick={() => handleNavItemClick('Balloons')}>Balloons</li>
-              <li onClick={() => handleNavItemClick('Party Poppers')}>Party Poppers</li>
-              <li onClick={() => handleNavItemClick('Candles')}>Candles</li>
-              <li onClick={() => handleNavItemClick('Birthday Caps')}>Birthday Caps</li>
-              <li onClick={() => handleNavItemClick('Sashes')}>Sashes</li>
-              <li className="love" onClick={() => handleNavItemClick('Banners')}>Banners<span>New</span></li>
+              <li className={`nav-menu-item ${isActive('/') ? 'active' : ''}`}>
+                <Link to="/">Home</Link>
+                {isActive('/') && <span className="active-indicator"></span>}
+              </li>
+
+              <li className="nav-vertical-divider"></li>
+
+              <li className={`nav-menu-item ${isActive('/services') ? 'active' : ''}`}>
+                <Link to="/services">Services</Link>
+                {isActive('/services') && <span className="active-indicator"></span>}
+              </li>
+
+              <li className="nav-vertical-divider"></li>
+
+              <li className={`nav-menu-item ${isActive('/features') ? 'active' : ''}`}>
+                <Link to="/features">Features</Link>
+                {isActive('/features') && <span className="active-indicator"></span>}
+              </li>
+
+              <li className="nav-vertical-divider"></li>
+
+              <li
+                className={`nav-menu-item dropdown-item ${isActive('/products') ? 'active' : ''}`}
+                onMouseEnter={() => setProductsDropdownOpen(true)}
+                onMouseLeave={() => setProductsDropdownOpen(false)}
+              >
+                <div
+                  className="products-menu-trigger"
+                  onClick={() => setProductsDropdownOpen((prev) => !prev)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <span>Products</span>
+                  <i className={`fa-solid fa-chevron-down dropdown-arrow ${productsDropdownOpen ? 'open' : ''}`}></i>
+                </div>
+                {isActive('/products') && <span className="active-indicator"></span>}
+
+                {productsDropdownOpen && (
+                  <div className="products-dropdown-menu">
+                    <div
+                      className="dropdown-option"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDropdownOptionClick('occasion');
+                      }}
+                    >
+                      Products by Occasion
+                    </div>
+                    <div
+                      className="dropdown-option"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDropdownOptionClick('categories');
+                      }}
+                    >
+                      Products by Categories
+                    </div>
+                    <div
+                      className="dropdown-option"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDropdownOptionClick('bestsellers');
+                      }}
+                    >
+                      Products by Best Sellers
+                    </div>
+                  </div>
+                )}
+              </li>
+
+              <li className="nav-vertical-divider"></li>
+
+              <li className={`nav-menu-item ${isActive('/about') ? 'active' : ''}`}>
+                <Link to="/about">About Us</Link>
+                {isActive('/about') && <span className="active-indicator"></span>}
+              </li>
+
+              <li className="nav-vertical-divider"></li>
+
+              <li className={`nav-menu-item ${isActive('/contact') ? 'active' : ''}`}>
+                <Link to="/contact">Contact</Link>
+                {isActive('/contact') && <span className="active-indicator"></span>}
+              </li>
             </ul>
           </div>
 
@@ -209,15 +324,7 @@ function Navbar() {
               />
             </div>
 
-            {/* Search icon only: tablet portrait */}
-            <button
-              className={`search-icon-btn${tabletSearchOpen ? ' active' : ''}`}
-              id="search-icon-btn"
-              aria-label="Search"
-              onClick={() => tabletSearchOpen ? closeTabletSearch() : openTabletSearch()}
-            >
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
+            <div className="nav-vertical-divider right-divider"></div>
 
             <div className="login">
               {isLoggedIn ? (
@@ -232,21 +339,31 @@ function Navbar() {
               ) : (
                 <>
                   <Link to="/login" className="loginbtn"><i className="fa-regular fa-user"></i></Link>
-                  <Link to="/login"><p>Login / Sign up </p></Link>
+                  <Link to="/login"><p>Login / Sign up</p></Link>
                 </>
               )}
             </div>
 
+            <div className="nav-vertical-divider icon-divider"></div>
+
             <div className="wishlist">
               <Link to="/wishlist" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <i className={wishlistCount > 0 ? "fa-solid fa-heart" : "fa-regular fa-heart"} style={{ color: wishlistCount > 0 ? '#ff3f6c' : undefined }}></i>
+                <div className="nav-icon-wrapper">
+                  <i className={wishlistCount > 0 ? "fa-solid fa-heart" : "fa-regular fa-heart"} style={{ color: wishlistCount > 0 ? '#ff3f6c' : undefined }}></i>
+                  {wishlistCount > 0 && <span className="nav-badge-round">{wishlistCount}</span>}
+                </div>
                 <p>Wishlist{wishlistCount > 0 ? ` (${wishlistCount})` : ''}</p>
               </Link>
             </div>
 
+            <div className="nav-vertical-divider icon-divider"></div>
+
             <div className="cart">
               <Link to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <i className="fa-solid fa-cart-shopping"></i>
+                <div className="nav-icon-wrapper">
+                  <i className="fa-solid fa-cart-shopping"></i>
+                  {cartCount > 0 && <span className="nav-badge-round">{cartCount}</span>}
+                </div>
                 <p>Cart{cartCount > 0 ? ` (${cartCount})` : ''}</p>
               </Link>
             </div>
@@ -306,7 +423,7 @@ function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Nav Drawer (from script.js createDrawerDOM) */}
+      {/* Mobile Nav Drawer */}
       {drawerOpen && (
         <div
           className="mobile-drawer-backdrop active"
@@ -335,24 +452,6 @@ function Navbar() {
         </div>
 
         <div className="mobile-drawer-body">
-          <h4 className="mobile-drawer-section-title">Product Categories</h4>
-          <ul className="mobile-drawer-list">
-            {categoriesList.map((item, idx) => (
-              <li key={idx}>
-                <Link to={item.url} className="mobile-drawer-item" onClick={closeDrawer}>
-                  <span className="drawer-item-left">
-                    <span className="drawer-item-icon"><i className={item.icon}></i></span>
-                    <span className="drawer-item-title">
-                      {item.name}
-                      {item.badge && <span className={item.badgeClass || 'drawer-badge-new'}>{item.badge}</span>}
-                    </span>
-                  </span>
-                  <i className="fa-solid fa-chevron-right drawer-item-arrow"></i>
-                </Link>
-              </li>
-            ))}
-          </ul>
-
           <h4 className="mobile-drawer-section-title">Navigation Links</h4>
           <ul className="mobile-drawer-list">
             {quickPagesList.map((item, idx) => (
@@ -373,6 +472,22 @@ function Navbar() {
                     </span>
                     <i className="fa-solid fa-chevron-right drawer-item-arrow"></i>
                   </button>
+                ) : item.optionType ? (
+                  <div
+                    className="mobile-drawer-item"
+                    style={{ cursor: 'pointer', width: '100%' }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      closeDrawer();
+                      handleDropdownOptionClick(item.optionType);
+                    }}
+                  >
+                    <span className="drawer-item-left">
+                      <span className="drawer-item-icon"><i className={item.icon}></i></span>
+                      <span className="drawer-item-title">{item.name}</span>
+                    </span>
+                    <i className="fa-solid fa-chevron-right drawer-item-arrow"></i>
+                  </div>
                 ) : (
                   <Link to={item.url} className="mobile-drawer-item" onClick={closeDrawer}>
                     <span className="drawer-item-left">
@@ -382,6 +497,24 @@ function Navbar() {
                     <i className="fa-solid fa-chevron-right drawer-item-arrow"></i>
                   </Link>
                 )}
+              </li>
+            ))}
+          </ul>
+
+          <h4 className="mobile-drawer-section-title">Product Categories</h4>
+          <ul className="mobile-drawer-list">
+            {categoriesList.map((item, idx) => (
+              <li key={idx}>
+                <Link to={item.url} className="mobile-drawer-item" onClick={closeDrawer}>
+                  <span className="drawer-item-left">
+                    <span className="drawer-item-icon"><i className={item.icon}></i></span>
+                    <span className="drawer-item-title">
+                      {item.name}
+                      {item.badge && <span className={item.badgeClass || 'drawer-badge-new'}>{item.badge}</span>}
+                    </span>
+                  </span>
+                  <i className="fa-solid fa-chevron-right drawer-item-arrow"></i>
+                </Link>
               </li>
             ))}
           </ul>
