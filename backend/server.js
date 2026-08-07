@@ -131,10 +131,13 @@ app.use(errorHandler);
 // Define Server Port
 const PORT = process.env.PORT || 5000;
 
+const seedDatabase = require('./config/productSeeder');
+
 // Connect to MongoDB Atlas first, then start Express HTTP Server
 const startServer = async () => {
   try {
     await connectDB();
+    await seedDatabase();
     app.listen(PORT, () => {
       console.log(`Express server running on port ${PORT}`);
       logger.info(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);

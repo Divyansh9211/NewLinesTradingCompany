@@ -1,24 +1,28 @@
 const mongoose = require('mongoose');
 
 /**
- * Establishes connection to MongoDB Atlas database.
- * Reads connection string from MONGODB_URI environment variable.
+ * Establishes connection to MongoDB database.
+ * Reads connection string from MONGODB_URI environment variable,
+ * or automatically falls back to in-memory MongoMemoryServer for development.
  */
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI;
+    let mongoURI = process.env.MONGODB_URI;
 
     if (!mongoURI) {
-      console.error('[Database Error] MONGODB_URI is not defined in environment variables.');
-      process.exit(1);
+      console.log('[Database] MONGODB_URI not found. Starting in-memory MongoMemoryServer...');
+      const { MongoMemoryServer } = require('mongodb-memory-server');
+      const mongoServer = await MongoMemoryServer.create();
+      mongoURI = mongoServer.getUri();
+      console.log(`[Database] In-memory MongoDB running at ${mongoURI}`);
     }
 
     const conn = await mongoose.connect(mongoURI);
 
-    console.log('MongoDB Connected Successfully');
+    console.log(`[Database] MongoDB Connected Successfully: ${conn.connection.host}`);
     return conn;
   } catch (error) {
-    console.error(`[Database Error] Failed to connect to MongoDB Atlas: ${error.message}`);
+    console.error(`[Database Error] Failed to connect to MongoDB: ${error.message}`);
     process.exit(1);
   }
 };

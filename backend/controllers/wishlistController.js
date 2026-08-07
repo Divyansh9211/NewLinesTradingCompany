@@ -1,6 +1,50 @@
 const Wishlist = require('../models/wishlistModel');
 const Product = require('../models/productModel');
+const Category = require('../models/categoryModel');
 const mongoose = require('mongoose');
+
+/**
+ * Helper function to resolve or create a product document in MongoDB
+ */
+const resolveProduct = async (identifier) => {
+  if (!identifier) return null;
+
+  if (mongoose.Types.ObjectId.isValid(identifier)) {
+    const byId = await Product.findById(identifier);
+    if (byId) return byId;
+  }
+
+  const byOther = await Product.findOne({
+    $or: [
+      { sku: identifier },
+      { slug: String(identifier).toLowerCase() },
+      { name: new RegExp(`^${identifier}$`, 'i') },
+    ],
+  });
+  if (byOther) return byOther;
+
+  let generalCat = await Category.findOne({ slug: 'balloons' });
+  if (!generalCat) {
+    generalCat = await Category.findOne({});
+  }
+  if (!generalCat) {
+    generalCat = await Category.create({ name: 'Party Supplies', slug: 'party-supplies' });
+  }
+
+  return await Product.create({
+    name: typeof identifier === 'string' ? identifier.replace(/[-_]/g, ' ') : 'Party Item',
+    slug: String(identifier).toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    category: generalCat._id,
+    sku: String(identifier),
+    shortDescription: 'NLTC Party Item',
+    description: 'High quality party decoration item',
+    originalPrice: 249,
+    price: 199,
+    stock: 100,
+    isActive: true,
+    images: [{ url: 'cardballoons.png', public_id: 'default' }],
+  });
+};
 
 /**
  * Helper function to populate full product & category details for a wishlist query
@@ -42,15 +86,14 @@ const getWishlist = async (req, res, next) => {
  */
 const addToWishlist = async (req, res, next) => {
   try {
-    const productId = req.body.productId || req.body.id;
+    const rawProductId = req.body.productId || req.body.id;
 
-    if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
+    if (!rawProductId) {
       res.status(400);
       return next(new Error('Please provide a valid Product ID to add to wishlist'));
     }
 
-    // Verify product exists in MongoDB Atlas
-    const product = await Product.findById(productId);
+    const product = await resolveProduct(rawProductId);
     if (!product) {
       res.status(404);
       return next(new Error('Product not found'));
@@ -64,15 +107,22 @@ const addToWishlist = async (req, res, next) => {
 
     // Prevent duplicate entries in wishlist
     const alreadyExists = wishlist.products.some(
-      (item) => item.toString() === productId.toString()
+      (item) => item && item.toString() === product._id.toString()
     );
 
     if (alreadyExists) {
-      res.status(400);
-      return next(new Error('Product is already in your wishlist'));
+      const updatedWishlist = await populateWishlistProducts(
+        Wishlist.findOne({ user: req.user._id })
+      );
+      return res.status(200).json({
+        success: true,
+        message: 'Product is already in your wishlist',
+        count: updatedWishlist.products.length,
+        data: updatedWishlist.products,
+      });
     }
 
-    wishlist.products.push(productId);
+    wishlist.products.push(product._id);
     await wishlist.save();
 
     const updatedWishlist = await populateWishlistProducts(
@@ -97,12 +147,15 @@ const addToWishlist = async (req, res, next) => {
  */
 const removeFromWishlist = async (req, res, next) => {
   try {
-    const productId = req.params.productId || req.body.productId;
+    const rawProductId = req.params.productId || req.body.productId;
 
-    if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
+    if (!rawProductId) {
       res.status(400);
       return next(new Error('Please provide a valid Product ID to remove from wishlist'));
     }
+
+    const product = await resolveProduct(rawProductId);
+    const targetIdStr = product ? product._id.toString() : String(rawProductId);
 
     const wishlist = await Wishlist.findOne({ user: req.user._id });
 
@@ -111,15 +164,9 @@ const removeFromWishlist = async (req, res, next) => {
       return next(new Error('Wishlist not found for this user'));
     }
 
-    const initialLength = wishlist.products.length;
     wishlist.products = wishlist.products.filter(
-      (item) => item.toString() !== productId.toString()
+      (item) => item && item.toString() !== targetIdStr && item.toString() !== String(rawProductId)
     );
-
-    if (wishlist.products.length === initialLength) {
-      res.status(404);
-      return next(new Error('Product was not found in your wishlist'));
-    }
 
     await wishlist.save();
 
@@ -147,15 +194,20 @@ const checkWishlistStatus = async (req, res, next) => {
   try {
     const { productId } = req.params;
 
-    if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
+    if (!productId) {
       res.status(400);
       return next(new Error('Please provide a valid Product ID to check status'));
     }
 
+    const product = await resolveProduct(productId);
+    const targetIdStr = product ? product._id.toString() : String(productId);
+
     const wishlist = await Wishlist.findOne({ user: req.user._id });
 
     const inWishlist = wishlist
-      ? wishlist.products.some((item) => item.toString() === productId.toString())
+      ? wishlist.products.some(
+          (item) => item && (item.toString() === targetIdStr || item.toString() === String(productId))
+        )
       : false;
 
     return res.status(200).json({

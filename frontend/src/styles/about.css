@@ -1,0 +1,185 @@
+.about-page-wrapper {
+  background-image: url('/background.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #faf7f2;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+}
+
+.about-page-wrapper .about,
+.about-page-wrapper .mission,
+.about-page-wrapper .vision,
+.about-page-wrapper .products,
+.about-page-wrapper .why {
+  width: 85%;
+  margin: 60px auto;
+}
+
+.about-page-wrapper h1 {
+  text-align: center;
+  font-size: 50px;
+  color: #e60000;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+.about-page-wrapper h2 {
+  text-align: center;
+  font-size: 35px;
+  color: #1E3A8A;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.about-page-wrapper .about p,
+.about-page-wrapper .mission p,
+.about-page-wrapper .vision p {
+  font-size: 18px;
+  text-align: justify;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* About */
+.about-page-wrapper .about {
+  background: white;
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .1);
+}
+
+.about-page-wrapper .about p {
+  margin-bottom: 20px;
+}
+
+/* Mission */
+.about-page-wrapper .mission {
+  background: #ffffff;
+  padding: 40px;
+  border-left: 8px solid red;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+}
+
+/* Vision */
+.about-page-wrapper .vision {
+  background: #ffffff;
+  padding: 40px;
+  border-left: 8px solid #1E3A8A;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+}
+
+/* Products Section in About */
+.about-page-wrapper .products {
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+}
+
+.about-page-wrapper .products h2 {
+  text-align: center;
+  font-size: 35px;
+  color: #1E3A8A;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.about-page-wrapper .products ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.about-page-wrapper .products ul li {
+  list-style: none;
+  background: #f2f2f2;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 17px;
+  color: #333;
+  transition: .3s;
+}
+
+.about-page-wrapper .products ul li:hover {
+  background: red;
+  color: white;
+  transform: translateY(-5px);
+}
+
+/* Why Choose Us */
+.about-page-wrapper .why {
+  background: white;
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+}
+
+.about-page-wrapper .box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-top: 35px;
+}
+
+.about-page-wrapper .card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+  transition: .3s;
+  border: none;
+}
+
+.about-page-wrapper .card:hover {
+  transform: translateY(-10px);
+}
+
+.about-page-wrapper .card h3 {
+  color: red;
+  margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.about-page-wrapper .card p {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+@media(max-width:768px) {
+  .about-page-wrapper h1 {
+    font-size: 32px;
+    margin-bottom: 25px;
+  }
+
+  .about-page-wrapper h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .about-page-wrapper .about,
+  .about-page-wrapper .mission,
+  .about-page-wrapper .vision,
+  .about-page-wrapper .products,
+  .about-page-wrapper .why {
+    width: 94%;
+    padding: 20px;
+    margin: 30px auto;
+  }
+
+  .about-page-wrapper p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
